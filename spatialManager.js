@@ -25,7 +25,6 @@ _nextSpatialID : 1, // make all valid IDs non-falsey (i.e. don't start at 0)
 _entities : [],
 
 // "PRIVATE" METHODS
-//
 // <none yet>
 
 

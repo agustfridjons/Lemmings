@@ -5,6 +5,7 @@ var g_doBox = false;
 var g_undoBox = false;
 var g_doFlipFlop = false;
 var g_doRender = true;
+var g_doMenu = false;
 
 var g_frameCounter = 1;
 
@@ -14,7 +15,7 @@ var TOGGLE_UNDO_BOX = 'U'.charCodeAt(0);
 var TOGGLE_FLIPFLOP = 'F'.charCodeAt(0);
 var TOGGLE_RENDER = 'R'.charCodeAt(0);
 
-function render(ctx) {
+function render(ctx,ctx2) {
     
     // Process various option toggles
     //
@@ -23,12 +24,16 @@ function render(ctx) {
     if (eatKey(TOGGLE_UNDO_BOX)) g_undoBox = !g_undoBox;
     if (eatKey(TOGGLE_FLIPFLOP)) g_doFlipFlop = !g_doFlipFlop;
     if (eatKey(TOGGLE_RENDER)) g_doRender = !g_doRender;
+    if (eatKey(KEY_MENU)) g_doMenu = !g_doMenu;
     
     // I've pulled the clear out of `renderSimulation()` and into
     // here, so that it becomes part of our "diagnostic" wrappers
     //
-    if (g_doClear) util.clearCanvas(ctx);
-    
+    if (g_doClear){
+        util.clearCanvas(ctx);
+        util.clearCanvas2(ctx2);
+    }
+
     // The main purpose of the box is to demonstrate that it is
     // always deleted by the subsequent "undo" before you get to
     // see it...
@@ -37,11 +42,11 @@ function render(ctx) {
     //
     if (g_doBox) util.fillBox(ctx, 200, 200, 50, 50, "red");
     
-    
+    if (g_doMenu) menu.showMenu(ctx);
+
     // The core rendering of the actual game / simulation
     //
     if (g_doRender) renderSimulation(ctx);
-    
     
     // This flip-flip mechanism illustrates the pattern of alternation
     // between frames, which provides a crude illustration of whether
@@ -67,6 +72,6 @@ function render(ctx) {
     // to illustrate flicker-proof double-buffering
     //
     if (g_undoBox) ctx.clearRect(200, 200, 50, 50);
-    
+
     ++g_frameCounter;
 }
