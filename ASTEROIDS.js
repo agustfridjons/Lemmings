@@ -2,6 +2,7 @@
 // ASTEROIDS
 // =========
 /*
+HAlós
 
 A sort-of-playable version of the classic arcade game.
 
