@@ -22,7 +22,7 @@ Grid.prototype.render = function(ctx,blocks){
     for(var i = 0; i < blocks.length; i++){
         var Boi = blocks[i];
         if(Boi[2]){
-            ctx.fillStyle = "black";
+            ctx.fillStyle = "blue";
             ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
         } else {
             ctx.fillStyle = "white";

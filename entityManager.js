@@ -128,17 +128,13 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    //this.grid.render(ctx,this._blocks);
-/*
+    this.grid.render(ctx,this._blocks);
+
     var debugX = 10, debugY = 100;
 
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
-
-        if (!this._bShowRocks && 
-            aCategory == this._rocks)
-            continue;
 
         for (var i = 0; i < aCategory.length; ++i) {
 
@@ -148,7 +144,7 @@ render: function(ctx) {
         }
         debugY += 10;
     }
-    */
+    
 }
 }
 
