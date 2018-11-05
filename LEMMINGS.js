@@ -1,5 +1,5 @@
 // =========
-// ASTEROIDS
+// LEMMINGS
 // =========
 /*
 HAlós
