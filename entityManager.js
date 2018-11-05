@@ -22,18 +22,13 @@ with suitable 'data' and 'methods'.
 //
 /*jslint nomen: true, white: true, plusplus: true*/
 
-
 var entityManager = {
 
 // "PRIVATE" DATA
 
-_rocks   : [],
-_bullets : [],
-_ships   : [],
-_lemmings: [],
-
-_bShowRocks : true,
-
+_blocks   : [],
+_lemmings : [],
+grid      : Object,
 // "PRIVATE" METHODS
 
 _forEachOf: function(aCategory, fn) {
@@ -53,7 +48,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._lemmings];
+    this._categories = [this._blocks, this._lemmings];
 },
 /*
 generateShip : function(descr) {
@@ -65,6 +60,7 @@ generateLemming : function(descr) {
 },
 
 init: function() {
+    this.generateGrid();
     //this._generateRocks();
     //this._generateShip();
 },
@@ -72,6 +68,41 @@ init: function() {
 resetShips: function() {
     //this._forEachOf(this._ships, Ship.prototype.reset);
 },
+
+generateGrid: function(){
+    this.grid = new Grid();
+    this._blocks = this.grid.createGrid(400,600);
+},
+
+
+handleMouse: function(evt) {
+    
+    var g_mouseX = evt.clientX - g_canvas.offsetLeft;
+    var g_mouseY = evt.clientY - g_canvas.offsetTop;
+    var button = evt.buttons === undefined ? evt.which : evt.buttons;
+    if (!button) return;
+    try  {
+        changeBlock(g_mouseX,g_mouseY);
+    }
+    catch(undefined){
+
+    }
+    g_grid.render(g_ctx,blocks);
+    
+},
+
+changeBlock: function(x,y){
+    var i = g_grid.findNearestBlock(x,y);
+    blocks[i][2] = !blocks[i][2] ;
+    g_grid.render(g_ctx,blocks);
+},
+
+
+
+
+
+
+
 
 update: function(du) {
 
@@ -97,7 +128,8 @@ update: function(du) {
 },
 
 render: function(ctx) {
-
+    this.grid.render(ctx,this._blocks);
+/*
     var debugX = 10, debugY = 100;
 
     for (var c = 0; c < this._categories.length; ++c) {
@@ -116,10 +148,9 @@ render: function(ctx) {
         }
         debugY += 10;
     }
-    
+    */
 }
 }
 
 // Some deferred setup which needs the object to have been created first
 entityManager.deferredSetup();
-
