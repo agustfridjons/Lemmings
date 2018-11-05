@@ -2,8 +2,9 @@
 
 entityManager.js
 
-A module which handles arbitrary entity-management for "Asteroids"
+A module which handles arbitrary entity-management for "Asteroids".
 
+Þetta er breyting sem Egill gerði.
 
 We create this module as a single global object, and initialise it
 with suitable 'data' and 'methods'.
