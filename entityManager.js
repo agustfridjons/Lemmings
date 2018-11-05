@@ -123,7 +123,7 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    this.grid.render(ctx,this._blocks);
+    //this.grid.render(ctx,this._blocks);
 /*
     var debugX = 10, debugY = 100;
 
