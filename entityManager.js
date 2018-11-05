@@ -30,6 +30,7 @@ var entityManager = {
 _rocks   : [],
 _bullets : [],
 _ships   : [],
+_lemmings: [],
 
 _bShowRocks : true,
 
@@ -52,7 +53,15 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    //this._categories = [this._rocks, this._bullets, this._ships];
+    this._categories = [this._lemmings];
+},
+/*
+generateShip : function(descr) {
+    this._ships.push(new Ship(descr));
+},
+*/
+generateLemming : function(descr) {
+    this._lemmings.push(new lemming(descr));
 },
 
 init: function() {
@@ -65,7 +74,7 @@ resetShips: function() {
 },
 
 update: function(du) {
-/*
+
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
@@ -85,13 +94,10 @@ update: function(du) {
             }
         }
     }
-    
-    if (this._rocks.length === 0) this._generateRocks();
-*/
 },
 
 render: function(ctx) {
-/*
+
     var debugX = 10, debugY = 100;
 
     for (var c = 0; c < this._categories.length; ++c) {
@@ -110,7 +116,7 @@ render: function(ctx) {
         }
         debugY += 10;
     }
-    */
+    
 }
 }
 
