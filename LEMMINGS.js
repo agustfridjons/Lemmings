@@ -49,7 +49,7 @@ var g_ctx = g_canvas.getContext("2d");
 // CREATE INITIAL SHIPS
 // ====================
 
-/*function createInitialShips() {
+function createInitialShips() {
 
     entityManager.generateShip({
         cx : 200,
@@ -207,4 +207,4 @@ function preloadDone() {
 
 // Kick it off
 requestPreloads();
-*/
+
