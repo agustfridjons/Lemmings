@@ -49,7 +49,7 @@ var g_ctx = g_canvas.getContext("2d");
 // CREATE INITIAL SHIPS
 // ====================
 
-/*function createInitialShips() {
+function createInitialShips() {
 
     entityManager.generateShip({
         cx : 200,
@@ -207,7 +207,7 @@ function preloadDone() {
 
 // Kick it off
 requestPreloads();
-*/
+/*
 g_canvas.addEventListener("mousedown", event =>{
     mouseHandler("down",event);
 });
@@ -221,4 +221,4 @@ var blocks = g_grid.createGrid(400,600);
 for(var i = 0; i < blocks.length; i++){
     console.log(blocks[i]);
 }
-g_grid.render(g_ctx,blocks);
+g_grid.render(g_ctx,blocks);*/

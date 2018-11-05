@@ -19,7 +19,7 @@ Grid.prototype.createGrid = function(width,height){
 };
 
 Grid.prototype.render = function(ctx,blocks){
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = "gray";
     for(var i = 0; i < blocks.length; i++){
         var Boi = blocks[i];
         ctx.strokeRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
