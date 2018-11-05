@@ -9,7 +9,7 @@
 var util = {
 
 
-// RANGES
+// RANGES are cool
 // ======
 
 clampRange: function(value, lowBound, highBound) {
