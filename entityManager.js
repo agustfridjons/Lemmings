@@ -71,31 +71,16 @@ resetShips: function() {
 
 generateGrid: function(){
     this.grid = new Grid();
-    this._blocks = this.grid.createGrid(400,600);
+    this.grid.createGrid(400,600);
 },
 
 
-handleMouse: function(evt) {
-    
-    var g_mouseX = evt.clientX - g_canvas.offsetLeft;
-    var g_mouseY = evt.clientY - g_canvas.offsetTop;
-    var button = evt.buttons === undefined ? evt.which : evt.buttons;
-    if (!button) return;
-    try  {
-        changeBlock(g_mouseX,g_mouseY);
-    }
-    catch(undefined){
 
-    }
-    g_grid.render(g_ctx,blocks);
-    
-},
 
 changeBlock: function(x,y){
-    var i = g_grid.findNearestBlock(x,y);
-    blocks[i][2] = !blocks[i][2] ;
-    g_grid.render(g_ctx,blocks);
-},
+    var i = this.grid.findNearestBlock(x,y);
+    this.grid.blocks[i][2] = !this.grid.blocks[i][2];
+    },
 
 
 

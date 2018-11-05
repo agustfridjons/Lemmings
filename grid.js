@@ -7,34 +7,33 @@ function Grid(descr) {
 
 Grid.prototype.halfWidth = 20;
 Grid.prototype.halfHeight = 20;
+Grid.prototype.blocks = [];
 
 Grid.prototype.createGrid = function(width,height){
-    var blocks = []
     for(var i = this.halfHeight; i < height; i+=this.halfHeight*2){
         for(var j = this.halfWidth; j < width; j+=this.halfWidth*2){
-            blocks.push([i,j,false]);
+            this.blocks.push([i,j,false,1]);
         }
     }
-    return blocks;
 };
 
-Grid.prototype.render = function(ctx,blocks){
-    for(var i = 0; i < blocks.length; i++){
-        var Boi = blocks[i];
+Grid.prototype.render = function(ctx){
+    for(var i = 0; i < this.blocks.length; i++){
+        var Boi = this.blocks[i];
         if(Boi[2]){
-            ctx.fillStyle = "blue";
+            ctx.fillStyle = "gray";
             ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
         } else {
-            ctx.fillStyle = "white";
-            ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
+            ctx.strokeStyle = "lightgray";
+            ctx.strokeRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
         }
     }
 };
 
 
 Grid.prototype.findNearestBlock = function(xPos, yPos){
-    for(var i = 0; i < blocks.length; i++){
-        var Boi = blocks[i];
+    for(var i = 0; i < this.blocks.length; i++){
+        var Boi = this.blocks[i];
         if(Boi[0] + this.halfWidth > xPos 
             && Boi[0] - this.halfWidth < xPos
             && Boi[1] + this.halfHeight > yPos
