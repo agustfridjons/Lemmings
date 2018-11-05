@@ -48,7 +48,15 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._blocks,this._lemmings];
+    this._categories = [this._blocks, this._lemmings];
+},
+/*
+generateShip : function(descr) {
+    this._ships.push(new Ship(descr));
+},
+*/
+generateLemming : function(descr) {
+    this._lemmings.push(new lemming(descr));
 },
 
 init: function() {
@@ -97,7 +105,7 @@ changeBlock: function(x,y){
 
 
 update: function(du) {
-/*
+
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
@@ -117,9 +125,6 @@ update: function(du) {
             }
         }
     }
-    
-    if (this._rocks.length === 0) this._generateRocks();
-*/
 },
 
 render: function(ctx) {
@@ -149,4 +154,3 @@ render: function(ctx) {
 
 // Some deferred setup which needs the object to have been created first
 entityManager.deferredSetup();
-

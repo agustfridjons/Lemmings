@@ -46,16 +46,13 @@ var g_ctx = g_canvas.getContext("2d");
 
 
 // ====================
-// CREATE INITIAL SHIPS
+// CREATE INITIAL Lemming
 // ====================
-
-function createInitialShips() {
-
-    entityManager.generateShip({
+function createInitialLemming() {
+    entityManager.generateLemming({
         cx : 200,
         cy : 200
     });
-    
 }
 
 // =============
@@ -180,9 +177,10 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
-        ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+        img0   : "/LemmingSprite/sprite_lemmings0.png",
+        img1  : "/LemmingSprite/sprite_lemmings1.png",
+        img2   : "/LemmingSprite/sprite_lemmings2.png",
+        img3   : "/LemmingSprite/sprite_lemmings3.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -191,7 +189,8 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-
+    var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3];
+    g_sprites.img0 = new Sprite(images);
     //g_sprites.ship  = new Sprite(g_images.ship);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
@@ -200,7 +199,7 @@ function preloadDone() {
     //g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
-    //createInitialShips();
+    //createInitialLemming();
 
     main.init();
 }
