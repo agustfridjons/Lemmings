@@ -22,12 +22,12 @@ with suitable 'data' and 'methods'.
 //
 /*jslint nomen: true, white: true, plusplus: true*/
 
-
+var grid;
 var entityManager = {
 
 // "PRIVATE" DATA
 
-_rocks   : [],
+_blocks   : [],
 _bullets : [],
 _ships   : [],
 
@@ -56,6 +56,7 @@ deferredSetup : function () {
 },
 
 init: function() {
+    this.generateGrid();
     //this._generateRocks();
     //this._generateShip();
 },
@@ -63,6 +64,42 @@ init: function() {
 resetShips: function() {
     //this._forEachOf(this._ships, Ship.prototype.reset);
 },
+
+generateGrid: function(){
+    grid = new Grid();
+    this._blocks = grid.createGrid(400,600);
+    console.log(this._blocks[1]);
+},
+
+
+handleMouse: function(evt) {
+    
+    var g_mouseX = evt.clientX - g_canvas.offsetLeft;
+    var g_mouseY = evt.clientY - g_canvas.offsetTop;
+    var button = evt.buttons === undefined ? evt.which : evt.buttons;
+    if (!button) return;
+    try  {
+        changeBlock(g_mouseX,g_mouseY);
+    }
+    catch(undefined){
+
+    }
+    g_grid.render(g_ctx,blocks);
+    
+},
+
+changeBlock: function(x,y){
+    var i = g_grid.findNearestBlock(x,y);
+    blocks[i][2] = !blocks[i][2] ;
+    g_grid.render(g_ctx,blocks);
+},
+
+
+
+
+
+
+
 
 update: function(du) {
 /*
@@ -91,6 +128,7 @@ update: function(du) {
 },
 
 render: function(ctx) {
+    grid.render(ctx,this._blocks);
 /*
     var debugX = 10, debugY = 100;
 

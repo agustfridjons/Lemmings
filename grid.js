@@ -19,13 +19,14 @@ Grid.prototype.createGrid = function(width,height){
 };
 
 Grid.prototype.render = function(ctx,blocks){
-    ctx.strokeStyle = "black";
-    ctx.fillStyle = "black";
     for(var i = 0; i < blocks.length; i++){
         var Boi = blocks[i];
         if(Boi[2]){
+            ctx.fillStyle = "black";
             ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
         } else {
+            ctx.fillStyle = "white";
+            ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
         }
     }
 };

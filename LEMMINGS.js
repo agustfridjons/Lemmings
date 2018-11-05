@@ -208,38 +208,3 @@ function preloadDone() {
 // Kick it off
 requestPreloads();
 */
-var g_mouseX = 0,
-    g_mouseY = 0;
-
-function handleMouse(evt) {
-    
-    g_mouseX = evt.clientX - g_canvas.offsetLeft;
-    g_mouseY = evt.clientY - g_canvas.offsetTop;
-    var button = evt.buttons === undefined ? evt.which : evt.buttons;
-    if (!button) return;
-    try  {
-        changeBlock(g_mouseX,g_mouseY);
-    }
-    catch(undefined){
-
-    }
-    g_grid.render(g_ctx,blocks);
-    
-}
-
-function changeBlock(x,y){
-    var i = g_grid.findNearestBlock(x,y);
-    blocks[i][2] = true;
-    g_grid.render(g_ctx,blocks);
-}
-
-// Handle "down" and "move" events the same way.
-window.addEventListener("mousedown", handleMouse);
-window.addEventListener("mousemove", handleMouse);
-
-var g_grid = new Grid();
-var blocks = g_grid.createGrid(400,600);
-
-
-
-g_grid.render(g_ctx,blocks);
