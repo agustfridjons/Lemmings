@@ -4,6 +4,7 @@
 /*
 HAlós
 Siggi
+Flóki gerði þetta 
 
 A sort-of-playable version of the classic arcade game.
 
