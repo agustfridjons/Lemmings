@@ -62,6 +62,12 @@ generateLemming : function(descr) {
 init: function() {
     this.generateGrid();
     this.grid.level1();
+    /*
+    this.generateLemming({
+        cx : 20,
+        cy : 220
+    });
+    */
     //this._generateRocks();
     //this._generateShip();
 },
