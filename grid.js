@@ -44,7 +44,7 @@ Grid.prototype.render = function(ctx){
     for(var i = 0; i < this.blocks.length; i++){
         var Boi = this.blocks[i];
         if(Boi[2]){
-            ctx.fillStyle = "pink";
+            ctx.fillStyle = "blue";
             ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
         } else {
             ctx.strokeStyle = "lightgray";
