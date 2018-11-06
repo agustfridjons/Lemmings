@@ -50,9 +50,14 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 function createInitialLemming() {
     entityManager.generateLemming({
+<<<<<<< HEAD
         cx : 200,
         cy : 200,
         radius : g_images.img0.width / 2
+=======
+        cx : 20,
+        cy : 20
+>>>>>>> master
     });
 }
 
@@ -200,7 +205,7 @@ function preloadDone() {
     //g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
-    //createInitialLemming();
+    createInitialLemming();
 
     main.init();
 }
