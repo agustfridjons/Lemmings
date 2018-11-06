@@ -56,8 +56,8 @@ Grid.prototype.makeFire = function(x,y,index){
 Grid.prototype.render = function(ctx){
     var cob = new Image();
     var back = new Image();
-    back.src = "/FireSprite/sprite_Background0.png";
-    cob.src = "/FireSprite/background.png"
+    back.src = "/BackgroundImg/sprite_Background0.png";
+    cob.src = "/BackgroundImg/background.png"
     for(var i = 0; i < this.blocks.length; i++){
         var Boi = this.blocks[i];
         if(Boi[2]===1){
