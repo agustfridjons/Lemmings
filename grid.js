@@ -20,6 +20,15 @@ Grid.prototype.createGrid = function(width,height){
 };
 
 Grid.prototype.level1 = function(){
+    for(var i = 0;i< 10; i++){
+        this.blocks[i][2] = 1;
+    }    
+    for(var i = 140;i< 150; i++){
+        this.blocks[i][2] = 1;
+    }
+    for(var i = 0; i < 140; i +=10){
+        this.blocks[i][2] = 1;
+    }
     for(var i = 1; i < 31; i+=10){
         this.blocks[i][2] = 1;
     }
@@ -40,6 +49,7 @@ Grid.prototype.level1 = function(){
     }
     this.makeFire(this.blocks[48][0],this.blocks[48][1],48);
     this.makeFire(this.blocks[108][0],this.blocks[108][1],108);
+    
 };
 Grid.prototype.makeFire = function(x,y,index){
     this.blocks[index][2] = 2;
@@ -101,7 +111,9 @@ Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
 
     var blockID = [this.blocks[i][2],      // middle
                    this.blocks[i-1][2],    // top middle
-                   this.blocks[i+1][2]];   // bottom middle 
+                   this.blocks[i+1][2],      // bottom middle
+                   this.blocks[i+10][2],    //right
+                   this.blocks[i-10][2]];   //left   
     
     var blockPosY = [this.blocks[i][0],  
                      this.blocks[i-1][0], 

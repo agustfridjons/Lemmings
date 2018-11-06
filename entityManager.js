@@ -70,8 +70,8 @@ init: function() {
     this.grid.level1();
     
     this.generateLemming({
-        cx : 220,
-        cy : 220
+        cx : 60,
+        cy : 340    
     });
     
     //this._generateRocks();

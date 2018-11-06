@@ -92,6 +92,9 @@ lemming.prototype.update = function (du) {
         this.velX = 0;
         this.velY += NOMINAL_GRAVITY * du;
     }
+    if(blocks.blocks[3] === 1){
+        this.velX *= -1;
+    }
 
     // Move lemming
     this.cx += this.velX * du;
