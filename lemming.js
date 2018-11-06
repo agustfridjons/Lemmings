@@ -44,19 +44,20 @@ lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 // Initial, inheritable, default values
 lemming.prototype.cx = 200;
 lemming.prototype.cy = 200;
-lemming.prototype.velX = 1;
+lemming.prototype.velX = 0;
 lemming.prototype.velY = 0;
 lemming.prototype.intervalVelY = 0;
 lemming.prototype.useGravity = false;
+lemming.prototype.useAveVel = true;
 lemming.prototype.isGoingRight = true;
-lemming.prototype.numSubSteps = 1;
+lemming.prototype.dropping = false;
+lemming.prototype.numSubSteps = 3;
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
     
 lemming.prototype.update = function (du) {
     
-
     // Change current image at certain interval    
     if (this.time % 10 === 0) {
         if (this.currentIMG < 3) {
@@ -79,12 +80,19 @@ lemming.prototype.update = function (du) {
         this.cx - this.radius < 0) {
         this.velX *= -1;
     }
-    /*
-    if (eatKey(this.KEY_JUMP)) {
-        this.velY -= 10;
-        this.useGravity = true;
+    var blocks = this.getAdjacentBlocks();
+
+    //console.log("blocks pos: ", blocks.posX[2]);
+    //console.log("width: ", blocks.blockWidth);
+    if (blocks.blocks[2] === 1
+        && this.cy + this.radius > blocks.posY[2] - blocks.blockWidth) {
+        this.dropping = false;
+        this.velY = 0;
+        this.velX = 1;
+    } else {
+        this.velX = 0;
+        this.velY += NOMINAL_GRAVITY * du;
     }
-    */
 
     // Move lemming
     this.cx += this.velX * du;
@@ -93,17 +101,15 @@ lemming.prototype.update = function (du) {
     spatialManager.register(this);
 };
 
+var NOMINAL_GRAVITY = 0.04;
 
-var NOMINAL_GRAVITY = 0.12;
-
-lemming.prototype.computeGravity = function () {
-    return g_useGravity ? NOMINAL_GRAVITY : 0;
-};
-
-var NOMINAL_THRUST = +0.2;
 
 lemming.prototype.getRadius = function () {
     return (this.sprite.width / 2) * 0.9;
+};
+
+lemming.prototype.getAdjacentBlocks = function () {
+    return entityManager.grid.findAdBlocks(this.cx, this.cy, this.radius);
 };
 
 lemming.prototype.render = function (ctx) {

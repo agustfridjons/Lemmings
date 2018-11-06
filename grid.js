@@ -86,25 +86,37 @@ Grid.prototype.returnFireIndex = function(){
 Grid.prototype.findNearestBlock = function(xPos, yPos){
     for(var i = 0; i < this.blocks.length; i++){
         var Boi = this.blocks[i];
-        if(Boi[0] + this.halfWidth > xPos 
-            && Boi[0] - this.halfWidth < xPos
-            && Boi[1] + this.halfHeight > yPos
-            && Boi[1] - this.halfHeight < yPos){
+        if(Boi[0] + this.halfWidth >= xPos 
+            && Boi[0] - this.halfWidth <= xPos
+            && Boi[1] + this.halfHeight >= yPos
+            && Boi[1] - this.halfHeight <= yPos){
                 return i;
         }
     }
 };
 
-Grid.prototype.findAdBlocks = function(xPos,yPos){
+Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
+    if (yPos + radius + this.halfHeight > g_canvas.height ||
+        yPos - radius - this.halfHeight < 0) {
+            return -1;
+        }
     var i = this.findNearestBlock(xPos,yPos);
-    var types = [this.blocks[i-1][2],
-                this.blocks[i+9][2],
-                this.blocks[i+10][2],
-                this.blocks[i+11][2],
-                this.blocks[i+1][2],
-                this.blocks[i-9][2],
-                this.blocks[i-10][2],
-                this.blocks[i-11][2],
-                ];
-    return types;
+    var blockID = [this.blocks[i][2],      // middle
+                   this.blocks[i-1][2],    // top middle
+                   this.blocks[i+1][2]];   // bottom middle 
+    
+    var blockPosY = [this.blocks[i][0],  
+                     this.blocks[i-1][0], 
+                     this.blocks[i+1][0]];
+
+    var blockPosX = [this.blocks[i][1],  
+                     this.blocks[i-1][1], 
+                     this.blocks[i+1][1]];
+
+    return {
+        blocks : blockID,
+        posX: blockPosY,
+        posY: blockPosX,
+        blockWidth: this.halfWidth
+    }
 }
