@@ -12,30 +12,30 @@ Grid.prototype.blocks = [];
 Grid.prototype.createGrid = function(width,height){
     for(var i = this.halfHeight; i < height; i+=this.halfHeight*2){
         for(var j = this.halfWidth; j < width; j+=this.halfWidth*2){
-            this.blocks.push([i,j,false,0]);
+            this.blocks.push([i,j,0]);
         }
     }
 };
 
 Grid.prototype.level1 = function(){
     for(var i = 1; i < 31; i+=10){
-        this.blocks[i][2] = true;
+        this.blocks[i][2] = 1;
     }
     for(var i = 33; i < 63; i+=10){
-        this.blocks[i][2]=true;
+        this.blocks[i][2]=1;
     }
     for(var i = 64; i < 94; i+=10){
-        this.blocks[i][2]=true;
+        this.blocks[i][2]=1;
     }
     for(var i = 96; i < 126; i+=10){
-        this.blocks[i][2]=true;
+        this.blocks[i][2]=1;
     }
     for(var i = 137; i < 157; i+=10){
-        this.blocks[i][2] = true;
+        this.blocks[i][2] = 1;
     }
     for(var i = 9; i < 150; i+=10){
         if(i !== 49 && i !== 109){
-            this.blocks[i][2] = true;
+            this.blocks[i][2] = 1;
         }
     }
 };
@@ -65,3 +65,17 @@ Grid.prototype.findNearestBlock = function(xPos, yPos){
         }
     }
 };
+
+Grid.prototype.findAdBlocks = function(xPos,yPos){
+    var i = this.findNearestBlock(xPos,yPos);
+    var types = [this.blocks[i-1][2],
+                this.blocks[i+9][2],
+                this.blocks[i+10][2],
+                this.blocks[i+11][2],
+                this.blocks[i+1][2],
+                this.blocks[i-9][2],
+                this.blocks[i-10][2],
+                this.blocks[i-11][2],
+                ];
+    return types;
+}
