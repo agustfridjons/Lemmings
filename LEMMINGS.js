@@ -180,7 +180,11 @@ function requestPreloads() {
         img0   : "/LemmingSprite/sprite_lemmings0.png",
         img1  : "/LemmingSprite/sprite_lemmings1.png",
         img2   : "/LemmingSprite/sprite_lemmings2.png",
-        img3   : "/LemmingSprite/sprite_lemmings3.png"
+        img3   : "/LemmingSprite/sprite_lemmings3.png",
+        button0 : "/buttons/controlsButton.png",
+        button1 : "/buttons/controlsButtonL.png",
+        button2 : "/buttons/startButton.png",
+        button3 : "/buttons/startButtonL.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -190,7 +194,10 @@ var g_sprites = {};
 
 function preloadDone() {
     var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3];
+    var buttons = [g_images.button0, g_images.button1,
+                   g_images.button2, g_images.button3];
     g_sprites.img0 = new Sprite(images);
+    g_sprites.button = new Sprite(buttons);
     //g_sprites.ship  = new Sprite(g_images.ship);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
@@ -199,7 +206,7 @@ function preloadDone() {
     //g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
-    //createInitialLemming();
+    createInitialLemming();
 
     main.init();
 }

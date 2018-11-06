@@ -29,6 +29,7 @@ var entityManager = {
 _blocks   : [],
 _lemmings : [],
 grid      : Object,
+menu      : Object,
 // "PRIVATE" METHODS
 
 _forEachOf: function(aCategory, fn) {
@@ -60,13 +61,16 @@ generateLemming : function(descr) {
 },
 
 init: function() {
+    this.generateMenu();
     this.generateGrid();
-    //this._generateRocks();
-    //this._generateShip();
 },
 
 resetShips: function() {
     //this._forEachOf(this._ships, Ship.prototype.reset);
+},
+
+generateMenu : function(){
+    this.menu = new Menu();
 },
 
 generateGrid: function(){
@@ -97,15 +101,8 @@ changeBlock: function(x,y){
     g_grid.render(g_ctx,blocks);
 },
 
-
-
-
-
-
-
-
 update: function(du) {
-
+    this.menu.update();
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
@@ -129,7 +126,7 @@ update: function(du) {
 
 render: function(ctx) {
     this.grid.render(ctx,this._blocks);
-
+    this.menu.render(ctx);
     var debugX = 10, debugY = 100;
 
     for (var c = 0; c < this._categories.length; ++c) {
