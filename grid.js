@@ -14,7 +14,6 @@ Grid.prototype.createGrid = function(width,height){
     for(var i = this.halfHeight; i < height; i+=this.halfHeight*2){
         for(var j = this.halfWidth; j < width; j+=this.halfWidth*2){
             this.blocks.push([i,j,0]);
-            console.log(i,j);
         }
     }
 };
@@ -71,10 +70,6 @@ Grid.prototype.render = function(ctx){
             ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
         }
     }
-};
-
-Grid.prototype.update = function(du){
-    
 };
 
 Grid.prototype.returnFireIndex = function(){

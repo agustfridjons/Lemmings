@@ -61,8 +61,7 @@ generateLemming : function(descr) {
 },
 
 generateFire :  function(descr) {
-    this._fires.push(new Fire(descr));
-    console.log(descr);    
+    this._fires.push(new Fire(descr)); 
 },
 
 
@@ -102,7 +101,6 @@ changeBlock: function(x,y){
 
 
 update: function(du) {
-    this.grid.update(du);
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
