@@ -14,6 +14,7 @@ Grid.prototype.createGrid = function(width,height){
     for(var i = this.halfHeight; i < height; i+=this.halfHeight*2){
         for(var j = this.halfWidth; j < width; j+=this.halfWidth*2){
             this.blocks.push([i,j,0]);
+            console.log(i,j)
         }
     }
 };
@@ -35,12 +36,10 @@ Grid.prototype.level1 = function(){
         this.blocks[i][2] = 1;
     }
     for(var i = 9; i < 150; i+=10){
-        if(i !== 49 && i !== 109){
-            this.blocks[i][2] = 1;
-        }
+        this.blocks[i][2] = 1;
     }
-    this.makeFire(this.blocks[49][0],this.blocks[49][1],49);
-    this.makeFire(this.blocks[109][0],this.blocks[109][1],109);
+    this.makeFire(this.blocks[48][0],this.blocks[48][1],48);
+    this.makeFire(this.blocks[108][0],this.blocks[108][1],108);
 };
 Grid.prototype.makeFire = function(x,y,index){
     this.blocks[index][2] = 2;
@@ -62,10 +61,7 @@ Grid.prototype.render = function(ctx){
         if(Boi[2]===1){
             ctx.drawImage(cob,Boi[0]-20,Boi[1]-20,40,40);
         } else if(Boi[2] === 2){
-            ctx.fillStyle = "orange";
-            ctx.globalAlpha = 0.3;
-            ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
-            ctx.globalAlpha = 1;
+            ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
         } else {
             ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
         }
@@ -101,6 +97,8 @@ Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
             return -1;
         }
     var i = this.findNearestBlock(xPos,yPos);
+
+
     var blockID = [this.blocks[i][2],      // middle
                    this.blocks[i-1][2],    // top middle
                    this.blocks[i+1][2]];   // bottom middle 

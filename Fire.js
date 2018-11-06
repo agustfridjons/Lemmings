@@ -4,9 +4,7 @@
 function Fire(descr) {
 
     // Common inherited setup logic from Entity
-    
-    this.cx = descr.cx;
-    this.cy = descr.cy;
+    this.setup(descr);
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.fire1;
     

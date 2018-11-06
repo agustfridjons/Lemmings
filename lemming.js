@@ -16,9 +16,8 @@
 function lemming(descr) {
 
     // Common inherited setup logic from Entity
-    
-
     this.rememberResets();
+    this.setup(descr);
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.img0;
     
@@ -89,7 +88,7 @@ lemming.prototype.update = function (du) {
         this.dropping = false;
         this.velY = 0;
         this.velX = 1;
-    } else {
+        }else {
         this.velX = 0;
         this.velY += NOMINAL_GRAVITY * du;
     }
