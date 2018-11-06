@@ -28,6 +28,7 @@ var entityManager = {
 
 _blocks   : [],
 _lemmings : [],
+_fires    : [],
 grid      : Object,
 // "PRIVATE" METHODS
 
@@ -48,7 +49,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._blocks, this._lemmings];
+    this._categories = [this._lemmings,this._fires];
 },
 /*
 generateShip : function(descr) {
@@ -58,6 +59,11 @@ generateShip : function(descr) {
 generateLemming : function(descr) {
     this._lemmings.push(new lemming(descr));
 },
+
+generateFire :  function(descr) {
+    this._fires.push(new Fire(descr)); 
+},
+
 
 init: function() {
     this.generateGrid();
@@ -85,9 +91,13 @@ generateGrid: function(){
 
 
 changeBlock: function(x,y){
-    var i = this.grid.findNearestBlock(x,y);
-    this.grid.blocks[i][2] = !this.grid.blocks[i][2];
-    },
+    try{
+        var i = this.grid.findNearestBlock(x,y);
+        this.grid.blocks[i][2] = 1;
+    } catch(undefined){
+
+    }
+},
 
 
 
@@ -97,7 +107,6 @@ changeBlock: function(x,y){
 
 
 update: function(du) {
-
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
@@ -120,8 +129,7 @@ update: function(du) {
 },
 
 render: function(ctx) {
-    this.grid.render(ctx,this._blocks);
-
+    this.grid.render(ctx);
     var debugX = 10, debugY = 100;
 
     for (var c = 0; c < this._categories.length; ++c) {

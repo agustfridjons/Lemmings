@@ -181,7 +181,11 @@ function requestPreloads() {
         img0   : "/LemmingSprite/sprite_lemmings0.png",
         img1  : "/LemmingSprite/sprite_lemmings1.png",
         img2   : "/LemmingSprite/sprite_lemmings2.png",
-        img3   : "/LemmingSprite/sprite_lemmings3.png"
+        img3   : "/LemmingSprite/sprite_lemmings3.png",
+        fire1   : "/FireSprite/Layer 1_sprite_fire1.png",
+        fire2   : "/FireSprite/Layer 1_sprite_fire2.png",
+        fire3   : "/FireSprite/Layer 1_sprite_fire3.png",
+        fire4   : "/FireSprite/Layer 1_sprite_fire4.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -191,7 +195,9 @@ var g_sprites = {};
 
 function preloadDone() {
     var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3];
+    var fire = [g_images.fire1,g_images.fire2,g_images.fire3,g_images.fire4,];
     g_sprites.img0 = new Sprite(images);
+    g_sprites.fire1 = new Sprite(fire);
     //g_sprites.ship  = new Sprite(g_images.ship);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);

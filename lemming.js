@@ -16,7 +16,7 @@
 function lemming(descr) {
 
     // Common inherited setup logic from Entity
-    this.setup(descr);
+    
 
     this.rememberResets();
     // Default sprite, if not otherwise specified

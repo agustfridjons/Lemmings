@@ -9,6 +9,7 @@ Grid.prototype.halfWidth = 20;
 Grid.prototype.halfHeight = 20;
 Grid.prototype.blocks = [];
 
+
 Grid.prototype.createGrid = function(width,height){
     for(var i = this.halfHeight; i < height; i+=this.halfHeight*2){
         for(var j = this.halfWidth; j < width; j+=this.halfWidth*2){
@@ -38,20 +39,48 @@ Grid.prototype.level1 = function(){
             this.blocks[i][2] = 1;
         }
     }
+    this.makeFire(this.blocks[49][0],this.blocks[49][1],49);
+    this.makeFire(this.blocks[109][0],this.blocks[109][1],109);
+};
+Grid.prototype.makeFire = function(x,y,index){
+    this.blocks[index][2] = 2;
+    entityManager.generateFire({
+        cx  :   x,
+        cy  :   y
+    });
 };
 
+    
+
 Grid.prototype.render = function(ctx){
+    var cob = new Image();
+    var back = new Image();
+    back.src = "/BackgroundImg/sprite_Background0.png";
+    cob.src = "/BackgroundImg/background.png"
     for(var i = 0; i < this.blocks.length; i++){
         var Boi = this.blocks[i];
-        if(Boi[2]){
-            ctx.fillStyle = "blue";
+        if(Boi[2]===1){
+            ctx.drawImage(cob,Boi[0]-20,Boi[1]-20,40,40);
+        } else if(Boi[2] === 2){
+            ctx.fillStyle = "orange";
+            ctx.globalAlpha = 0.3;
             ctx.fillRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
+            ctx.globalAlpha = 1;
         } else {
-            ctx.strokeStyle = "lightgray";
-            ctx.strokeRect(Boi[0]-20,Boi[1]-20,this.halfWidth*2,this.halfHeight*2);
+            ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
         }
     }
 };
+
+Grid.prototype.returnFireIndex = function(){
+    var fires = [];
+    for(var i = 0; i < this.blocks.length; i++){
+        if(this.blocks[i][2] === 2){
+            fires.push(i);
+        }
+    }
+    return fires;
+}
 
 
 Grid.prototype.findNearestBlock = function(xPos, yPos){
