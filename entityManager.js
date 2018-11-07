@@ -50,11 +50,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-<<<<<<< HEAD
-    this._categories = [this._lemmings,this._fires,this._waters,this._doors,this._menu];
-=======
-    this._categories = [this._lemmings,this._entities];
->>>>>>> master
+    this._categories = [this._lemmings,this._entities,this._menu];
 },
 /*
 generateShip : function(descr) {

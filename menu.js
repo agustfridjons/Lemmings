@@ -17,15 +17,15 @@ function Menu(descr) {
     // Set normal drawing scale, and warp state off
 };
 
-//Menu.prototype = new Entity();
+Menu.prototype = new Entity();
 Menu.prototype.currentLevel = 1;
 Menu.prototype.KEY_MENU  = 'M'.charCodeAt(0);
 Menu.prototype.showMenu = false;
 
 Menu.prototype.buttonW = 200;
 Menu.prototype.buttonH = 50;
-//Menu.prototype.buttonStart = [g_images.button0,g_images.button1]; 
-//Menu.prototype.buttonContr = [g_images.button2,g_images.button3];
+Menu.prototype.buttonStart = [g_images.button0,g_images.button1]; 
+Menu.prototype.buttonContr = [g_images.button2,g_images.button3];
 Menu.prototype.imageS = 0;
 Menu.prototype.imageC = 0;
 
@@ -54,8 +54,8 @@ Menu.prototype.render = function(ctx){
     util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height,"#704F5F");
     util.drawText(ctx, '700 25px Arial',"#E2E2E2",
                   this.levelString(), ctx.canvas.width/2 - 100, 100);
-    //ctx.drawImage(this.buttonStart[this.imageS], 200, 150);
-    //ctx.drawImage(this.buttonContr[this.imageC], 200, 250);                           
+    ctx.drawImage(this.buttonStart[this.imageS], 200, 150);
+    ctx.drawImage(this.buttonContr[this.imageC], 200, 250);                           
 };
 
 Menu.prototype.buttonPress = function(press){
