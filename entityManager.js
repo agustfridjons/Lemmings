@@ -90,7 +90,7 @@ init: function() {
     
     this.generateLemming({
         cx : 60,
-        cy : 340    
+        cy : 320    
     });
     
     //this._generateRocks();

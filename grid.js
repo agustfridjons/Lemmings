@@ -37,7 +37,7 @@ Grid.prototype.level1 = function(){
     for(var i = 176; i <= 188; i +=12){
         this.blocks[i][2] = 1;
     }
-
+    this.blocks[81][2] = 1;
     this.makeFire(187);
     this.makeWater(106);
     this.makeDoor(21);
@@ -166,8 +166,18 @@ Grid.prototype.findNearestBlock = function(xPos, yPos){
     }
 };
 
-Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
-    if (yPos + radius + this.halfHeight > g_canvas.height ||
+Grid.prototype.findAdBlocks = function(xPos,yPos,velX,velY){
+
+
+    var nextBlock = this.blocks[i+12];
+    var i = this.findNearestBlock(xPos,yPos);
+    if(velX > 0){
+        nextBlock = this.blocks[i+12];
+    } else if(velX < 0){
+        nextBlock = this.blocks[i-12];
+    }
+    return nextBlock;
+    /*if (yPos + radius + this.halfHeight > g_canvas.height ||
         yPos - radius - this.halfHeight < 0) {
             return -1;
         }
@@ -195,5 +205,20 @@ Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
         posX: blockPosY,
         posY: blockPosX,
         blockWidth: this.halfWidth
+    }*/
+};
+
+Grid.prototype.collidesWith = function(xPos,yPos,velX,velY,radius){
+    var nextBlock = this.findAdBlocks(xPos,yPos,velX,velY);
+    if(velX >= 0 && nextBlock[2] === 1 && xPos + velX + radius > nextBlock[0] - this.halfWidth){
+        //if(this.xPos + velX > nextBlock - nextBlock.halfWidth){
+            return -1;
+        //}
+    } else if(velX < 0 && nextBlock[2] === 1 && xPos + velX - radius< nextBlock[0] + this.halfWidth){
+        //if(this.xPos + velX < nextBlock + nextBlock.halfWidth){
+            return -1;
+        //}
+    } else {
+        return 0;
     }
 };

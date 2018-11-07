@@ -37,13 +37,14 @@ lemming.prototype.rememberResets = function () {
 lemming.prototype.KEY_JUMP = 'W'.charCodeAt(0);
 lemming.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 lemming.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
+lemming.prototype.KEY_DOWN = 'S'.charCodeAt(0);
 
 lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
 lemming.prototype.cx = 200;
 lemming.prototype.cy = 200;
-lemming.prototype.velX = 0;
+lemming.prototype.velX = 1;
 lemming.prototype.velY = 0;
 lemming.prototype.intervalVelY = 0;
 lemming.prototype.useGravity = false;
@@ -57,6 +58,7 @@ lemming.prototype.time = 0;
     
 lemming.prototype.update = function (du) {
     
+
     // Change current image at certain interval    
     if (this.time % 10 === 0) {
         if (this.currentIMG < 3) {
@@ -79,7 +81,22 @@ lemming.prototype.update = function (du) {
         this.cx - this.radius < 0) {
         this.velX *= -1;
     }
-    var blocks = this.getAdjacentBlocks();
+    if(eatKey(this.KEY_JUMP)){
+        this.velY = -1;
+        this.velX = 0;
+    }
+    if(eatKey(this.KEY_DOWN)){
+        this.velY = 1;
+        this.velX = 0;
+    }
+    if(entityManager.grid.collidesWith(this.cx,this.cy,this.velX,this.velY,this.radius) ===-1){
+        this.velY = 0;
+        this.velX *= -1;
+    }
+    if(eatKey(this.KEY_LEFT)){
+        this.velY = 0;
+        this.velX = -1;
+    }
 
     //console.log("blocks pos: ", blocks.posX[2]);
     //console.log("width: ", blocks.blockWidth);
