@@ -88,6 +88,7 @@ init: function() {
     this.generateGrid();
     this.grid.level1();
     /*
+    
     this.generateLemming({
         cx : 122,
         cy : 277    
@@ -103,7 +104,7 @@ resetShips: function() {
 
 generateGrid: function(){
     this.grid = new Grid();
-    this.grid.createGrid(400,600);
+    this.grid.createGrid();
 },
 
 
