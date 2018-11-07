@@ -209,7 +209,12 @@ function requestPreloads() {
         right1  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight0.png",
         right2  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight1.png",
         right3  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight2.png",
-        right4  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight3.png"
+        right4  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight3.png",
+
+        button0 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton0.png",
+        button1 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton1.png",
+        button2 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton0.png",
+        button3 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton1.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -225,6 +230,7 @@ function preloadDone() {
     var jump = [g_images.jump1,g_images.jump2,g_images.jump3,g_images.jump4];
     var side = [g_images.side1,g_images.side2,g_images.side3,g_images.side4];
     var right = [g_images.right1,g_images.right2,g_images.right3,g_images.right4];
+    var buttons = [g_images.button0,g_images.button1,g_images.button2,g_images.button3];
     g_sprites.img0 = new Sprite(images);
     g_sprites.fire1 = new Sprite(fire);
     g_sprites.water1 = new Sprite(water);
@@ -232,6 +238,7 @@ function preloadDone() {
     g_sprites.jump1 = new Sprite(jump);
     g_sprites.side1 = new Sprite(side);
     g_sprites.right1 = new Sprite(right);
+    g_sprites.button1 = new Sprite(buttons);
     //g_sprites.ship  = new Sprite(g_images.ship);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
