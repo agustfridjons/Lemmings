@@ -178,33 +178,38 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        img0   : "/LemmingSprite/sprite_lemmings0.png",
-        img1  : "/LemmingSprite/sprite_lemmings1.png",
-        img2   : "/LemmingSprite/sprite_lemmings2.png",
-        img3   : "/LemmingSprite/sprite_lemmings3.png",
+        img0   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings0.png",
+        img1  : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings1.png",
+        img2   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings2.png",
+        img3   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings3.png",
         
-        fire1   : "/FireSprite/Layer 1_sprite_fire1.png",
-        fire2   : "/FireSprite/Layer 1_sprite_fire2.png",
-        fire3   : "/FireSprite/Layer 1_sprite_fire3.png",
-        fire4   : "/FireSprite/Layer 1_sprite_fire4.png",
-        water1  : "/WaterSprites/sprite_Water0.png",
-        water2  : "/WaterSprites/sprite_Water1.png",
-        water3  : "/WaterSprites/sprite_Water2.png",
-        water4  : "/WaterSprites/sprite_Water3.png",
-        door1   : "/DoorSprites/sprite_Doors0.png",
-        door2   : "/DoorSprites/sprite_Doors1.png",
-        jump1   : "/JumpSprite/sprite_Jump0.png",
-        jump2   : "/JumpSprite/sprite_Jump1.png",
-        jump3   : "/JumpSprite/sprite_Jump2.png",
-        jump4   : "/JumpSprite/sprite_Jump3.png",
-        side1   : "/SideJumpSprite/sprite_SideJump0.png",
-        side2   : "/SideJumpSprite/sprite_SideJump1.png",
-        side3   : "/SideJumpSprite/sprite_SideJump2.png",
-        side4   : "/SideJumpSprite/sprite_SideJump3.png",
-        right1  : "/JumpRightSprite/sprite_JumpRight0.png",
-        right2  : "/JumpRightSprite/sprite_JumpRight1.png",
-        right3  : "/JumpRightSprite/sprite_JumpRight2.png",
-        right4  : "/JumpRightSprite/sprite_JumpRight3.png"
+        fire1   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire1.png",
+        fire2   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire2.png",
+        fire3   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire3.png",
+        fire4   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire4.png",
+
+        water1  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water0.png",
+        water2  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water1.png",
+        water3  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water2.png",
+        water4  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water3.png",
+
+        door1   : "https://notendur.hi.is/~fth29/Kalli/DoorSprites/sprite_Doors0.png",
+        door2   : "https://notendur.hi.is/~fth29/Kalli/DoorSprites/sprite_Doors1.png",
+
+        jump1   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump0.png",
+        jump2   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump1.png",
+        jump3   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump2.png",
+        jump4   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump3.png",
+
+        side1   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump0.png",
+        side2   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump1.png",
+        side3   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump2.png",
+        side4   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump3.png",
+        
+        right1  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight0.png",
+        right2  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight1.png",
+        right3  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight2.png",
+        right4  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight3.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
