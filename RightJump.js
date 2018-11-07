@@ -1,29 +1,28 @@
-//Fire
+//Right jump pad
 
-// A generic contructor which accepts an arbitrary descriptor object
-function Fire(descr) {
+function RightJump(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
     // Default sprite, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.fire1;
+    this.sprite = this.sprite || g_sprites.right1;
     
     // Set normal drawing scale, and warp state off
     this._scale = 1.8;
 };
 
-Fire.prototype = new Entity();
+RightJump.prototype = new Entity();
 
 
 
-Fire.prototype.cx = 180;
-Fire.prototype.cy = 200;
-Fire.prototype.currentIMG = 0;
-Fire.prototype.time = 0;
-Fire.prototype._scale = 1;
+RightJump.prototype.cx = 180;
+RightJump.prototype.cy = 200;
+RightJump.prototype.currentIMG = 0;
+RightJump.prototype.time = 0;
+RightJump.prototype._scale = 1;
 
 
-Fire.prototype.update = function () {
+RightJump.prototype.update = function () {
     
 
     // Change current image at certain interval    
@@ -37,7 +36,7 @@ Fire.prototype.update = function () {
     this.time++;
 };
 
-Fire.prototype.render = function (ctx) {
+RightJump.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;

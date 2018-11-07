@@ -1,34 +1,35 @@
-//Fire
+//Door
+
 
 // A generic contructor which accepts an arbitrary descriptor object
-function Fire(descr) {
+function Door(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
     // Default sprite, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.fire1;
+    this.sprite = this.sprite || g_sprites.door1;
     
     // Set normal drawing scale, and warp state off
-    this._scale = 1.8;
+    this._scale = 2;
 };
 
-Fire.prototype = new Entity();
+Door.prototype = new Entity();
 
 
 
-Fire.prototype.cx = 180;
-Fire.prototype.cy = 200;
-Fire.prototype.currentIMG = 0;
-Fire.prototype.time = 0;
-Fire.prototype._scale = 1;
+Door.prototype.cx = 180;
+Door.prototype.cy = 200;
+Door.prototype.currentIMG = 0;
+Door.prototype.time = 0;
+Door.prototype._scale = 1;
 
 
-Fire.prototype.update = function () {
+Door.prototype.update = function () {
     
 
     // Change current image at certain interval    
-    if (this.time % 10 === 0) {
-        if (this.currentIMG < 3) {
+    if (this.time % 100 === 0) {
+        if (this.currentIMG < 1) {
             this.currentIMG++;
         } else {
             this.currentIMG = 0;
@@ -37,7 +38,7 @@ Fire.prototype.update = function () {
     this.time++;
 };
 
-Fire.prototype.render = function (ctx) {
+Door.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;

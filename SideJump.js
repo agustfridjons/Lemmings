@@ -1,29 +1,28 @@
-//Fire
+//SideSideJump pad
 
-// A generic contructor which accepts an arbitrary descriptor object
-function Fire(descr) {
+function SideJump(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
     // Default sprite, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.fire1;
+    this.sprite = this.sprite || g_sprites.side1;
     
     // Set normal drawing scale, and warp state off
     this._scale = 1.8;
 };
 
-Fire.prototype = new Entity();
+SideJump.prototype = new Entity();
 
 
 
-Fire.prototype.cx = 180;
-Fire.prototype.cy = 200;
-Fire.prototype.currentIMG = 0;
-Fire.prototype.time = 0;
-Fire.prototype._scale = 1;
+SideJump.prototype.cx = 180;
+SideJump.prototype.cy = 200;
+SideJump.prototype.currentIMG = 0;
+SideJump.prototype.time = 0;
+SideJump.prototype._scale = 1;
 
 
-Fire.prototype.update = function () {
+SideJump.prototype.update = function () {
     
 
     // Change current image at certain interval    
@@ -37,7 +36,7 @@ Fire.prototype.update = function () {
     this.time++;
 };
 
-Fire.prototype.render = function (ctx) {
+SideJump.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
