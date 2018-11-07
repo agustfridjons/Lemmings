@@ -15,10 +15,10 @@ Menu.prototype.showMenu = false;
 Menu.prototype.sprite = g_sprites.button;
 Menu.prototype.buttonW = 200;
 Menu.prototype.buttonH = 50;
-Menu.prototype.button1 = 0; 
-Menu.prototype.button2 = 2;
-
-
+Menu.prototype.buttonStart = [g_images.button0,g_images.button1]; 
+Menu.prototype.buttonContr = [g_images.button2,g_images.button3];
+Menu.prototype.imageS = 0;
+Menu.prototype.imageC = 0;
 
 Menu.prototype.nextLevel = function(){
     this.currentLevel++;
@@ -30,17 +30,10 @@ Menu.prototype.levelString = function(){
 
 Menu.prototype.update = function(){
     console.log("update");
-    //if mouse is hovering a button change sprites
-    if(this.mouseOnButton(200,150,this.buttonW,this.buttonH)){
-        this.button1 = 1; 
-    }else{
-        this.button1 = 0;
-    }
-    if(this.mouseOnButton(200,250,this.buttonW,this.buttonH)){
-        this.button1 = 3; 
-    }else{
-        this.button1 = 2;
-    }
+    //if mouse is hovering a button changes sprites
+    this.imageS = this.mouseOnButton(200,150,this.buttonW,this.buttonH);
+    this.imageC = this.mouseOnButton(200,250,this.buttonW,this.buttonH);
+    
 
     if(eatKey(this.KEY_MENU)){
         console.log("show");
@@ -49,14 +42,12 @@ Menu.prototype.update = function(){
 };
 
 Menu.prototype.render = function(ctx){
-    //if(!this.showMenu) return;
+    if(!this.showMenu) return;
     util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height,"#704F5F");
     util.drawText(ctx, '700 25px Arial',"#E2E2E2",
                   this.levelString(), ctx.canvas.width/2 - 100, 100);
-    this.sprite.drawCenteredAt(ctx, 200+this.buttonW/2,
-                               150+this.buttonH/2,this.button1);
-    this.sprite.drawCenteredAt(ctx, 200+this.buttonW/2,
-                                250+this.buttonH/2,this.button2);                           
+    ctx.drawImage(this.buttonStart[this.imageS], 200, 150);
+    ctx.drawImage(this.buttonContr[this.imageC], 200, 250);                           
 };
 
 Menu.prototype.buttonPress = function(press){

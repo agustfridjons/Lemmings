@@ -194,10 +194,7 @@ var g_sprites = {};
 
 function preloadDone() {
     var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3];
-    var buttons = [g_images.button0, g_images.button1,
-                   g_images.button2, g_images.button3];
     g_sprites.img0 = new Sprite(images);
-    g_sprites.button = new Sprite(buttons);
     //g_sprites.ship  = new Sprite(g_images.ship);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);
