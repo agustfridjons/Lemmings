@@ -14,7 +14,6 @@ Grid.prototype.createGrid = function(width,height){
     for(var i = -this.halfHeight; i <= height+this.halfHeight; i+=this.halfHeight*2){
         for(var j = -this.halfWidth; j <= width+this.halfWidth; j+=this.halfWidth*2){
             this.blocks.push([i,j,0]);
-            console.log(i,j)
         }
     }
 };
@@ -42,7 +41,10 @@ Grid.prototype.level1 = function(){
     this.makeFire(187);
     this.makeWater(106);
     this.makeDoor(21);
-    this.makeJump(45);
+    this.makeJump(165);
+    this.makeJump(93);
+    this.makeLeftJump(175);
+    this.makeRightJump(117);
 
     /*for(var i = 0;i< 10; i++){
         this.blocks[i][2] = 1;
@@ -108,6 +110,22 @@ Grid.prototype.makeJump = function(index){
 };
 
 
+Grid.prototype.makeLeftJump = function(index){
+    this.blocks[index][2] = 6;
+    entityManager.generateLeftJump({
+        cx  :   this.blocks[index][0],
+        cy  :   this.blocks[index][1]
+    });
+};
+
+Grid.prototype.makeRightJump = function(index){
+    this.blocks[index][2] = 6;
+    entityManager.generateRightJump({
+        cx  :   this.blocks[index][0],
+        cy  :   this.blocks[index][1]
+    });
+};
+
     
 
 Grid.prototype.render = function(ctx){
@@ -119,10 +137,6 @@ Grid.prototype.render = function(ctx){
         var Boi = this.blocks[i];
         if(Boi[2]===1){
             ctx.drawImage(cob,Boi[0]-20,Boi[1]-20,40,40);
-        } else if(Boi[2] === 2){
-            ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
-        }else if(Boi[2]===3){
-            ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
         }else {
             ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
         }

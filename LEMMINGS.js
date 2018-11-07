@@ -196,7 +196,15 @@ function requestPreloads() {
         jump1   : "/JumpSprite/sprite_Jump0.png",
         jump2   : "/JumpSprite/sprite_Jump1.png",
         jump3   : "/JumpSprite/sprite_Jump2.png",
-        jump4   : "/JumpSprite/sprite_Jump3.png"
+        jump4   : "/JumpSprite/sprite_Jump3.png",
+        side1   : "/SideJumpSprite/sprite_SideJump0.png",
+        side2   : "/SideJumpSprite/sprite_SideJump1.png",
+        side3   : "/SideJumpSprite/sprite_SideJump2.png",
+        side4   : "/SideJumpSprite/sprite_SideJump3.png",
+        right1  : "/JumpRightSprite/sprite_JumpRight0.png",
+        right2  : "/JumpRightSprite/sprite_JumpRight1.png",
+        right3  : "/JumpRightSprite/sprite_JumpRight2.png",
+        right4  : "/JumpRightSprite/sprite_JumpRight3.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -210,11 +218,15 @@ function preloadDone() {
     var water = [g_images.water1,g_images.water2,g_images.water3,g_images.water4];
     var door = [g_images.door1,g_images.door2];
     var jump = [g_images.jump1,g_images.jump2,g_images.jump3,g_images.jump4];
+    var side = [g_images.side1,g_images.side2,g_images.side3,g_images.side4];
+    var right = [g_images.right1,g_images.right2,g_images.right3,g_images.right4];
     g_sprites.img0 = new Sprite(images);
     g_sprites.fire1 = new Sprite(fire);
     g_sprites.water1 = new Sprite(water);
     g_sprites.door1 = new Sprite(door);
     g_sprites.jump1 = new Sprite(jump);
+    g_sprites.side1 = new Sprite(side);
+    g_sprites.right1 = new Sprite(right);
     //g_sprites.ship  = new Sprite(g_images.ship);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);

@@ -1,29 +1,28 @@
-//Water
+//SideSideJump pad
 
-// A generic contructor which accepts an arbitrary descriptor object
-function Water(descr) {
+function SideJump(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
     // Default sprite, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.water1;
+    this.sprite = this.sprite || g_sprites.side1;
     
     // Set normal drawing scale, and warp state off
     this._scale = 1.8;
 };
 
-Water.prototype = new Entity();
+SideJump.prototype = new Entity();
 
 
 
-Water.prototype.cx = 180;
-Water.prototype.cy = 200;
-Water.prototype.currentIMG = 0;
-Water.prototype.time = 0;
-Water.prototype._scale = 1;
+SideJump.prototype.cx = 180;
+SideJump.prototype.cy = 200;
+SideJump.prototype.currentIMG = 0;
+SideJump.prototype.time = 0;
+SideJump.prototype._scale = 1;
 
 
-Water.prototype.update = function () {
+SideJump.prototype.update = function () {
     
 
     // Change current image at certain interval    
@@ -37,14 +36,12 @@ Water.prototype.update = function () {
     this.time++;
 };
 
-Water.prototype.render = function (ctx) {
+SideJump.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
-    ctx.globalAlpha = 0.7;
     this.sprite.drawCentredAt(
 	ctx, this.cx, this.cy, this.rotation, this.currentIMG
     );
     this.sprite.scale = origScale;
-    ctx.globalAlpha = 1;
-};//Water
+};
