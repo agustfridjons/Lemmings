@@ -68,12 +68,12 @@ generateFire :  function(descr) {
 init: function() {
     this.generateGrid();
     this.grid.level1();
-    
+    /*
     this.generateLemming({
-        cx : 60,
-        cy : 340    
+        cx : 122,
+        cy : 277    
     });
-    
+    */
     //this._generateRocks();
     //this._generateShip();
 },

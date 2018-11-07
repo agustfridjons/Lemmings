@@ -8,13 +8,13 @@ function Grid(descr) {
 Grid.prototype.halfWidth = 20;
 Grid.prototype.halfHeight = 20;
 Grid.prototype.blocks = [];
+Grid.prototype.hardBlocks = [];
 
 
 Grid.prototype.createGrid = function(width,height){
     for(var i = this.halfHeight; i < height; i+=this.halfHeight*2){
         for(var j = this.halfWidth; j < width; j+=this.halfWidth*2){
             this.blocks.push([i,j,0]);
-            console.log(i,j)
         }
     }
 };
@@ -49,6 +49,7 @@ Grid.prototype.level1 = function(){
     }
     this.makeFire(this.blocks[48][0],this.blocks[48][1],48);
     this.makeFire(this.blocks[108][0],this.blocks[108][1],108);
+    this.getHard();
     
 };
 Grid.prototype.makeFire = function(x,y,index){
@@ -59,7 +60,13 @@ Grid.prototype.makeFire = function(x,y,index){
     });
 };
 
-    
+Grid.prototype.getHard = function() {
+    for (var i = 0; i < this.blocks.length; i++) {
+        if(this.blocks[i][2] === 1) {
+            this.hardBlocks.push(this.blocks[i]);
+        }
+    }
+};
 
 Grid.prototype.render = function(ctx){
     var cob = new Image();
@@ -99,6 +106,128 @@ Grid.prototype.findNearestBlock = function(xPos, yPos){
                 return i;
         }
     }
+};
+
+/*
+0 = y hnit
+1 = x hnit
+
+*/
+// Returns -1 if lemming is not colliding with block
+// Returns 0 if lemming is colliding with top of block
+// Returns 1 if lemming is colliding with bottom of block
+// Returns 2 if lemming is colliding with left side of block
+// Returns 3 if lemming is colliding with right side of block
+Grid.prototype.isColliding = function(xPos, yPos, radius, velX, velY) {
+    var lemmingTop = yPos - radius,
+        lemmingBottom = yPos + radius,
+        lemmingLeft = xPos - radius,
+        lemmingRight = xPos + radius;
+        /*
+    for (var i = 0; i < this.hardBlocks.length; i++) {
+        var x = this.hardBlocks[i][1];
+        var y = this.hardBlocks[i][0];
+
+        var closestPointX, closestPointY;
+
+        var blockTop = y - this.halfHeight;
+        var blockBottom = y + this.halfHeight;
+        var blockLeft = x - this.halfWidth;
+        var blockRight = x + this.halfWidth;
+
+        //Closest point on collision box
+        var cX, cY;
+
+        //Find closest x offset
+        if( a.x < b.x )
+    {
+        cX = b.x;
+    }
+    else if( a.x > b.x + b.w )
+    {
+        cX = b.x + b.w;
+    }
+    else
+    {
+        cX = a.x;
+    }
+
+*/
+     /*   
+        if (velX > 0) {
+            if (velY > 0) {
+                // leftside
+                // top
+                if (lemmingRight >= blockLeft && yPos > blockTop && yPos < blockBottom) {
+                    // collision on leftside of block
+                    return 2;
+                }
+                if (lemmingBottom >= blockTop && xPos < blockRight && xPos > blockLeft) {
+                    // collision on top of block
+                    return 0;
+                }
+            } else if (velY < 0) {
+                // leftside
+                // bottom
+                if (lemmingRight >= blockLeft && yPos > blockTop && yPos < blockBottom) {
+                    // collision on leftside of block
+                    return 2;
+                }
+                if (lemmingTop <= blockBottom && xPos < blockRight && xPos > blockLeft) {
+                    // collision on bottom of block
+                    return 1;
+                }
+            }
+            // leftside
+            if (lemmingRight >= blockLeft && yPos >= blockTop && yPos <= blockBottom) {
+                // collision on leftside of block
+                return 2;
+            }
+        } else if (velX < 0) {
+            if (velY > 0) {
+                // rightside
+                // top
+                if (lemmingLeft < blockRight && yPos < blockTop && yPos > blockBottom) {
+                    // collision on rightside of block
+                    return 3;
+                }
+                if (lemmingBottom >= blockTop && xPos < blockRight && xPos > blockLeft) {
+                    // collision on top of block
+                    return 0;
+                }
+            } else if (velY < 0) {
+                // rightside
+                // bottom
+                if (lemmingLeft < blockRight && yPos < blockTop && yPos > blockBottom) {
+                    // collision on rightside of block
+                    return 3;
+                }
+                if (lemmingTop <= blockBottom && xPos < blockRight && xPos > blockLeft) {
+                    // collision on bottom of block
+                    return 1;
+                }
+            }
+            // rightside
+            if (lemmingLeft < blockRight && yPos < blockTop && yPos > blockBottom) {
+                // collision on rightside of block
+                return 3;
+            }
+        } else {
+            // top
+            // bottom
+            if (lemmingBottom >= blockTop && xPos < blockRight && xPos > blockLeft) {
+                // collision on top of block
+                return 0;
+            }
+            if (lemmingTop <= blockBottom && xPos < blockRight && xPos > blockLeft) {
+                // collistion on bottom of block
+                return 1;
+            }
+        }
+    }
+       */
+    return -1;
+    
 };
 
 Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
