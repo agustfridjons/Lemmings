@@ -13,10 +13,15 @@ Grid.prototype.blocks = [];
 Grid.prototype.hardBlocks = [];
 Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
+Grid.prototype.background = new Image();
+Grid.prototype.blockIMG = new Image();
 
 
 
 Grid.prototype.createGrid = function(){
+
+    this.background.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/sprite_Background0.png";
+    this.blockIMG.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png";
 
     this.position = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -125,19 +130,16 @@ Grid.prototype.makeRightJump = function(pos){
 
 
 Grid.prototype.render = function(ctx){
-    var cob = new Image();
-    var back = new Image();
-    back.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/sprite_Background0.png";
-    cob.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png";
+
 
     for (var i = 0; i < this.colLength; i++) {
         for (var j = 0; j < this.rowLength; j++) {
             if (this.currentLevel[i][j] === 1) {
-                ctx.drawImage(cob, this.position[i][j].cx - this.halfWidth,
+                ctx.drawImage(this.blockIMG, this.position[i][j].cx - this.halfWidth,
                              this.position[i][j].cy - this.halfHeight,
                               this.halfWidth*2, this.halfHeight*2);
             } else {
-                ctx.drawImage(back, this.position[i][j].cx - this.halfWidth,
+                ctx.drawImage(this.background, this.position[i][j].cx - this.halfWidth,
                             this.position[i][j].cy - this.halfHeight,
                             this.halfWidth*2, this.halfHeight*2);
             }
