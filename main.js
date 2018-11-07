@@ -127,7 +127,6 @@ main.init = function () {
 
     // We'll be working on a black background here,
     // so let's use a fillStyle which works against that...
-    //
 
     this._requestNextIteration();
 };

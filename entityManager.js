@@ -32,6 +32,7 @@ _fires    : [],
 _waters   : [],
 _doors    : [],
 grid      : Object,
+_menu      : [],
 // "PRIVATE" METHODS
 
 _forEachOf: function(aCategory, fn) {
@@ -51,7 +52,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._lemmings,this._fires,this._waters,this._doors];
+    this._categories = [this._lemmings,this._fires,this._waters,this._doors,this._menu];
 },
 /*
 generateShip : function(descr) {
@@ -75,6 +76,9 @@ generateDoor  : function(descr) {
 },
 
 init: function() {
+    /*this.generateMenu({
+        boi : 2
+    });*/
     this.generateGrid();
     this.grid.level1();
     
@@ -89,6 +93,10 @@ init: function() {
 
 resetShips: function() {
     //this._forEachOf(this._ships, Ship.prototype.reset);
+},
+
+generateMenu : function(descr){
+    this._menu.push(new Menu(descr));
 },
 
 generateGrid: function(){
@@ -107,13 +115,6 @@ changeBlock: function(x,y){
 
     }
 },
-
-
-
-
-
-
-
 
 update: function(du) {
     for (var c = 0; c < this._categories.length; ++c) {

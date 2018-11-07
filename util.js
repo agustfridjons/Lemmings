@@ -108,6 +108,14 @@ fillBox: function (ctx, x, y, w, h, style) {
     ctx.fillStyle = style;
     ctx.fillRect(x, y, w, h);
     ctx.fillStyle = oldStyle;
+},
+
+drawText: function(ctx, font, style, string, x, y){
+    var oldStyle = ctx.fillStyle;
+    ctx.fillStyle = style;
+    ctx.font = font;
+    ctx.fillText(string, x, y);
+    ctx.fillStyle = oldStyle;
 }
 
 };

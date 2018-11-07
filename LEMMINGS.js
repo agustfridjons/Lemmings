@@ -191,7 +191,11 @@ function requestPreloads() {
         water3  : "/WaterSprites/sprite_Water2.png",
         water4  : "/WaterSprites/sprite_Water3.png",
         door1   : "/DoorSprites/sprite_Doors0.png",
-        door2   : "/DoorSprites/sprite_Doors1.png"
+        door2   : "/DoorSprites/sprite_Doors1.png",
+        button0 : "/buttons/controlsButton.png",
+        button1 : "/buttons/controlsButtonL.png",
+        button2 : "/buttons/startButton.png",
+        button3 : "/buttons/startButtonL.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -216,7 +220,7 @@ function preloadDone() {
     //g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
-    //createInitialLemming();
+    createInitialLemming();
 
     main.init();
 }
