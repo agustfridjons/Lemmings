@@ -39,8 +39,8 @@ Grid.prototype.level1 = function(){
         this.blocks[i][2] = 1;
     }
 
-    this.makeFire(69);
-    this.makeWater(94);
+    this.makeFire(187);
+    this.makeWater(106);
     this.makeDoor(21);
 
     /*for(var i = 0;i< 10; i++){
