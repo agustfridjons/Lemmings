@@ -37,18 +37,15 @@ lemming.prototype.rememberResets = function () {
 lemming.prototype.KEY_JUMP = 'W'.charCodeAt(0);
 lemming.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 lemming.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
-lemming.prototype.KEY_DOWN = 'S'.charCodeAt(0);
+lemming.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
 
 lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
 lemming.prototype.cx = 200;
 lemming.prototype.cy = 200;
-lemming.prototype.velX = 1;
-lemming.prototype.velY = 0;
-lemming.prototype.intervalVelY = 0;
-lemming.prototype.useGravity = false;
-lemming.prototype.useAveVel = true;
+lemming.prototype.velX = 0;
+lemming.prototype.velY = 1;
 lemming.prototype.isGoingRight = true;
 lemming.prototype.dropping = false;
 lemming.prototype.numSubSteps = 3;
@@ -76,9 +73,19 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    // Reverse velocity if lemming is at canvas edge
-    if (this.cx + this.radius > g_canvas.width ||
-        this.cx - this.radius < 0) {
+    // Returns -1 if lemming is not colliding with block
+    // Returns 0 if lemming is colliding with top of block
+    // Returns 1 if lemming is colliding with bottom of block
+    // Returns 2 if lemming is colliding with left side of block
+    // Returns 3 if lemming is colliding with right side of block
+    var collision = entityManager.grid.isColliding(this.cx, this.cy, 
+                                this.radius, this.velX, this.velY);
+    //console.log(collision);
+    
+    if (collision === 0 || collision === 1) {
+        this.velY *= -1;
+    }
+    if (collision === 2 || collision === 3) {
         this.velX *= -1;
     }
     if(eatKey(this.KEY_JUMP)){
@@ -98,9 +105,36 @@ lemming.prototype.update = function (du) {
         this.velX = -1;
     }
 
-    //console.log("blocks pos: ", blocks.posX[2]);
-    //console.log("width: ", blocks.blockWidth);
-    
+    /*
+    if (blocks.blocks[2] === 1
+        && this.cy + this.radius > blocks.posY[2] - blocks.blockWidth) {
+        this.dropping = false;
+        this.velY = 0;
+        this.velX = 1;
+        }else {
+        this.velX = 0;
+        this.velY += NOMINAL_GRAVITY * du;
+    }
+    if(blocks.blocks[3] === 1){
+        this.velX *= -1;
+    }
+    */
+    if (eatKey(this.KEY_JUMP)) {
+        this.velY = -1;
+        this.velX = 0;
+    }
+    if (eatKey(this.KEY_DOWN)) {
+        this.velY = 1;
+        this.velX = 0;
+    }
+    if (eatKey(this.KEY_RIGHT)) {
+        this.velX = 1;
+        this.velY = 0;
+    }
+    if (eatKey(this.KEY_LEFT)) {
+        this.velX = -1;
+        this.velY = 0;
+    }
 
     // Move lemming
     this.cx += this.velX * du;
