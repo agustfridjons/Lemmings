@@ -112,7 +112,9 @@ generateGrid: function(){
 changeBlock: function(x,y){
     try{
         var i = this.grid.findNearestBlock(x,y);
-        this.grid.blocks[i][2] = 1;
+        if(this.grid.blocks[i][2] === 0){
+            this.grid.blocks[i][2] = 1;
+        }
     } catch(undefined){
 
     }
