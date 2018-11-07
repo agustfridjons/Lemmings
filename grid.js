@@ -49,6 +49,7 @@ Grid.prototype.createGrid = function(){
         y += (this.halfHeight*2);
         x = -this.halfWidth;
     }
+    console.log(this.position);
 };
 
 Grid.prototype.level1 = function(){
