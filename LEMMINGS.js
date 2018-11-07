@@ -178,24 +178,24 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        img0   : "/LemmingSprite/sprite_lemmings0.png",
-        img1  : "/LemmingSprite/sprite_lemmings1.png",
-        img2   : "/LemmingSprite/sprite_lemmings2.png",
-        img3   : "/LemmingSprite/sprite_lemmings3.png",
-        fire1   : "/FireSprite/Layer 1_sprite_fire1.png",
-        fire2   : "/FireSprite/Layer 1_sprite_fire2.png",
-        fire3   : "/FireSprite/Layer 1_sprite_fire3.png",
-        fire4   : "/FireSprite/Layer 1_sprite_fire4.png",
-        water1  : "/WaterSprites/sprite_Water0.png",
-        water2  : "/WaterSprites/sprite_Water1.png",
-        water3  : "/WaterSprites/sprite_Water2.png",
-        water4  : "/WaterSprites/sprite_Water3.png",
-        door1   : "/DoorSprites/sprite_Doors0.png",
-        door2   : "/DoorSprites/sprite_Doors1.png",
-        button0 : "/buttons/controlsButton.png",
-        button1 : "/buttons/controlsButtonL.png",
-        button2 : "/buttons/startButton.png",
-        button3 : "/buttons/startButtonL.png"
+        img0   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_lemmings0.png",
+        img1  : "https://notendur.hi.is/agf6/lemmingSprites/sprite_lemmings1.png",
+        img2   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_lemmings2.png",
+        img3   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_lemmings3.png",
+        fire1   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_fire1.png",
+        fire2   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_fire2.png",
+        fire3   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_fire3.png",
+        fire4   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_fire4.png",
+        water1  : "https://notendur.hi.is/agf6/lemmingSprites/sprite_Water0.png",
+        water2  : "https://notendur.hi.is/agf6/lemmingSprites/sprite_Water1.png",
+        water3  : "https://notendur.hi.is/agf6/lemmingSprites/sprite_Water2.png",
+        water4  : "https://notendur.hi.is/agf6/lemmingSprites/sprite_Water3.png",
+        door1   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_Doors0.png",
+        door2   : "https://notendur.hi.is/agf6/lemmingSprites/sprite_Doors1.png",
+        button0 : "https://notendur.hi.is/agf6/lemmingSprites/controlsButton.png",
+        button1 : "https://notendur.hi.is/agf6/lemmingSprites/controlsButtonL.png",
+        button2 : "https://notendur.hi.is/agf6/lemmingSprites/startButton.png",
+        button3 : "https://notendur.hi.is/agf6/lemmingSprites/startButtonL.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
