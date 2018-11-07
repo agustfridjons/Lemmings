@@ -2,21 +2,30 @@
 // MENU
 //---------
  
-function Menu(descr) {
+/*function Menu(descr) {
     for (var property in descr) {
         this[property] = descr[property];
     } 
 }
+*/
+function Menu(descr) {
 
+    // Common inherited setup logic from Entity
+    this.setup(descr);
+
+    
+    // Set normal drawing scale, and warp state off
+};
+
+//Menu.prototype = new Entity();
 Menu.prototype.currentLevel = 1;
 Menu.prototype.KEY_MENU  = 'M'.charCodeAt(0);
 Menu.prototype.showMenu = false;
 
-Menu.prototype.sprite = g_sprites.button;
 Menu.prototype.buttonW = 200;
 Menu.prototype.buttonH = 50;
-Menu.prototype.buttonStart = [g_images.button0,g_images.button1]; 
-Menu.prototype.buttonContr = [g_images.button2,g_images.button3];
+//Menu.prototype.buttonStart = [g_images.button0,g_images.button1]; 
+//Menu.prototype.buttonContr = [g_images.button2,g_images.button3];
 Menu.prototype.imageS = 0;
 Menu.prototype.imageC = 0;
 
@@ -29,7 +38,6 @@ Menu.prototype.levelString = function(){
 };
 
 Menu.prototype.update = function(du){
-    console.log("update");
     //if mouse is hovering a button changes sprites
     this.imageS = this.mouseOnButton(200,150,this.buttonW,this.buttonH);
     this.imageC = this.mouseOnButton(200,250,this.buttonW,this.buttonH);
@@ -46,8 +54,8 @@ Menu.prototype.render = function(ctx){
     util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height,"#704F5F");
     util.drawText(ctx, '700 25px Arial',"#E2E2E2",
                   this.levelString(), ctx.canvas.width/2 - 100, 100);
-    ctx.drawImage(this.buttonStart[this.imageS], 200, 150);
-    ctx.drawImage(this.buttonContr[this.imageC], 200, 250);                           
+    //ctx.drawImage(this.buttonStart[this.imageS], 200, 150);
+    //ctx.drawImage(this.buttonContr[this.imageC], 200, 250);                           
 };
 
 Menu.prototype.buttonPress = function(press){

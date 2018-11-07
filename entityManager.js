@@ -61,7 +61,9 @@ generateLemming : function(descr) {
 },
 
 init: function() {
-    this.generateMenu();
+    /*this.generateMenu({
+        boi : 2
+    });*/
     this.generateGrid();
 },
 
@@ -69,8 +71,8 @@ resetShips: function() {
     //this._forEachOf(this._ships, Ship.prototype.reset);
 },
 
-generateMenu : function(){
-    this._menu.push(new Menu());
+generateMenu : function(descr){
+    this._menu.push(new Menu(descr));
 },
 
 generateGrid: function(){
