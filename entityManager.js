@@ -29,6 +29,8 @@ var entityManager = {
 _blocks   : [],
 _lemmings : [],
 _fires    : [],
+_waters   : [],
+_doors    : [],
 grid      : Object,
 // "PRIVATE" METHODS
 
@@ -49,7 +51,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._lemmings,this._fires];
+    this._categories = [this._lemmings,this._fires,this._waters,this._doors];
 },
 /*
 generateShip : function(descr) {
@@ -64,6 +66,13 @@ generateFire :  function(descr) {
     this._fires.push(new Fire(descr)); 
 },
 
+generateWater :  function(descr) {
+    this._waters.push(new Water(descr)); 
+},
+
+generateDoor  : function(descr) {
+    this._doors.push(new Door(descr));
+},
 
 init: function() {
     this.generateGrid();

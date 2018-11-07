@@ -11,8 +11,8 @@ Grid.prototype.blocks = [];
 
 
 Grid.prototype.createGrid = function(width,height){
-    for(var i = this.halfHeight; i < height; i+=this.halfHeight*2){
-        for(var j = this.halfWidth; j < width; j+=this.halfWidth*2){
+    for(var i = -this.halfHeight; i <= height+this.halfHeight; i+=this.halfHeight*2){
+        for(var j = -this.halfWidth; j <= width+this.halfWidth; j+=this.halfWidth*2){
             this.blocks.push([i,j,0]);
             console.log(i,j)
         }
@@ -20,7 +20,30 @@ Grid.prototype.createGrid = function(width,height){
 };
 
 Grid.prototype.level1 = function(){
-    for(var i = 0;i< 10; i++){
+    for(var i = 0; i < 12; i++){
+        this.blocks[i][2] = 1;
+    }
+    for(var i = 12; i <= 144; i += 12){
+        this.blocks[i][2] = 1;
+    }
+    for(var i = 11; i <= 143; i += 12){
+        this.blocks[i][2] = 1;
+    }
+    for(var i = 192; i < 204; i++){
+        this.blocks[i][2] = 1;
+    }
+    for(var i = 22; i < 192; i+=12){
+        this.blocks[i][2] = 1;
+    }
+    for(var i = 176; i <= 188; i +=12){
+        this.blocks[i][2] = 1;
+    }
+
+    this.makeFire(69);
+    this.makeWater(94);
+    this.makeDoor(21);
+
+    /*for(var i = 0;i< 10; i++){
         this.blocks[i][2] = 1;
     }    
     for(var i = 140;i< 150; i++){
@@ -41,7 +64,7 @@ Grid.prototype.level1 = function(){
     for(var i = 96; i < 126; i+=10){
         this.blocks[i][2]=1;
     }
-    for(var i = 137; i < 157; i+=10){
+    for(var i = 137; i < 147; i+=10){
         this.blocks[i][2] = 1;
     }
     for(var i = 9; i < 150; i+=10){
@@ -49,15 +72,32 @@ Grid.prototype.level1 = function(){
     }
     this.makeFire(this.blocks[48][0],this.blocks[48][1],48);
     this.makeFire(this.blocks[108][0],this.blocks[108][1],108);
-    
+    */
 };
-Grid.prototype.makeFire = function(x,y,index){
+Grid.prototype.makeFire = function(index){
     this.blocks[index][2] = 2;
     entityManager.generateFire({
-        cx  :   x,
-        cy  :   y
+        cx  :   this.blocks[index][0],
+        cy  :   this.blocks[index][1]
     });
 };
+
+Grid.prototype.makeWater = function(index){
+    this.blocks[index][2] = 3;
+    entityManager.generateWater({
+        cx  :   this.blocks[index][0],
+        cy  :   this.blocks[index][1]
+    });
+};
+
+Grid.prototype.makeDoor = function(index){
+    this.blocks[index][2] = 4;
+    entityManager.generateDoor({
+        cx  :   this.blocks[index][0],
+        cy  :   this.blocks[index][1]
+    });
+}
+
 
     
 
@@ -72,7 +112,9 @@ Grid.prototype.render = function(ctx){
             ctx.drawImage(cob,Boi[0]-20,Boi[1]-20,40,40);
         } else if(Boi[2] === 2){
             ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
-        } else {
+        }else if(Boi[2]===3){
+            ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
+        }else {
             ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
         }
     }
@@ -86,7 +128,7 @@ Grid.prototype.returnFireIndex = function(){
         }
     }
     return fires;
-}
+};
 
 
 Grid.prototype.findNearestBlock = function(xPos, yPos){
@@ -117,11 +159,13 @@ Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
     
     var blockPosY = [this.blocks[i][0],  
                      this.blocks[i-1][0], 
-                     this.blocks[i+1][0]];
+                     this.blocks[i+1][0],
+                     this.blocks[i+10][0]];
 
     var blockPosX = [this.blocks[i][1],  
                      this.blocks[i-1][1], 
-                     this.blocks[i+1][1]];
+                     this.blocks[i+1][1],
+                     this.blocks[i+10][1]];
 
     return {
         blocks : blockID,
@@ -129,4 +173,4 @@ Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
         posY: blockPosX,
         blockWidth: this.halfWidth
     }
-}
+};

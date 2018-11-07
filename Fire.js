@@ -9,7 +9,7 @@ function Fire(descr) {
     this.sprite = this.sprite || g_sprites.fire1;
     
     // Set normal drawing scale, and warp state off
-    this._scale = 1.5;
+    this._scale = 1.8;
 };
 
 Fire.prototype = new Entity();

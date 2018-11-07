@@ -83,18 +83,7 @@ lemming.prototype.update = function (du) {
 
     //console.log("blocks pos: ", blocks.posX[2]);
     //console.log("width: ", blocks.blockWidth);
-    if (blocks.blocks[2] === 1
-        && this.cy + this.radius > blocks.posY[2] - blocks.blockWidth) {
-        this.dropping = false;
-        this.velY = 0;
-        this.velX = 1;
-        }else {
-        this.velX = 0;
-        this.velY += NOMINAL_GRAVITY * du;
-    }
-    if(blocks.blocks[3] === 1){
-        this.velX *= -1;
-    }
+    
 
     // Move lemming
     this.cx += this.velX * du;
