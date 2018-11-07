@@ -31,6 +31,7 @@ _lemmings : [],
 _fires    : [],
 _waters   : [],
 _doors    : [],
+_jumps    : [],
 grid      : Object,
 // "PRIVATE" METHODS
 
@@ -51,7 +52,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._lemmings,this._fires,this._waters,this._doors];
+    this._categories = [this._lemmings,this._fires,this._waters,this._doors,this._jumps];
 },
 /*
 generateShip : function(descr) {
@@ -72,6 +73,10 @@ generateWater :  function(descr) {
 
 generateDoor  : function(descr) {
     this._doors.push(new Door(descr));
+},
+
+generateJump   : function(descr){
+    this._jumps.push(new Jump(descr));
 },
 
 init: function() {

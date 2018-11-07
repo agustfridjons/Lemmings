@@ -22,7 +22,7 @@ function lemming(descr) {
     this.sprite = this.sprite || g_sprites.img0;
     
     // Set normal drawing scale, and warp state off
-    this._scale = 1;
+    this._scale = 1.2;
 };
 
 lemming.prototype = new Entity();

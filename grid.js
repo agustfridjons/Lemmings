@@ -42,6 +42,7 @@ Grid.prototype.level1 = function(){
     this.makeFire(187);
     this.makeWater(106);
     this.makeDoor(21);
+    this.makeJump(45);
 
     /*for(var i = 0;i< 10; i++){
         this.blocks[i][2] = 1;
@@ -96,7 +97,15 @@ Grid.prototype.makeDoor = function(index){
         cx  :   this.blocks[index][0],
         cy  :   this.blocks[index][1]
     });
-}
+};
+
+Grid.prototype.makeJump = function(index){
+    this.blocks[index][2] = 5;
+    entityManager.generateJump({
+        cx  :   this.blocks[index][0],
+        cy  :   this.blocks[index][1]
+    });
+};
 
 
     
