@@ -29,7 +29,7 @@ var entityManager = {
 _blocks   : [],
 _lemmings : [],
 grid      : Object,
-menu      : Object,
+_menu      : [],
 // "PRIVATE" METHODS
 
 _forEachOf: function(aCategory, fn) {
@@ -49,7 +49,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._blocks, this._lemmings];
+    this._categories = [this._menu,this._blocks, this._lemmings];
 },
 /*
 generateShip : function(descr) {
@@ -70,7 +70,7 @@ resetShips: function() {
 },
 
 generateMenu : function(){
-    this.menu = new Menu();
+    this._menu.push(new Menu());
 },
 
 generateGrid: function(){
@@ -102,7 +102,6 @@ changeBlock: function(x,y){
 },
 
 update: function(du) {
-    this.menu.update();
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
@@ -126,7 +125,6 @@ update: function(du) {
 
 render: function(ctx) {
     this.grid.render(ctx,this._blocks);
-    this.menu.render(ctx);
     var debugX = 10, debugY = 100;
 
     for (var c = 0; c < this._categories.length; ++c) {

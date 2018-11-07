@@ -28,7 +28,7 @@ Menu.prototype.levelString = function(){
     return "Level " + this.currentLevel;
 };
 
-Menu.prototype.update = function(){
+Menu.prototype.update = function(du){
     console.log("update");
     //if mouse is hovering a button changes sprites
     this.imageS = this.mouseOnButton(200,150,this.buttonW,this.buttonH);
