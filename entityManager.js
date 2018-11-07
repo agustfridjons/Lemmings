@@ -28,9 +28,7 @@ var entityManager = {
 
 _blocks   : [],
 _lemmings : [],
-_fires    : [],
-_waters   : [],
-_doors    : [],
+_entities : [],
 grid      : Object,
 _menu      : [],
 // "PRIVATE" METHODS
@@ -52,7 +50,11 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
+<<<<<<< HEAD
     this._categories = [this._lemmings,this._fires,this._waters,this._doors,this._menu];
+=======
+    this._categories = [this._lemmings,this._entities];
+>>>>>>> master
 },
 /*
 generateShip : function(descr) {
@@ -64,15 +66,27 @@ generateLemming : function(descr) {
 },
 
 generateFire :  function(descr) {
-    this._fires.push(new Fire(descr)); 
+    this._entities.push(new Fire(descr)); 
 },
 
 generateWater :  function(descr) {
-    this._waters.push(new Water(descr)); 
+    this._entities.push(new Water(descr)); 
 },
 
 generateDoor  : function(descr) {
-    this._doors.push(new Door(descr));
+    this._entities.push(new Door(descr));
+},
+
+generateJump   : function(descr){
+    this._entities.push(new Jump(descr));
+},
+
+generateLeftJump : function(descr) {
+    this._entities.push(new SideJump(descr));
+},
+
+generateRightJump : function(descr) {
+    this._entities.push(new RightJump(descr));
 },
 
 init: function() {
