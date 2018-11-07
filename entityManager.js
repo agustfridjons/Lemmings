@@ -107,25 +107,6 @@ generateGrid: function(){
     this.grid.createGrid();
 },
 
-
-
-
-changeBlock: function(x,y){
-    try{
-        var i = this.grid.findNearestBlock(x,y);
-        this.grid.blocks[i][2] = 1;
-    } catch(undefined){
-
-    }
-},
-
-
-
-
-
-
-
-
 update: function(du) {
     for (var c = 0; c < this._categories.length; ++c) {
 

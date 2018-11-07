@@ -84,6 +84,8 @@ Grid.prototype.level1 = function(){
             }
         }
     }
+
+    console.log(this.findAdjacentBlocks(300,340));
 };
 Grid.prototype.makeFire = function(pos){
     entityManager.generateFire({
@@ -113,7 +115,6 @@ Grid.prototype.makeJump = function(pos){
     });
 };
 
-
 Grid.prototype.makeLeftJump = function(pos){
     entityManager.generateLeftJump({
         cx  :   pos.cx,
@@ -126,6 +127,25 @@ Grid.prototype.makeRightJump = function(pos){
         cx  :   pos.cx,
         cy  :   pos.cy
     });
+};
+
+Grid.prototype.isAllowed = function(x,y){
+    if(this.currentLevel[y][x] === 0 && this.currentLevel[y+1][x] === 1){
+        return true;
+    } else{
+        return false;
+    }
+};
+
+Grid.prototype.changeBlock = function(x,y,type){
+    if(this.isAllowed(x,y)){
+        if(type === 1){
+            this.currentLevel[y][x] === 1;
+        } else if(type === 2){
+            this.currentLevel[y][x] === 5;
+            this.makeJump(this.position[y][x]);
+        }
+    }
 };
 
 
@@ -147,8 +167,34 @@ Grid.prototype.render = function(ctx){
     }
 };
 
-Grid.prototype.findNearestBlocks = function(xPos, yPos){
+Grid.prototype.findCurrentBlock = function(xPos, yPos){
+    var realX = Math.round((xPos+this.halfWidth)/(this.halfWidth*2));
+    var realY = Math.round((yPos+this.halfHeight)/(this.halfHeight*2));
     
+    return {
+        x : realX,
+        y : realY
+    };
+};
+
+// Returns an array of adjecent blocks
+// Example: [[left top, middle top,right top], 
+//           left,middle,right],
+//           [left bottom,middle bottom, right bottom]]
+Grid.prototype.findAdjacentBlocks = function(xPos,yPos){
+    var curr = this.findCurrentBlock(xPos,yPos);
+    var topL = this.currentLevel[curr.y -1][curr.x-1];
+    var topM = this.currentLevel[curr.y -1][curr.x];
+    var topR = this.currentLevel[curr.y -1][curr.x+1];
+    var midL = this.currentLevel[curr.y][curr.x-1];
+    var midM = this.currentLevel[curr.y][curr.x];
+    var midR = this.currentLevel[curr.y][curr.x+1];
+    var botL = this.currentLevel[curr.y + 1][curr.x-1];
+    var botM = this.currentLevel[curr.y + 1][curr.x];
+    var botR = this.currentLevel[curr.y + 1][curr.x+1]
+    return [[topL,topM,topR],
+            [midL,midM,midR],
+            [botL,botM,botR]];
 };
 
 Grid.prototype.isColliding = function(xPos, yPos, radius, velX, velY) {
