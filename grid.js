@@ -14,7 +14,6 @@ Grid.prototype.createGrid = function(width,height){
     for(var i = -this.halfHeight; i <= height+this.halfHeight; i+=this.halfHeight*2){
         for(var j = -this.halfWidth; j <= width+this.halfWidth; j+=this.halfWidth*2){
             this.blocks.push([i,j,0]);
-            console.log(i,j)
         }
     }
 };
