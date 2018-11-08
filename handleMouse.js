@@ -13,7 +13,6 @@
 
 var g_mouseX = 0,
     g_mouseY = 0;
-var choice = 0;
 
 function handleMouse(evt) {
     
@@ -26,6 +25,7 @@ function handleMouse(evt) {
     
     entityManager.grid.changeBlock(g_mouseX,g_mouseY,choice);
 }
+
 
 // Handle "down" and "move" events the same way.
 window.addEventListener("mousedown", handleMouse);

@@ -129,14 +129,9 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleRocks();
 
-    if (eatKey(KEY_1)) handleMouse.choice = 1;
+    if (eatKey(KEY_1)) entityManager.changeChoice(1);
 
-    if (eatKey(KEY_2)) entityManager.generateShip({
-        cx : g_mouseX,
-        cy : g_mouseY,
-        
-        sprite : g_sprites.ship2
-        });
+    if (eatKey(KEY_2)) entityManager.changeChoice(2); 
 
     if (eatKey(KEY_K)) entityManager.killNearestShip(
         g_mouseX, g_mouseY);

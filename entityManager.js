@@ -84,6 +84,15 @@ generateRightJump : function(descr) {
     this._entities.push(new RightJump(descr));
 },
 
+changeChoice : function(type){
+    this.grid.choice = type;
+    if(type !== 0){
+        this.grid.isChosen = true;
+    } else {
+        this.grid.isChosen = false;
+    }
+},
+
 init: function() {
     this.generateGrid();
     this.grid.level1();
@@ -102,6 +111,7 @@ generateGrid: function(){
 },
 
 update: function(du) {
+    this.grid.update();
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
