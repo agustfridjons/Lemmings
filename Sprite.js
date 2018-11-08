@@ -22,8 +22,8 @@ function Sprite(images) {
     this.scale = 1;
 }
 
-Sprite.prototype.drawAt = function (ctx, x, y) {
-    ctx.drawImage(this.image[0], 
+Sprite.prototype.drawAt = function (ctx, x, y, img) {
+    ctx.drawImage(this.image[img], 
                   x, y);
 };
 

@@ -230,6 +230,7 @@ function preloadDone() {
     var jump = [g_images.jump1,g_images.jump2,g_images.jump3,g_images.jump4];
     var side = [g_images.side1,g_images.side2,g_images.side3,g_images.side4];
     var right = [g_images.right1,g_images.right2,g_images.right3,g_images.right4];
+    var buttons = [g_images.button0,g_images.button1,g_images.button2,g_images.button3];
     g_sprites.img0 = new Sprite(images);
     g_sprites.fire1 = new Sprite(fire);
     g_sprites.water1 = new Sprite(water);

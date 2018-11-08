@@ -13,19 +13,18 @@ function Menu(descr) {
     // Common inherited setup logic from Entity
     this.setup(descr);
 
-    
-    // Set normal drawing scale, and warp state off
+    this.sprite = this.sprite || g_sprites.button1;
 };
 
 Menu.prototype = new Entity();
+
 Menu.prototype.currentLevel = 1;
+
 Menu.prototype.KEY_MENU  = 'M'.charCodeAt(0);
-Menu.prototype.showMenu = false;
+Menu.prototype.doMenu = false;
 
 Menu.prototype.buttonW = 200;
 Menu.prototype.buttonH = 50;
-Menu.prototype.buttonStart = [g_images.button0,g_images.button1]; 
-Menu.prototype.buttonContr = [g_images.button2,g_images.button3];
 Menu.prototype.imageS = 0;
 Menu.prototype.imageC = 0;
 
@@ -38,24 +37,28 @@ Menu.prototype.levelString = function(){
 };
 
 Menu.prototype.update = function(du){
+    this.imageS = 0;
+    this.imageC = 2;
     //if mouse is hovering a button changes sprites
-    this.imageS = this.mouseOnButton(200,150,this.buttonW,this.buttonH);
-    this.imageC = this.mouseOnButton(200,250,this.buttonW,this.buttonH);
-    
+    if(this.mouseOnButton(200,150,this.buttonW,this.buttonH)){
+        this.imageS++;
+    }if(this.mouseOnButton(200,250,this.buttonW,this.buttonH)){
+        this.imageC++;
+    }
 
     if(eatKey(this.KEY_MENU)){
-        console.log("show");
-        this.showMenu = !this.showMenu;
+        this.doMenu = !this.doMenu;
     }
 };
 
 Menu.prototype.render = function(ctx){
-    if(!this.showMenu) return;
+    if(!this.doMenu) return;
+    console.log("menu");
     util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height,"#704F5F");
     util.drawText(ctx, '700 25px Arial',"#E2E2E2",
                   this.levelString(), ctx.canvas.width/2 - 100, 100);
-    ctx.drawImage(this.buttonStart[this.imageS], 200, 150);
-    ctx.drawImage(this.buttonContr[this.imageC], 200, 250);                           
+    this.sprite.drawAt(ctx, 200, 150, this.imageS);
+    this.sprite.drawAt(ctx, 200, 250, this.imageC);                           
 };
 
 Menu.prototype.buttonPress = function(press){
@@ -64,9 +67,9 @@ Menu.prototype.buttonPress = function(press){
 
 Menu.prototype.mouseOnButton = function(x, y, w, h){
     if(x < g_mouseX 
-       && mouseX < x + w
+       && g_mouseX < x + w
        && y < g_mouseY
-       && g_mousey < y + h){
+       && g_mouseY < y + h){
         return true;
        }
     return false;

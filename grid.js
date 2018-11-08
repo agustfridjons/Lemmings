@@ -131,13 +131,8 @@ Grid.prototype.makeRightJump = function(index){
 Grid.prototype.render = function(ctx){
     var cob = new Image();
     var back = new Image();
-<<<<<<< HEAD
-    back.src = "https://notendur.hi.is/agf6/lemmingSprites/sprite_Background0.png";
-    cob.src = "https://notendur.hi.is/agf6/lemmingSprites/background.png"
-=======
     back.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/sprite_Background0.png";
     cob.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png"
->>>>>>> master
     for(var i = 0; i < this.blocks.length; i++){
         var Boi = this.blocks[i];
         if(Boi[2]===1){

@@ -21,7 +21,6 @@ function handleMouse(evt) {
 
     // If no button is being pressed, then bail
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
-    entityManager.menu.buttonPress(button);
     if (!button) return;
     
     entityManager.changeBlock(g_mouseX,g_mouseY);

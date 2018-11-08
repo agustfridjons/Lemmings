@@ -86,9 +86,9 @@ generateRightJump : function(descr) {
 },
 
 init: function() {
-    /*this.generateMenu({
+    this.generateMenu({
         boi : 2
-    });*/
+    });
     this.generateGrid();
     this.grid.level1();
     
