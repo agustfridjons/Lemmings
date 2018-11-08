@@ -14,7 +14,6 @@ Grid.prototype.hardBlocks = [];
 Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
-Grid.prototype.isChosen = false;
 Grid.prototype.background = new Image();
 Grid.prototype.blockIMG = new Image();
 
@@ -58,15 +57,15 @@ Grid.prototype.level1 = function(){
 
 
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,6,2,1],
+                         [1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-                         [1,4,0,0,0,0,0,5,0,7,0,0,0,5,0,0,1],
+                         [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
@@ -87,6 +86,10 @@ Grid.prototype.level1 = function(){
             }
         }
     }
+    entityManager.jumpsLeft = 9;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 3;
+    entityManager.rightLeft = 4;
 };
 Grid.prototype.makeFire = function(pos){
     entityManager.generateFire({
@@ -137,17 +140,29 @@ Grid.prototype.isAllowed = function(x,y){
         return false;
     }
 };
+Grid.prototype.changeChoice = function(choice){
+    this.choice = choice;
+};
 
 Grid.prototype.changeBlock = function(x,y){
     var realx = this.findCurrentBlock(x,y).x;
     var realy = this.findCurrentBlock(x,y).y;
     if(this.isAllowed(realx,realy)){
-        if(this.choice === 1){
+        if(this.choice === 1 && entityManager.blocksLeft !== 0){
             this.currentLevel[realy][realx] = 1;
-            console.log("HAlló");
-        } else if(this.choice === 2){
+            entityManager.blocksLeft--;
+        } else if(this.choice === 2 && entityManager.jumpsLeft !== 0){
             this.currentLevel[realy][realx] = 5;
             this.makeJump(this.position[realy][realx]);
+            entityManager.jumpsLeft--;
+        } else if(this.choice === 3 && entityManager.leftLeft !== 0){
+            this.currentLevel[realy][realx] = 6;
+            this.makeLeftJump(this.position[realy][realx]);
+            entityManager.leftLeft--;
+        } else if(this.choice === 4 && entityManager.rightLeft !== 0){
+            this.currentLevel[realy][realx] = 7;
+            this.makeRightJump(this.position[realy][realx]);
+            entityManager.rightLeft--;
         }
     }
 };
@@ -172,7 +187,6 @@ Grid.prototype.render = function(ctx){
 };
 
 Grid.prototype.update = function(){
-    
 };
 
 Grid.prototype.findCurrentBlock = function(xPos, yPos){

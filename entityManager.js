@@ -29,6 +29,13 @@ var entityManager = {
 _blocks   : [],
 _lemmings : [],
 _entities : [],
+mouseX    : 0,
+mouseY    : 0,
+jumpsLeft : 0,
+rightLeft : 0,
+leftLeft  : 0,
+blocksLeft: 0,
+isChosen  : false,
 grid      : Object,
 // "PRIVATE" METHODS
 
@@ -84,12 +91,18 @@ generateRightJump : function(descr) {
     this._entities.push(new RightJump(descr));
 },
 
+changeMouse : function(x,y){
+    this.mouseX = x;
+    this.mouseY = y;
+},
+
 changeChoice : function(type){
-    this.grid.choice = type;
+    this.choice = type;
+    this.grid.changeChoice(type);
     if(type !== 0){
-        this.grid.isChosen = true;
+        this.isChosen = true;
     } else {
-        this.grid.isChosen = false;
+        this.isChosen = false;
     }
 },
 
@@ -116,7 +129,61 @@ generateGrid: function(){
     this.grid.createGrid();
 },
 
+
+
+render: function(ctx) {
+
+    this.grid.render(ctx);
+    var debugX = 10, debugY = 100;
+
+    for (var c = 0; c < this._categories.length; ++c) {
+
+        var aCategory = this._categories[c];
+
+        for (var i = 0; i < aCategory.length; ++i) {
+
+            aCategory[i].render(ctx);
+            //debug.text(".", debugX + i * 10, debugY);
+
+        }
+        debugY += 10;
+    }
+    if(this.isChosen){
+        ctx.globalAlpha = 0.65;
+        try{
+        var i = this.grid.findCurrentBlock(this.mouseX,this.mouseY);
+        if(this.choice === 1 && this.blocksLeft !== 0){
+            ctx.drawImage(this.grid.blockIMG,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        } else if(this.choice === 2 && this.jumpsLeft !== 0){
+            ctx.drawImage(g_images.jump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        } else if(this.choice === 3 && this.leftLeft !== 0){
+            ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        } else if(this.choice === 4&& this.rightLeft !== 0){
+            ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        }
+    } catch(undefined){
+            
+    }
+        ctx.globalAlpha = 1;
+    }
+    
+},
+
+updateStats : function(){
+    var level = document.getElementById("level");
+    level.innerHTML = "Level: 1";
+    var blocks = document.getElementById("blocks");
+    blocks.innerHTML = "Blocks: " + this.blocksLeft;
+    var jumps = document.getElementById("jumps");
+    jumps.innerHTML = "Jumps: " + this.jumpsLeft;
+    var right = document.getElementById("right");
+    right.innerHTML = "Right Jumps: " + this.rightLeft;
+    var left = document.getElementById("left");
+    left.innerHTML ="Left Jumps: " + this.leftLeft;
+},
+
 update: function(du) {
+    this.updateStats();
     this.grid.update();
     for (var c = 0; c < this._categories.length; ++c) {
 
@@ -137,25 +204,6 @@ update: function(du) {
             }
         }
     }
-},
-
-render: function(ctx) {
-    this.grid.render(ctx);
-    var debugX = 10, debugY = 100;
-
-    for (var c = 0; c < this._categories.length; ++c) {
-
-        var aCategory = this._categories[c];
-
-        for (var i = 0; i < aCategory.length; ++i) {
-
-            aCategory[i].render(ctx);
-            //debug.text(".", debugX + i * 10, debugY);
-
-        }
-        debugY += 10;
-    }
-    
 }
 }
 

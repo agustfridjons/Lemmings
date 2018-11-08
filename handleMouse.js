@@ -19,6 +19,7 @@ function handleMouse(evt) {
     g_mouseX = evt.clientX - g_canvas.offsetLeft;
     g_mouseY = evt.clientY - g_canvas.offsetTop;
     
+    entityManager.changeMouse(g_mouseX,g_mouseY);
     // If no button is being pressed, then bail
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
     if (!button) return;
