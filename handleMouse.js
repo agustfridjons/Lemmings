@@ -24,7 +24,7 @@ function handleMouse(evt) {
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
     if (!button) return;
     
-    entityManager.grid.changeBlock(g_mouseX,g_mouseY,choice);
+    entityManager.grid.changeBlock(g_mouseX,g_mouseY);
 }
 
 
