@@ -13,6 +13,8 @@ Grid.prototype.blocks = [];
 Grid.prototype.hardBlocks = [];
 Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
+Grid.prototype.choice = 0;
+Grid.prototype.isChosen = false;
 Grid.prototype.background = new Image();
 Grid.prototype.blockIMG = new Image();
 
@@ -84,8 +86,6 @@ Grid.prototype.level1 = function(){
             }
         }
     }
-
-    console.log(this.findAdjacentBlocks(300,340));
 };
 Grid.prototype.makeFire = function(pos){
     entityManager.generateFire({
@@ -137,13 +137,16 @@ Grid.prototype.isAllowed = function(x,y){
     }
 };
 
-Grid.prototype.changeBlock = function(x,y,type){
-    if(this.isAllowed(x,y)){
-        if(type === 1){
-            this.currentLevel[y][x] === 1;
-        } else if(type === 2){
-            this.currentLevel[y][x] === 5;
-            this.makeJump(this.position[y][x]);
+Grid.prototype.changeBlock = function(x,y){
+    var realx = this.findCurrentBlock(x,y).x;
+    var realy = this.findCurrentBlock(x,y).y;
+    if(this.isAllowed(realx,realy)){
+        if(this.choice === 1){
+            this.currentLevel[realy][realx] = 1;
+            console.log("HAlló");
+        } else if(this.choice === 2){
+            this.currentLevel[realy][realx] = 5;
+            this.makeJump(this.position[realy][realx]);
         }
     }
 };
@@ -165,6 +168,10 @@ Grid.prototype.render = function(ctx){
             }
         }
     }
+};
+
+Grid.prototype.update = function(){
+    
 };
 
 Grid.prototype.findCurrentBlock = function(xPos, yPos){
