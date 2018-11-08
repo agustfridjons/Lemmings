@@ -72,6 +72,25 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
+    // Remember my previous position
+    var prevX = this.cx;
+    var prevY = this.cy;
+    
+    // Compute my provisional new position (barring collisions)
+    var nextX = prevX + this.velX * du;
+    var nextY = prevY + this.velY * du;
+
+    // Block collision
+    if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY === -1)) {
+        this.velY *= -1; // Change direction of lemming
+        console.log("Its a hit!");
+    }
+    if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX === -1)) {
+        this.velX *= -1; // change direction of lemming
+        console.log("Its a hit!");
+    }
+
+
     
     if (eatKey(this.KEY_JUMP)) {
         this.velY = -1;

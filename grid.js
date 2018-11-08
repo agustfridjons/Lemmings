@@ -51,7 +51,6 @@ Grid.prototype.createGrid = function(){
         y += (this.halfHeight*2);
         x = -this.halfWidth;
     }
-    console.log(this.position);
 };
 
 Grid.prototype.level1 = function(){
@@ -195,21 +194,97 @@ Grid.prototype.findCurrentBlock = function(xPos, yPos){
 //           [left bottom,middle bottom, right bottom]]
 Grid.prototype.findAdjacentBlocks = function(xPos,yPos){
     var curr = this.findCurrentBlock(xPos,yPos);
-    var topL = this.currentLevel[curr.y -1][curr.x-1];
-    var topM = this.currentLevel[curr.y -1][curr.x];
-    var topR = this.currentLevel[curr.y -1][curr.x+1];
-    var midL = this.currentLevel[curr.y][curr.x-1];
-    var midM = this.currentLevel[curr.y][curr.x];
-    var midR = this.currentLevel[curr.y][curr.x+1];
-    var botL = this.currentLevel[curr.y + 1][curr.x-1];
-    var botM = this.currentLevel[curr.y + 1][curr.x];
-    var botR = this.currentLevel[curr.y + 1][curr.x+1]
+    var topL = this.position[curr.y -1][curr.x-1];
+    var topM = this.position[curr.y -1][curr.x];
+    var topR = this.position[curr.y -1][curr.x+1];
+    var midL = this.position[curr.y][curr.x-1];
+    var midM = this.position[curr.y][curr.x];
+    var midR = this.position[curr.y][curr.x+1];
+    var botL = this.position[curr.y + 1][curr.x-1];
+    var botM = this.position[curr.y + 1][curr.x];
+    var botR = this.position[curr.y + 1][curr.x+1]
     return [[topL,topM,topR],
             [midL,midM,midR],
             [botL,botM,botR]];
 };
 
-Grid.prototype.isColliding = function(xPos, yPos, radius, velX, velY) {
+
+// Returns -1 if not colliding
+// Returns 0 if colliding with top of block
+// Returns 1 if colliding with bottom of block
+// Returns 2 if colliding with left side of block
+// Returns 3 if colliding with right side of block
+Grid.prototype.collidesVertical = function(prevX, prevY, nextX, nextY, r, vel) {
+    var adBlocks = this.findAdjacentBlocks(prevX, prevY);
     
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            var blockPos = this.findCurrentBlock(adBlocks[i][j].cx, adBlocks[i][j].cy);
+            var type = this.currentLevel[blockPos.y][blockPos.x];
+
+            if (type === 1) {
+                var blockEdge = adBlocks[i][j].cy;
+                
+                // Check which direction the lemming is going
+                // to decide which brick side to check
+                if (vel) {
+                    blockEdge += this.halfHeight;
+                } else {
+                    blockEdge -= this.halfHeight;
+                }
+                
+                
+                // Check Y coords
+                if ((nextY - r < blockEdge && prevY - r >= blockEdge) ||
+                (nextY + r > blockEdge && prevY + r <= blockEdge)) {
+                    // Check X coords
+                    if (nextX + r >= adBlocks[i][j].cx - this.halfWidth &&
+                        nextX - r <= adBlocks[i][j].cx + this.halfWidth) {
+                            // It's a hit!
+                            return true;
+                        }
+                    }
+            }
+        }
+    }
+        // It's a miss!
+        return false;
+
 };
 
+Grid.prototype.collidesHorizontal = function(prevX, prevY, nextX, nextY, r, vel) {
+    var adBlocks = this.findAdjacentBlocks(prevX, prevY);
+    
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+
+            var blockPos = this.findCurrentBlock(adBlocks[i][j].cx, adBlocks[i][j].cy);
+            var type = this.currentLevel[blockPos.y][blockPos.x];
+
+            if (type === 1) {
+                var blockEdge = adBlocks[i][j].cx;
+                
+                // Check which direction the lemming is going
+                // to decide which block side to check
+                if (vel) {
+                    blockEdge += this.halfHeight;
+                } else {
+                    blockEdge -= this.halfHeight;
+                }
+                
+                // Check X coords
+                if ((nextX - r < blockEdge && prevX - r >= blockEdge) ||
+                (nextX + r > blockEdge && prevX + r <= blockEdge)) {
+                    // Check Y coords
+                    if (nextY + r >= adBlocks[i][j].cy - this.halfWidth &&
+                        nextY - r <= adBlocks[i][j].cy + this.halfWidth) {
+                            // It's a hit!
+                            return true;
+                        }
+                    }
+            }
+        }
+    }
+        // It's a miss!
+        return false;
+};
