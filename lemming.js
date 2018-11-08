@@ -72,36 +72,26 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    // Returns -1 if lemming is not colliding with block
-    // Returns 0 if lemming is colliding with top of block
-    // Returns 1 if lemming is colliding with bottom of block
-    // Returns 2 if lemming is colliding with left side of block
-    // Returns 3 if lemming is colliding with right side of block
-    var collision = entityManager.grid.isColliding(this.cx, this.cy, 
-                                this.radius, this.velX, this.velY);
-    //console.log(collision);
+    // Remember my previous position
+    var prevX = this.cx;
+    var prevY = this.cy;
     
-    if (collision === 0 || collision === 1) {
-        this.velY *= -1;
+    // Compute my provisional new position (barring collisions)
+    var nextX = prevX + this.velX * du;
+    var nextY = prevY + this.velY * du;
+
+    // Block collision
+    if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY === -1)) {
+        this.velY *= -1; // Change direction of lemming
+        console.log("Its a hit!");
     }
-    if (collision === 2 || collision === 3) {
-        this.velX *= -1;
+    if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX === -1)) {
+        this.velX *= -1; // change direction of lemming
+        console.log("Its a hit!");
     }
 
-    /*
-    if (blocks.blocks[2] === 1
-        && this.cy + this.radius > blocks.posY[2] - blocks.blockWidth) {
-        this.dropping = false;
-        this.velY = 0;
-        this.velX = 1;
-        }else {
-        this.velX = 0;
-        this.velY += NOMINAL_GRAVITY * du;
-    }
-    if(blocks.blocks[3] === 1){
-        this.velX *= -1;
-    }
-    */
+
+    
     if (eatKey(this.KEY_JUMP)) {
         this.velY = -1;
         this.velX = 0;
