@@ -87,19 +87,13 @@ generateRightJump : function(descr) {
 init: function() {
     this.generateGrid();
     this.grid.level1();
-    /*
+    
     
     this.generateLemming({
         cx : 122,
         cy : 277    
     });
-    */
-    //this._generateRocks();
-    //this._generateShip();
-},
-
-resetShips: function() {
-    //this._forEachOf(this._ships, Ship.prototype.reset);
+    
 },
 
 generateGrid: function(){

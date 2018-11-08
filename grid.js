@@ -149,6 +149,10 @@ Grid.prototype.changeBlock = function(x,y,type){
     }
 };
 
+Grid.prototype.update = function(du) {
+
+};
+
 
 Grid.prototype.render = function(ctx){
 
