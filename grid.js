@@ -166,6 +166,12 @@ Grid.prototype.changeBlock = function(x,y){
     }
 };
 
+Grid.prototype.getBottomBlockID = function(cx, cy) {
+    var currentBlockPos = this.findCurrentBlock(cx, cy);
+    return [this.currentLevel[currentBlockPos.y + 1][currentBlockPos.x],
+            this.currentLevel[currentBlockPos.y][currentBlockPos.x]];
+};
+
 Grid.prototype.update = function(du) {
 
 };
@@ -222,12 +228,6 @@ Grid.prototype.findAdjacentBlocks = function(xPos,yPos){
             [botL,botM,botR]];
 };
 
-
-// Returns -1 if not colliding
-// Returns 0 if colliding with top of block
-// Returns 1 if colliding with bottom of block
-// Returns 2 if colliding with left side of block
-// Returns 3 if colliding with right side of block
 Grid.prototype.collidesVertical = function(prevX, prevY, nextX, nextY, r, vel) {
     var adBlocks = this.findAdjacentBlocks(prevX, prevY);
     

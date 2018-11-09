@@ -38,21 +38,27 @@ lemming.prototype.KEY_JUMP = 'W'.charCodeAt(0);
 lemming.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 lemming.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
 lemming.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
+lemming.prototype.KEY_STOP  = 'E'.charCodeAt(0);
+lemming.prototype.KEY_GRAVITY  = 'Z'.charCodeAt(0);
 
 lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
 lemming.prototype.cx = 200;
 lemming.prototype.cy = 200;
-lemming.prototype.velX = 0;
-lemming.prototype.velY = 1;
+lemming.prototype.velX = -1.5;
+lemming.prototype.velY = 0;
 lemming.prototype.isGoingRight = true;
-lemming.prototype.dropping = false;
 lemming.prototype.numSubSteps = 3;
+
+lemming.prototype.lifeSpan = 1500 / NOMINAL_UPDATE_INTERVAL;
+lemming.prototype.isDying = false;
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
     
+
+
 lemming.prototype.update = function (du) {
     
     // Change current image at certain interval    
@@ -72,6 +78,8 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
+    if (this.lifeSpan < 0) return entityManager.KILL_ME_NOW;
+
     // Remember my previous position
     var prevX = this.cx;
     var prevY = this.cy;
@@ -81,33 +89,44 @@ lemming.prototype.update = function (du) {
     var nextY = prevY + this.velY * du;
 
     // Block collision
-    if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY === -1)) {
-        this.velY *= -1; // Change direction of lemming
-        console.log("Its a hit!");
+    if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
+        if (this.velY > 0) {
+            this.velY = 0;
+        } else {
+            this.velY *= -1;
+        }
     }
-    if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX === -1)) {
+    if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
         this.velX *= -1; // change direction of lemming
-        console.log("Its a hit!");
     }
-
-
     
     if (eatKey(this.KEY_JUMP)) {
-        this.velY = -1;
-        this.velX = 0;
+        this.velY = -4;
+        //this.velX = 0;
     }
     if (eatKey(this.KEY_DOWN)) {
         this.velY = 1;
-        this.velX = 0;
     }
     if (eatKey(this.KEY_RIGHT)) {
-        this.velX = 1;
+        this.velX *= -1;
         this.velY = 0;
     }
     if (eatKey(this.KEY_LEFT)) {
-        this.velX = -1;
+        this.velX *= -1;
         this.velY = 0;
     }
+    if (eatKey(this.KEY_STOP)) {
+        this.velX = 0;
+        this.velY = 0;
+    }
+    // Get the id of current block and bottom blocks
+    var BlocksID = entityManager.grid.getBottomBlockID(this.cx, this.cy);
+    // Get position of adjacent blocks
+    var adBlocks = entityManager.grid.findAdjacentBlocks(this.cx, this.cy);
+    // React to specialBlocks
+    this.specialReaction(BlocksID, adBlocks, du);
+    
+
 
     // Move lemming
     this.cx += this.velX * du;
@@ -116,11 +135,42 @@ lemming.prototype.update = function (du) {
     spatialManager.register(this);
 };
 
-var NOMINAL_GRAVITY = 0.04;
+var NOMINAL_GRAVITY = 0.1;
 
+lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
+    var currentBlockPos = adBlocks[1][1];
+    if (BlocksID[0] != 1) {
+        this.velY += NOMINAL_GRAVITY;
+    } else if (BlocksID[1] === 5) {
+        this.velY = -4;
+    } else if (BlocksID[1] === 7) {
+        if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
+            this.velY = -1.5;
+            this.velX = -1.5;
+        } else {
+            this.velY = -4;
+            this.velX = 1.5;
+        }
+    } else if (BlocksID[1] === 6) {
+        if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
+            this.velY = -1.5;
+        } else {
+            this.velY = -4;
+            this.velX = -1.5;
+        }
+    } else if (BlocksID[1] === 3) {
+        this.lifeSpan -= du;
+        this.currentIMG = 1;
+        this.velX /= 1.02;
+    } else if (BlocksID[1] === 2) {
+        //this.lifeSpan -= du * 2;
+        //if (currentBlockPos)
+        // WORK IN PROGRESS MOTHERFUCKERS
+    }
+};
 
 lemming.prototype.getRadius = function () {
-    return (this.sprite.width / 2) * 0.9;
+    return (this.sprite.width / 2);
 };
 
 lemming.prototype.getAdjacentBlocks = function () {
@@ -131,8 +181,18 @@ lemming.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;
+
+    var fadeThresh = lemming.prototype.lifeSpan / 3;
+
+    if (this.lifeSpan < fadeThresh) {
+       ctx.globalAlpha = this.lifeSpan / fadeThresh;
+    }
+    if (this.lifeSpan < 0) {
+        ctx.globalAlpha = 0;
+    }
     this.sprite.drawCentredAt(
 	ctx, this.cx, this.cy, this.rotation, this.currentIMG
     );
     this.sprite.scale = origScale;
+    ctx.globalAlpha = 1;
 };
