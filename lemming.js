@@ -46,13 +46,8 @@ lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 // Initial, inheritable, default values
 lemming.prototype.cx = 200;
 lemming.prototype.cy = 200;
-<<<<<<< HEAD
-lemming.prototype.velX = 1;
-lemming.prototype.velY = 1;
-=======
 lemming.prototype.velX = -1.5;
 lemming.prototype.velY = 0;
->>>>>>> 63f596874b591fe673175f8515aeafa4e6bfa380
 lemming.prototype.isGoingRight = true;
 lemming.prototype.numSubSteps = 3;
 
@@ -93,22 +88,6 @@ lemming.prototype.update = function (du) {
     var nextX = prevX + this.velX * du;
     var nextY = prevY + this.velY * du;
 
-<<<<<<< HEAD
-    var currBlock = entityManager.grid.findCurrentBlock(this.cx,this.cy);
-    var currPos = entityManager.grid.position[currBlock.y][currBlock.x];
-    var currType = entityManager.grid.currentLevel[currBlock.y][currBlock.x];
-    var belowType = entityManager.grid.currentLevel[currBlock.y+1][currBlock.x];
-    var prevVelX = this.velX;
-       // Block collision
-    if(entityManager.grid.collidesVertical(prevX,prevY,nextX,nextY,this.radius+2.5,this.velY<0) === 1){
-        this.velY *= -0.5;
-    } else if(entityManager.grid.collidesVertical(prevX,prevY,nextX,nextY,this.radius+2.5,this.velY<0) === 0){
-        this.velY = 0;
-        this.velX = prevVelX;
-    }
-    if(entityManager.grid.collidesHorizontal(prevX,prevY,nextX,nextY,this.radius,this.velX<0)){
-        this.velX *= -1;
-=======
     // Block collision
     if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
         if (this.velY > 0) {
@@ -119,41 +98,22 @@ lemming.prototype.update = function (du) {
     }
     if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
         this.velX *= -1; // change direction of lemming
->>>>>>> 63f596874b591fe673175f8515aeafa4e6bfa380
     }
     
-    if(belowType !== 1){
-        this.velY += NOMINAL_GRAVITY;
-    }
-    if(currType === 5 && currPos.cx + 5 > this.cx && currPos.cx - 5 < this.cx){
-        this.velY = -3.5;
-    }
-
     if (eatKey(this.KEY_JUMP)) {
-<<<<<<< HEAD
-        this.velY = -3.5;
-=======
         this.velY = -4;
         //this.velX = 0;
->>>>>>> 63f596874b591fe673175f8515aeafa4e6bfa380
     }
     if (eatKey(this.KEY_DOWN)) {
         this.velY = 1;
     }
     if (eatKey(this.KEY_RIGHT)) {
-<<<<<<< HEAD
-        this.velX = 1;
-    }
-    if (eatKey(this.KEY_LEFT)) {
-        this.velX = -1;
-=======
         this.velX *= -1;
         this.velY = 0;
     }
     if (eatKey(this.KEY_LEFT)) {
         this.velX *= -1;
         this.velY = 0;
->>>>>>> 63f596874b591fe673175f8515aeafa4e6bfa380
     }
     if (eatKey(this.KEY_STOP)) {
         this.velX = 0;
@@ -177,8 +137,6 @@ lemming.prototype.update = function (du) {
 
 var NOMINAL_GRAVITY = 0.1;
 
-<<<<<<< HEAD
-=======
 lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
     var currentBlockPos = adBlocks[1][1];
     if (BlocksID[0] != 1) {
@@ -210,7 +168,6 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         // WORK IN PROGRESS MOTHERFUCKERS
     }
 };
->>>>>>> 63f596874b591fe673175f8515aeafa4e6bfa380
 
 lemming.prototype.getRadius = function () {
     return (this.sprite.width / 2);
