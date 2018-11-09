@@ -125,7 +125,7 @@ lemming.prototype.update = function (du) {
     var adBlocks = entityManager.grid.findAdjacentBlocks(this.cx, this.cy);
     // React to specialBlocks
     this.specialReaction(BlocksID, adBlocks, du);
-
+    
 
 
     // Move lemming
