@@ -44,7 +44,7 @@ lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 // Initial, inheritable, default values
 lemming.prototype.cx = 200;
 lemming.prototype.cy = 200;
-lemming.prototype.velX = 0;
+lemming.prototype.velX = 1;
 lemming.prototype.velY = 1;
 lemming.prototype.isGoingRight = true;
 lemming.prototype.dropping = false;
@@ -53,6 +53,8 @@ lemming.prototype.numSubSteps = 3;
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
     
+
+
 lemming.prototype.update = function (du) {
     
     // Change current image at certain interval    
@@ -80,34 +82,43 @@ lemming.prototype.update = function (du) {
     var nextX = prevX + this.velX * du;
     var nextY = prevY + this.velY * du;
 
-    // Block collision
-    if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY === -1)) {
-        this.velY *= -1; // Change direction of lemming
-        console.log("Its a hit!");
+    var currBlock = entityManager.grid.findCurrentBlock(this.cx,this.cy);
+    var currPos = entityManager.grid.position[currBlock.y][currBlock.x];
+    var currType = entityManager.grid.currentLevel[currBlock.y][currBlock.x];
+    var belowType = entityManager.grid.currentLevel[currBlock.y+1][currBlock.x];
+    var prevVelX = this.velX;
+       // Block collision
+    if(entityManager.grid.collidesVertical(prevX,prevY,nextX,nextY,this.radius+2.5,this.velY<0) === 1){
+        this.velY *= -0.5;
+    } else if(entityManager.grid.collidesVertical(prevX,prevY,nextX,nextY,this.radius+2.5,this.velY<0) === 0){
+        this.velY = 0;
+        this.velX = prevVelX;
     }
-    if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX === -1)) {
-        this.velX *= -1; // change direction of lemming
-        console.log("Its a hit!");
+    if(entityManager.grid.collidesHorizontal(prevX,prevY,nextX,nextY,this.radius,this.velX<0)){
+        this.velX *= -1;
     }
-
-
     
+    if(belowType !== 1){
+        this.velY += NOMINAL_GRAVITY;
+    }
+    if(currType === 5 && currPos.cx + 5 > this.cx && currPos.cx - 5 < this.cx){
+        this.velY = -3.5;
+    }
+
     if (eatKey(this.KEY_JUMP)) {
-        this.velY = -1;
-        this.velX = 0;
+        this.velY = -3.5;
     }
     if (eatKey(this.KEY_DOWN)) {
         this.velY = 1;
-        this.velX = 0;
     }
     if (eatKey(this.KEY_RIGHT)) {
         this.velX = 1;
-        this.velY = 0;
     }
     if (eatKey(this.KEY_LEFT)) {
         this.velX = -1;
-        this.velY = 0;
     }
+
+
 
     // Move lemming
     this.cx += this.velX * du;
@@ -116,7 +127,7 @@ lemming.prototype.update = function (du) {
     spatialManager.register(this);
 };
 
-var NOMINAL_GRAVITY = 0.04;
+var NOMINAL_GRAVITY = 0.1;
 
 
 lemming.prototype.getRadius = function () {

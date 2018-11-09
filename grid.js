@@ -57,12 +57,12 @@ Grid.prototype.level1 = function(){
 
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
                          [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1],
@@ -230,13 +230,20 @@ Grid.prototype.findAdjacentBlocks = function(xPos,yPos){
 // Returns 3 if colliding with right side of block
 Grid.prototype.collidesVertical = function(prevX, prevY, nextX, nextY, r, vel) {
     var adBlocks = this.findAdjacentBlocks(prevX, prevY);
-    
     for (var i = 0; i < 3; i++) {
         for (var j = 0; j < 3; j++) {
             var blockPos = this.findCurrentBlock(adBlocks[i][j].cx, adBlocks[i][j].cy);
             var type = this.currentLevel[blockPos.y][blockPos.x];
 
-            if (type === 1) {
+            if(type === 1){
+                var blockEdge = adBlocks[i][j].cy;
+                
+                if(vel){
+                    blockEdge += this.halfHeight;
+                } else {
+                    blockEdge -= this.halfHeight;
+                }
+            /*if (type === 1) {
                 var blockEdge = adBlocks[i][j].cy;
                 
                 // Check which direction the lemming is going
@@ -247,23 +254,25 @@ Grid.prototype.collidesVertical = function(prevX, prevY, nextX, nextY, r, vel) {
                     blockEdge -= this.halfHeight;
                 }
                 
-                
+              */  
                 // Check Y coords
-                if ((nextY - r < blockEdge && prevY - r >= blockEdge) ||
-                (nextY + r > blockEdge && prevY + r <= blockEdge)) {
+                if (nextY + r > blockEdge && nextY -r < blockEdge) {
                     // Check X coords
                     if (nextX + r >= adBlocks[i][j].cx - this.halfWidth &&
                         nextX - r <= adBlocks[i][j].cx + this.halfWidth) {
                             // It's a hit!
-                            return true;
+                            if(vel){
+                                return 1;
+                            } else {
+                                return 0;
+                            }
                         }
                     }
             }
         }
     }
         // It's a miss!
-        return false;
-
+        return -1;
 };
 
 Grid.prototype.collidesHorizontal = function(prevX, prevY, nextX, nextY, r, vel) {
