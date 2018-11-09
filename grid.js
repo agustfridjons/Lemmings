@@ -7,193 +7,298 @@ function Grid(descr) {
 
 Grid.prototype.halfWidth = 20;
 Grid.prototype.halfHeight = 20;
+Grid.prototype.rowLength = 17;
+Grid.prototype.colLength = 12;
 Grid.prototype.blocks = [];
+Grid.prototype.hardBlocks = [];
+Grid.prototype.position = [];
+Grid.prototype.currentLevel = [];
+Grid.prototype.choice = 0;
+Grid.prototype.background = new Image();
+Grid.prototype.blockIMG = new Image();
 
 
-Grid.prototype.createGrid = function(width,height){
-    for(var i = -this.halfHeight; i <= height+this.halfHeight; i+=this.halfHeight*2){
-        for(var j = -this.halfWidth; j <= width+this.halfWidth; j+=this.halfWidth*2){
-            this.blocks.push([i,j,0]);
+
+Grid.prototype.createGrid = function(){
+
+    this.background.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/sprite_Background0.png";
+    this.blockIMG.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png";
+
+    this.position = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+
+    var x = -this.halfWidth;
+    var y = -this.halfHeight;
+    for (var i = 0; i < this.colLength; i++) {
+        for (var j = 0; j < this.rowLength; j++) {
+            this.position[i][j] = {
+                cx : x,
+                cy : y
+            };
+            x += (this.halfWidth*2);
         }
+        y += (this.halfHeight*2);
+        x = -this.halfWidth;
     }
 };
 
 Grid.prototype.level1 = function(){
-    for(var i = 0; i < 12; i++){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 12; i <= 144; i += 12){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 11; i <= 143; i += 12){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 192; i < 204; i++){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 22; i < 192; i+=12){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 176; i <= 188; i +=12){
-        this.blocks[i][2] = 1;
-    }
 
-    this.makeFire(187);
-    this.makeWater(106);
-    this.makeDoor(21);
-    this.makeJump(165);
-    this.makeJump(93);
-    this.makeLeftJump(175);
-    this.makeRightJump(117);
 
-    /*for(var i = 0;i< 10; i++){
-        this.blocks[i][2] = 1;
-    }    
-    for(var i = 140;i< 150; i++){
-        this.blocks[i][2] = 1;
+    this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
+                         [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
+    for (var i = 0; i < this.colLength; i++) {
+        for (var j = 0; j < this.rowLength; j++) {
+            if (this.currentLevel[i][j] === 2) {
+                this.makeFire(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 3) {
+                this.makeWater(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 4) {
+                this.makeDoor(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 5) {
+                this.makeJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 6) {
+                this.makeLeftJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 7) {
+                this.makeRightJump(this.position[i][j]);
+            }
+        }
     }
-    for(var i = 0; i < 140; i +=10){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 1; i < 31; i+=10){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 33; i < 63; i+=10){
-        this.blocks[i][2]=1;
-    }
-    for(var i = 64; i < 94; i+=10){
-        this.blocks[i][2]=1;
-    }
-    for(var i = 96; i < 126; i+=10){
-        this.blocks[i][2]=1;
-    }
-    for(var i = 137; i < 147; i+=10){
-        this.blocks[i][2] = 1;
-    }
-    for(var i = 9; i < 150; i+=10){
-        this.blocks[i][2] = 1;
-    }
-    this.makeFire(this.blocks[48][0],this.blocks[48][1],48);
-    this.makeFire(this.blocks[108][0],this.blocks[108][1],108);
-    */
+    entityManager.jumpsLeft = 9;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 3;
+    entityManager.rightLeft = 4;
 };
-Grid.prototype.makeFire = function(index){
-    this.blocks[index][2] = 2;
+Grid.prototype.makeFire = function(pos){
     entityManager.generateFire({
-        cx  :   this.blocks[index][0],
-        cy  :   this.blocks[index][1]
+        cx  :   pos.cx,
+        cy  :   pos.cy
     });
 };
 
-Grid.prototype.makeWater = function(index){
-    this.blocks[index][2] = 3;
+Grid.prototype.makeWater = function(pos){
     entityManager.generateWater({
-        cx  :   this.blocks[index][0],
-        cy  :   this.blocks[index][1]
+        cx  :   pos.cx,
+        cy  :   pos.cy
     });
 };
 
-Grid.prototype.makeDoor = function(index){
-    this.blocks[index][2] = 4;
+Grid.prototype.makeDoor = function(pos){
     entityManager.generateDoor({
-        cx  :   this.blocks[index][0],
-        cy  :   this.blocks[index][1]
+        cx  :   pos.cx,
+        cy  :   pos.cy
     });
 };
 
-Grid.prototype.makeJump = function(index){
-    this.blocks[index][2] = 5;
+Grid.prototype.makeJump = function(pos){
     entityManager.generateJump({
-        cx  :   this.blocks[index][0],
-        cy  :   this.blocks[index][1]
+        cx  :   pos.cx,
+        cy  :   pos.cy
     });
 };
 
-
-Grid.prototype.makeLeftJump = function(index){
-    this.blocks[index][2] = 6;
+Grid.prototype.makeLeftJump = function(pos){
     entityManager.generateLeftJump({
-        cx  :   this.blocks[index][0],
-        cy  :   this.blocks[index][1]
+        cx  :   pos.cx,
+        cy  :   pos.cy
     });
 };
 
-Grid.prototype.makeRightJump = function(index){
-    this.blocks[index][2] = 6;
+Grid.prototype.makeRightJump = function(pos){
     entityManager.generateRightJump({
-        cx  :   this.blocks[index][0],
-        cy  :   this.blocks[index][1]
+        cx  :   pos.cx,
+        cy  :   pos.cy
     });
 };
 
-    
+Grid.prototype.isAllowed = function(x,y){
+    if(this.currentLevel[y][x] === 0 && this.currentLevel[y+1][x] === 1){
+        return true;
+    } else{
+        return false;
+    }
+};
+Grid.prototype.changeChoice = function(choice){
+    this.choice = choice;
+};
+
+Grid.prototype.changeBlock = function(x,y){
+    var realx = this.findCurrentBlock(x,y).x;
+    var realy = this.findCurrentBlock(x,y).y;
+    if(this.isAllowed(realx,realy)){
+        if(this.choice === 1 && entityManager.blocksLeft !== 0){
+            this.currentLevel[realy][realx] = 1;
+            entityManager.blocksLeft--;
+        } else if(this.choice === 2 && entityManager.jumpsLeft !== 0){
+            this.currentLevel[realy][realx] = 5;
+            this.makeJump(this.position[realy][realx]);
+            entityManager.jumpsLeft--;
+        } else if(this.choice === 3 && entityManager.leftLeft !== 0){
+            this.currentLevel[realy][realx] = 6;
+            this.makeLeftJump(this.position[realy][realx]);
+            entityManager.leftLeft--;
+        } else if(this.choice === 4 && entityManager.rightLeft !== 0){
+            this.currentLevel[realy][realx] = 7;
+            this.makeRightJump(this.position[realy][realx]);
+            entityManager.rightLeft--;
+        }
+    }
+};
+
+Grid.prototype.update = function(du) {
+
+};
+
 
 Grid.prototype.render = function(ctx){
-    var cob = new Image();
-    var back = new Image();
-    back.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/sprite_Background0.png";
-    cob.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png"
-    for(var i = 0; i < this.blocks.length; i++){
-        var Boi = this.blocks[i];
-        if(Boi[2]===1){
-            ctx.drawImage(cob,Boi[0]-20,Boi[1]-20,40,40);
-        }else {
-            ctx.drawImage(back,Boi[0]-20,Boi[1]-20,40,40);
+
+
+    for (var i = 0; i < this.colLength; i++) {
+        for (var j = 0; j < this.rowLength; j++) {
+            if (this.currentLevel[i][j] === 1) {
+                ctx.drawImage(this.blockIMG, this.position[i][j].cx - this.halfWidth,
+                             this.position[i][j].cy - this.halfHeight,
+                              this.halfWidth*2, this.halfHeight*2);
+            } else {
+                ctx.drawImage(this.background, this.position[i][j].cx - this.halfWidth,
+                            this.position[i][j].cy - this.halfHeight,
+                            this.halfWidth*2, this.halfHeight*2);
+            }
         }
     }
 };
 
-Grid.prototype.returnFireIndex = function(){
-    var fires = [];
-    for(var i = 0; i < this.blocks.length; i++){
-        if(this.blocks[i][2] === 2){
-            fires.push(i);
-        }
-    }
-    return fires;
+Grid.prototype.update = function(){
 };
 
-
-Grid.prototype.findNearestBlock = function(xPos, yPos){
-    for(var i = 0; i < this.blocks.length; i++){
-        var Boi = this.blocks[i];
-        if(Boi[0] + this.halfWidth >= xPos 
-            && Boi[0] - this.halfWidth <= xPos
-            && Boi[1] + this.halfHeight >= yPos
-            && Boi[1] - this.halfHeight <= yPos){
-                return i;
-        }
-    }
-};
-
-Grid.prototype.findAdBlocks = function(xPos,yPos, radius){
-    if (yPos + radius + this.halfHeight > g_canvas.height ||
-        yPos - radius - this.halfHeight < 0) {
-            return -1;
-        }
-    var i = this.findNearestBlock(xPos,yPos);
-
-
-    var blockID = [this.blocks[i][2],      // middle
-                   this.blocks[i-1][2],    // top middle
-                   this.blocks[i+1][2],      // bottom middle
-                   this.blocks[i+10][2],    //right
-                   this.blocks[i-10][2]];   //left   
+Grid.prototype.findCurrentBlock = function(xPos, yPos){
+    var realX = Math.round((xPos+this.halfWidth)/(this.halfWidth*2));
+    var realY = Math.round((yPos+this.halfHeight)/(this.halfHeight*2));
     
-    var blockPosY = [this.blocks[i][0],  
-                     this.blocks[i-1][0], 
-                     this.blocks[i+1][0],
-                     this.blocks[i+10][0]];
-
-    var blockPosX = [this.blocks[i][1],  
-                     this.blocks[i-1][1], 
-                     this.blocks[i+1][1],
-                     this.blocks[i+10][1]];
-
     return {
-        blocks : blockID,
-        posX: blockPosY,
-        posY: blockPosX,
-        blockWidth: this.halfWidth
+        x : realX,
+        y : realY
+    };
+};
+
+// Returns an array of adjecent blocks
+// Example: [[left top, middle top,right top], 
+//           left,middle,right],
+//           [left bottom,middle bottom, right bottom]]
+Grid.prototype.findAdjacentBlocks = function(xPos,yPos){
+    var curr = this.findCurrentBlock(xPos,yPos);
+    var topL = this.position[curr.y -1][curr.x-1];
+    var topM = this.position[curr.y -1][curr.x];
+    var topR = this.position[curr.y -1][curr.x+1];
+    var midL = this.position[curr.y][curr.x-1];
+    var midM = this.position[curr.y][curr.x];
+    var midR = this.position[curr.y][curr.x+1];
+    var botL = this.position[curr.y + 1][curr.x-1];
+    var botM = this.position[curr.y + 1][curr.x];
+    var botR = this.position[curr.y + 1][curr.x+1]
+    return [[topL,topM,topR],
+            [midL,midM,midR],
+            [botL,botM,botR]];
+};
+
+
+// Returns -1 if not colliding
+// Returns 0 if colliding with top of block
+// Returns 1 if colliding with bottom of block
+// Returns 2 if colliding with left side of block
+// Returns 3 if colliding with right side of block
+Grid.prototype.collidesVertical = function(prevX, prevY, nextX, nextY, r, vel) {
+    var adBlocks = this.findAdjacentBlocks(prevX, prevY);
+    
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            var blockPos = this.findCurrentBlock(adBlocks[i][j].cx, adBlocks[i][j].cy);
+            var type = this.currentLevel[blockPos.y][blockPos.x];
+
+            if (type === 1) {
+                var blockEdge = adBlocks[i][j].cy;
+                
+                // Check which direction the lemming is going
+                // to decide which brick side to check
+                if (vel) {
+                    blockEdge += this.halfHeight;
+                } else {
+                    blockEdge -= this.halfHeight;
+                }
+                
+                
+                // Check Y coords
+                if ((nextY - r < blockEdge && prevY - r >= blockEdge) ||
+                (nextY + r > blockEdge && prevY + r <= blockEdge)) {
+                    // Check X coords
+                    if (nextX + r >= adBlocks[i][j].cx - this.halfWidth &&
+                        nextX - r <= adBlocks[i][j].cx + this.halfWidth) {
+                            // It's a hit!
+                            return true;
+                        }
+                    }
+            }
+        }
     }
+        // It's a miss!
+        return false;
+
+};
+
+Grid.prototype.collidesHorizontal = function(prevX, prevY, nextX, nextY, r, vel) {
+    var adBlocks = this.findAdjacentBlocks(prevX, prevY);
+    
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+
+            var blockPos = this.findCurrentBlock(adBlocks[i][j].cx, adBlocks[i][j].cy);
+            var type = this.currentLevel[blockPos.y][blockPos.x];
+
+            if (type === 1) {
+                var blockEdge = adBlocks[i][j].cx;
+                
+                // Check which direction the lemming is going
+                // to decide which block side to check
+                if (vel) {
+                    blockEdge += this.halfHeight;
+                } else {
+                    blockEdge -= this.halfHeight;
+                }
+                
+                // Check X coords
+                if ((nextX - r < blockEdge && prevX - r >= blockEdge) ||
+                (nextX + r > blockEdge && prevX + r <= blockEdge)) {
+                    // Check Y coords
+                    if (nextY + r >= adBlocks[i][j].cy - this.halfWidth &&
+                        nextY - r <= adBlocks[i][j].cy + this.halfWidth) {
+                            // It's a hit!
+                            return true;
+                        }
+                    }
+            }
+        }
+    }
+        // It's a miss!
+        return false;
 };

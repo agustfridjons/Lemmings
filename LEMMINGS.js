@@ -109,6 +109,8 @@ var KEY_0 = keyCode('0');
 
 var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
+var KEY_3 = keyCode('3');
+var KEY_4 = keyCode('4');
 
 var KEY_K = keyCode('K');
 
@@ -127,20 +129,13 @@ function processDiagnostics() {
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
-    if (eatKey(KEY_0)) entityManager.toggleRocks();
+    if (eatKey(KEY_0)) entityManager.changeChoice(0);
 
-    if (eatKey(KEY_1)) entityManager.generateShip({
-        cx : g_mouseX,
-        cy : g_mouseY,
-        
-        sprite : g_sprites.ship});
+    if (eatKey(KEY_1)) entityManager.changeChoice(1);
 
-    if (eatKey(KEY_2)) entityManager.generateShip({
-        cx : g_mouseX,
-        cy : g_mouseY,
-        
-        sprite : g_sprites.ship2
-        });
+    if (eatKey(KEY_2)) entityManager.changeChoice(2); 
+    if (eatKey(KEY_3)) entityManager.changeChoice(3);
+    if (eatKey(KEY_4)) entityManager.changeChoice(4);  
 
     if (eatKey(KEY_K)) entityManager.killNearestShip(
         g_mouseX, g_mouseY);

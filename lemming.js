@@ -37,6 +37,7 @@ lemming.prototype.rememberResets = function () {
 lemming.prototype.KEY_JUMP = 'W'.charCodeAt(0);
 lemming.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
 lemming.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
+lemming.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
 
 lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
@@ -44,10 +45,7 @@ lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 lemming.prototype.cx = 200;
 lemming.prototype.cy = 200;
 lemming.prototype.velX = 0;
-lemming.prototype.velY = 0;
-lemming.prototype.intervalVelY = 0;
-lemming.prototype.useGravity = false;
-lemming.prototype.useAveVel = true;
+lemming.prototype.velY = 1;
 lemming.prototype.isGoingRight = true;
 lemming.prototype.dropping = false;
 lemming.prototype.numSubSteps = 3;
@@ -74,16 +72,42 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    // Reverse velocity if lemming is at canvas edge
-    if (this.cx + this.radius > g_canvas.width ||
-        this.cx - this.radius < 0) {
-        this.velX *= -1;
-    }
-    var blocks = this.getAdjacentBlocks();
-
-    //console.log("blocks pos: ", blocks.posX[2]);
-    //console.log("width: ", blocks.blockWidth);
+    // Remember my previous position
+    var prevX = this.cx;
+    var prevY = this.cy;
     
+    // Compute my provisional new position (barring collisions)
+    var nextX = prevX + this.velX * du;
+    var nextY = prevY + this.velY * du;
+
+    // Block collision
+    if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY === -1)) {
+        this.velY *= -1; // Change direction of lemming
+        console.log("Its a hit!");
+    }
+    if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX === -1)) {
+        this.velX *= -1; // change direction of lemming
+        console.log("Its a hit!");
+    }
+
+
+    
+    if (eatKey(this.KEY_JUMP)) {
+        this.velY = -1;
+        this.velX = 0;
+    }
+    if (eatKey(this.KEY_DOWN)) {
+        this.velY = 1;
+        this.velX = 0;
+    }
+    if (eatKey(this.KEY_RIGHT)) {
+        this.velX = 1;
+        this.velY = 0;
+    }
+    if (eatKey(this.KEY_LEFT)) {
+        this.velX = -1;
+        this.velY = 0;
+    }
 
     // Move lemming
     this.cx += this.velX * du;

@@ -30,7 +30,7 @@ function render(ctx,ctx2) {
     //
     if (g_doClear){
         util.clearCanvas(ctx);
-        util.clearCanvas2(ctx2);
+        //util.clearCanvas2(ctx2);
     }
 
     // The main purpose of the box is to demonstrate that it is
