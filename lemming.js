@@ -119,7 +119,7 @@ lemming.prototype.update = function (du) {
         this.velX = 0;
         this.velY = 0;
     }
-    // Get the id of current block and bottom block
+    // Get the id of current block and bottom blocks
     var BlocksID = entityManager.grid.getBottomBlockID(this.cx, this.cy);
     // Get position of adjacent blocks
     var adBlocks = entityManager.grid.findAdjacentBlocks(this.cx, this.cy);
