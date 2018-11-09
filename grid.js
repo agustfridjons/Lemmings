@@ -65,7 +65,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,6,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-                         [1,4,0,0,0,0,0,5,0,7,0,0,0,5,0,0,1],
+                         [1,4,0,0,0,0,0,2,0,7,0,0,0,5,0,0,1],
                          [1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
@@ -151,6 +151,12 @@ Grid.prototype.changeBlock = function(x,y){
     }
 };
 
+Grid.prototype.getBottomBlockID = function(cx, cy) {
+    var currentBlockPos = this.findCurrentBlock(cx, cy);
+    return [this.currentLevel[currentBlockPos.y + 1][currentBlockPos.x],
+            this.currentLevel[currentBlockPos.y][currentBlockPos.x]];
+};
+
 Grid.prototype.update = function(du) {
 
 };
@@ -208,12 +214,6 @@ Grid.prototype.findAdjacentBlocks = function(xPos,yPos){
             [botL,botM,botR]];
 };
 
-
-// Returns -1 if not colliding
-// Returns 0 if colliding with top of block
-// Returns 1 if colliding with bottom of block
-// Returns 2 if colliding with left side of block
-// Returns 3 if colliding with right side of block
 Grid.prototype.collidesVertical = function(prevX, prevY, nextX, nextY, r, vel) {
     var adBlocks = this.findAdjacentBlocks(prevX, prevY);
     
