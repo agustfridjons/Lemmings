@@ -111,10 +111,10 @@ init: function() {
     this.grid.level1();
     
     
-    this.generateLemming({
+    /*this.generateLemming({
         cx : 122,
         cy : 277    
-    });
+    });*/
     
 },
 
@@ -126,7 +126,6 @@ generateGrid: function(){
 
 
 render: function(ctx) {
-
     this.grid.render(ctx);
     var debugX = 10, debugY = 100;
 

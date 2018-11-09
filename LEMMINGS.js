@@ -48,14 +48,14 @@ var g_ctx = g_canvas.getContext("2d");
 // ====================
 // CREATE INITIAL Lemming
 // ====================
-function createInitialLemming() {
+/*function createInitialLemming() {
     entityManager.generateLemming({
         cx : 200,
         cy : 200,
         radius : g_images.img0.width / 2
     });
 }
-
+*/
 // =============
 // GATHER INPUTS
 // =============
@@ -173,11 +173,20 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        img0   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings0.png",
+        /*img0   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings0.png",
         img1  : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings1.png",
         img2   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings2.png",
         img3   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings3.png",
-        
+        */
+        img0 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm0.png",
+        img1 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm1.png",
+        img2 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm2.png",
+        img3 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm3.png",
+        img4 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm4.png",
+        img5 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm5.png",
+        img6 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm6.png",
+        img7 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm7.png",
+
         fire1   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire1.png",
         fire2   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire2.png",
         fire3   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire3.png",
@@ -209,16 +218,26 @@ function requestPreloads() {
         button0 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton0.png",
         button1 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton1.png",
         button2 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton0.png",
-        button3 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton1.png"
+        button3 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton1.png",
+
+        explosion0 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion0.png",
+        explosion1 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion1.png",
+        explosion2 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion2.png",
+        explosion3 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion3.png",
+
+        background : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/background.png",
+        block : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/sprite_Background0.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
 }
 
 var g_sprites = {};
+var background;
+var block;
 
 function preloadDone() {
-    var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3];
+    var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3,g_images.img4,g_images.img5,g_images.img6,g_images.img7];
     var fire = [g_images.fire1,g_images.fire2,g_images.fire3,g_images.fire4];
     var water = [g_images.water1,g_images.water2,g_images.water3,g_images.water4];
     var door = [g_images.door1,g_images.door2];
@@ -226,6 +245,9 @@ function preloadDone() {
     var side = [g_images.side1,g_images.side2,g_images.side3,g_images.side4];
     var right = [g_images.right1,g_images.right2,g_images.right3,g_images.right4];
     var buttons = [g_images.button0,g_images.button1,g_images.button2,g_images.button3];
+    var explosion = [g_images.explosion0,g_images.explosion1,g_images.explosion2,g_images.explosion3];
+    background = new Image(g_images.background);
+    block = new Image(g_images.block);
     g_sprites.img0 = new Sprite(images);
     g_sprites.fire1 = new Sprite(fire);
     g_sprites.water1 = new Sprite(water);
@@ -234,6 +256,7 @@ function preloadDone() {
     g_sprites.side1 = new Sprite(side);
     g_sprites.right1 = new Sprite(right);
     g_sprites.button1 = new Sprite(buttons);
+    g_sprites.explosion = new Sprite(explosion);
     //g_sprites.ship  = new Sprite(g_images.ship);
     //g_sprites.ship2 = new Sprite(g_images.ship2);
     //g_sprites.rock  = new Sprite(g_images.rock);

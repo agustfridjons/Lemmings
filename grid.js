@@ -14,8 +14,14 @@ Grid.prototype.hardBlocks = [];
 Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
+
 Grid.prototype.background = new Image();
 Grid.prototype.blockIMG = new Image();
+
+Grid.prototype.numberOfLemmings = 0;
+Grid.prototype.maxLemmings = 0;
+
+Grid.prototype.time = 0;
 
 
 
@@ -54,7 +60,7 @@ Grid.prototype.createGrid = function(){
 
 Grid.prototype.level1 = function(){
 
-
+    this.maxLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -64,7 +70,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-                         [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,4,0,0,0,0,0,6,0,5,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
@@ -172,8 +178,20 @@ Grid.prototype.getBottomBlockID = function(cx, cy) {
             this.currentLevel[currentBlockPos.y][currentBlockPos.x]];
 };
 
-Grid.prototype.update = function(du) {
+Grid.prototype.print = function(){
+    console.log(this.maxLemmings,this.numberOfLemmings);
+};
 
+Grid.prototype.update = function(du) {
+    console.log(this.numberOfLemmings,this.maxLemmings);
+    if(this.numberOfLemmings < this.maxLemmings && this.time % 25 === 0){
+        entityManager.generateLemming({
+            cx : 20,
+            cy : 348
+        });
+        this.numberOfLemmings++;
+    }
+    this.time++;
 };
 
 
@@ -195,8 +213,6 @@ Grid.prototype.render = function(ctx){
     }
 };
 
-Grid.prototype.update = function(){
-};
 
 Grid.prototype.findCurrentBlock = function(xPos, yPos){
     var realX = Math.round((xPos+this.halfWidth)/(this.halfWidth*2));
