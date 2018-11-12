@@ -265,7 +265,6 @@ function preloadDone() {
     //g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
-    //createInitialLemming();
 
     main.init();
 }

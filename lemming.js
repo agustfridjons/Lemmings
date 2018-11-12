@@ -179,7 +179,7 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         if(this.velX < 0){
             this.velX *= -1;
         }
-        else if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
+        else if (currentBlockPos.cy < this.cy + (this.radius)) {
             this.velY = -1.5;
         } else {
             this.velY = -4;
@@ -191,6 +191,7 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         this.velX /= 1.02;
     } else if (BlocksID[1] === 2) {
         this.isExploding = true;
+        if(this.currentIMG >3) this.currentIMG = 0;
         this.sprite = g_sprites.explosion;
         this.velX = 0;
         this.velY = 0;

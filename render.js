@@ -24,7 +24,6 @@ function render(ctx,ctx2) {
     if (eatKey(TOGGLE_UNDO_BOX)) g_undoBox = !g_undoBox;
     if (eatKey(TOGGLE_FLIPFLOP)) g_doFlipFlop = !g_doFlipFlop;
     if (eatKey(TOGGLE_RENDER)) g_doRender = !g_doRender;
-    if (eatKey(KEY_MENU)) g_doMenu = !g_doMenu;
     
     // I've pulled the clear out of `renderSimulation()` and into
     // here, so that it becomes part of our "diagnostic" wrappers
@@ -41,8 +40,6 @@ function render(ctx,ctx2) {
     // i.e. double-buffering prevents flicker!
     //
     if (g_doBox) util.fillBox(ctx, 200, 200, 50, 50, "red");
-    
-    if (g_doMenu) menu.showMenu(ctx);
 
     // The core rendering of the actual game / simulation
     //
