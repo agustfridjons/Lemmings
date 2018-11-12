@@ -58,6 +58,7 @@ lemming.prototype.lifeSpan = 1500 / NOMINAL_UPDATE_INTERVAL;
 lemming.prototype.isDying = false;
 lemming.prototype.explodingIMG = 0; 
 lemming.prototype.isExploding = false;
+lemming.prototype.isLeaving = false;
 
 
 lemming.prototype.currentIMG = 0;
@@ -69,7 +70,7 @@ lemming.prototype.update = function (du) {
 
     if(this.velX < 0){
         this.sprite = g_sprites.reverse;
-    } else {
+    } else if(this.velX > 0){
         this.sprite = g_sprites.img0;
     }
     
@@ -82,7 +83,9 @@ lemming.prototype.update = function (du) {
                 this.currentIMG = 0;
             }
         }
-    } else {
+    } else if(this.isLeaving){
+        this.currentIMG = 8;
+    }else {
         if (this.time % 10 === 0) {
             if (this.currentIMG < 3) {
                 this.currentIMG++;
@@ -205,6 +208,11 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         //this.lifeSpan -= du * 2;
         //if (currentBlockPos)
         // WORK IN PROGRESS MOTHERFUCKERS
+    } else if(BlocksID[1] === 4 && this.cx < currentBlockPos.cx + 1 && this.cx > currentBlockPos.cx - 1){
+        this.lifeSpan -= du*4;
+        this.isLeaving = true;
+        this.currentIMG = 8;
+        this.velX = 0;
     }
 };
 

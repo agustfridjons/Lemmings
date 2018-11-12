@@ -28,14 +28,7 @@ Door.prototype.update = function () {
     
 
     // Change current image at certain interval    
-    if (this.time % 100 === 0) {
-        if (this.currentIMG < 1) {
-            this.currentIMG++;
-        } else {
-            this.currentIMG = 0;
-        }
-    }
-    this.time++;
+    this.currentIMG = 0;
 };
 
 Door.prototype.render = function (ctx) {

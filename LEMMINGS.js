@@ -195,6 +195,8 @@ function requestPreloads() {
         img14 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_6.png",
         img15 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_7.png",
 
+        backside : "https://notendur.hi.is/~fth29/Kalli/New%20Piskel.png",
+
         fire1   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire1.png",
         fire2   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire2.png",
         fire3   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire3.png",
@@ -245,8 +247,8 @@ var background;
 var block;
 
 function preloadDone() {
-    var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3,g_images.img4,g_images.img5,g_images.img6,g_images.img7];
-    var reverse = [g_images.img8, g_images.img9, g_images.img10, g_images.img11,g_images.img12,g_images.img13,g_images.img14,g_images.img15];
+    var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3,g_images.img4,g_images.img5,g_images.img6,g_images.img7,g_images.backside];
+    var reverse = [g_images.img8, g_images.img9, g_images.img10, g_images.img11,g_images.img12,g_images.img13,g_images.img14,g_images.img15,g_images.backside];
     var fire = [g_images.fire1,g_images.fire2,g_images.fire3,g_images.fire4];
     var water = [g_images.water1,g_images.water2,g_images.water3,g_images.water4];
     var door = [g_images.door1,g_images.door2];

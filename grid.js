@@ -70,7 +70,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,1,0,6,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-                         [1,4,0,0,0,0,0,5,0,0,0,0,0,5,0,0,1],
+                         [1,0,0,0,0,0,0,5,0,0,0,0,0,5,0,0,1],
                          [1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
@@ -168,7 +168,7 @@ Grid.prototype.changeBlock = function(x,y){
             this.currentLevel[realy][realx] = 7;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
-        }
+        } 
     }
 };
 
