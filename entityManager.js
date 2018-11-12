@@ -29,6 +29,7 @@ var entityManager = {
 _blocks   : [],
 _lemmings : [],
 _entities : [],
+_doors    : [],
 mouseX    : 0,
 mouseY    : 0,
 jumpsLeft : 0,
@@ -56,7 +57,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._lemmings,this._entities];
+    this._categories = [this._doors,this._lemmings,this._entities];
 },
 /*
 generateShip : function(descr) {
@@ -76,7 +77,7 @@ generateWater :  function(descr) {
 },
 
 generateDoor  : function(descr) {
-    this._entities.push(new Door(descr));
+    this._doors.push(new Door(descr));
 },
 
 generateJump   : function(descr){
