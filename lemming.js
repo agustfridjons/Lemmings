@@ -66,6 +66,12 @@ lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
+
+    if(this.velX < 0){
+        this.sprite = g_sprites.reverse;
+    } else {
+        this.sprite = g_sprites.img0;
+    }
     
     // Change current image at certain interval
     if(!this.isExploding){    

@@ -186,6 +186,14 @@ function requestPreloads() {
         img5 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm5.png",
         img6 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm6.png",
         img7 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm7.png",
+        img8 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_0.png",
+        img9 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_1.png",
+        img10 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_2.png",
+        img11 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_3.png",
+        img12 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_4.png",
+        img13 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_5.png",
+        img14 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_6.png",
+        img15 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_7.png",
 
         fire1   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire1.png",
         fire2   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire2.png",
@@ -238,6 +246,7 @@ var block;
 
 function preloadDone() {
     var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3,g_images.img4,g_images.img5,g_images.img6,g_images.img7];
+    var reverse = [g_images.img8, g_images.img9, g_images.img10, g_images.img11,g_images.img12,g_images.img13,g_images.img14,g_images.img15];
     var fire = [g_images.fire1,g_images.fire2,g_images.fire3,g_images.fire4];
     var water = [g_images.water1,g_images.water2,g_images.water3,g_images.water4];
     var door = [g_images.door1,g_images.door2];
@@ -248,6 +257,7 @@ function preloadDone() {
     var explosion = [g_images.explosion0,g_images.explosion1,g_images.explosion2,g_images.explosion3];
     background = new Image(g_images.background);
     block = new Image(g_images.block);
+    g_sprites.reverse = new Sprite(reverse);
     g_sprites.img0 = new Sprite(images);
     g_sprites.fire1 = new Sprite(fire);
     g_sprites.water1 = new Sprite(water);
