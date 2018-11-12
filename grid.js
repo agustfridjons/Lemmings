@@ -59,7 +59,6 @@ Grid.prototype.createGrid = function(){
 };
 
 Grid.prototype.level1 = function(){
-
     this.maxLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -179,15 +178,18 @@ Grid.prototype.getBottomBlockID = function(cx, cy) {
 };
 
 Grid.prototype.print = function(){
-    console.log(this.maxLemmings,this.numberOfLemmings);
+    //console.log(this.maxLemmings,this.numberOfLemmings);
 };
 
 Grid.prototype.update = function(du) {
-    console.log(this.numberOfLemmings,this.maxLemmings);
-    if(this.numberOfLemmings < this.maxLemmings && this.time % 25 === 0){
+    //console.log(this.numberOfLemmings,this.maxLemmings);
+    if(this.numberOfLemmings < this.maxLemmings 
+        && this.time % 25 === 0
+        && this.time > 25){
         entityManager.generateLemming({
             cx : 20,
-            cy : 348
+            cy : 348,
+            velX : 1.5
         });
         this.numberOfLemmings++;
     }

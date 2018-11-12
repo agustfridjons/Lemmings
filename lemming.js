@@ -59,7 +59,7 @@ lemming.prototype.isDying = false;
 lemming.prototype.explodingIMG = 0; 
 lemming.prototype.isExploding = false;
 lemming.prototype.isLeaving = false;
-
+lemming.prototype.isDropping = false;
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
@@ -101,7 +101,7 @@ lemming.prototype.update = function (du) {
     // Unregister and check for death
     spatialManager.unregister(this);
 
-    // Check if entity is dead
+    // Check if lemming is dead
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
     }
@@ -123,6 +123,7 @@ lemming.prototype.update = function (du) {
     if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
         if (this.velY > 0) {
             this.velY = 0;
+            this.isDropping = false;
             //this.cy = belowTop - this.radius - 0.5;
         } else {
             this.velY *= -1;
@@ -151,6 +152,8 @@ lemming.prototype.update = function (du) {
         this.velX = 0;
         this.velY = 0;
     }
+
+    
     // Get the id of current block and bottom blocks
     var BlocksID = entityManager.grid.getBottomBlockID(this.cx, this.cy);
     // Get position of adjacent blocks
@@ -158,6 +161,9 @@ lemming.prototype.update = function (du) {
     // React to specialBlocks
     this.specialReaction(BlocksID, adBlocks, du);
     
+    if (this.isDropping) {
+        this.velY += NOMINAL_GRAVITY;
+    }
     // Move lemming
     this.cx += this.velX * du;
     this.cy += this.velY * du;
@@ -170,27 +176,24 @@ var NOMINAL_GRAVITY = 0.1;
 lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
     var currentBlockPos = adBlocks[1][1];
     if (BlocksID[0] != 1) {
-        this.velY += NOMINAL_GRAVITY;
-    } else if (BlocksID[1] === 5) {
+        this.isDropping = true;
+    } else if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
+        this.isDropping = true;
         this.velY = -4;
     } else if (BlocksID[1] === 7) {
-        if(this.velX > 0){
-            this.velX *= -1;
-        }
-         else if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
+        if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
             this.velY = -1.5;
             this.velX = -1.5;
         } else {
+            this.isDropping = true;
             this.velY = -4;
             this.velX = 1.5;
         }
     } else if (BlocksID[1] === 6) {
-        if(this.velX < 0){
-            this.velX *= -1;
-        }
-        else if (currentBlockPos.cy < this.cy + (this.radius)) {
+        if (currentBlockPos.cy < this.cy + (this.radius)) {
             this.velY = -1.5;
         } else {
+            this.isDropping = true;
             this.velY = -4;
             this.velX = -1.5;
         }
@@ -204,10 +207,6 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         this.sprite = g_sprites.explosion;
         this.velX = 0;
         this.velY = 0;
-
-        //this.lifeSpan -= du * 2;
-        //if (currentBlockPos)
-        // WORK IN PROGRESS MOTHERFUCKERS
     } else if(BlocksID[1] === 4 && this.cx < currentBlockPos.cx + 1 && this.cx > currentBlockPos.cx - 1){
         this.lifeSpan -= du*4;
         this.isLeaving = true;
