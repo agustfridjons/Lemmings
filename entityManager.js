@@ -80,8 +80,16 @@ generateDoor  : function(descr) {
     this._doors.push(new Door(descr));
 },
 
+generateGun : function(descr){
+    this._entities.push(new Gun(descr));
+},
+
 generateJump   : function(descr){
     this._entities.push(new Jump(descr));
+},
+
+generateSmallJump   : function(descr){
+    this._entities.push(new SmallJump(descr));
 },
 
 generateLeftJump : function(descr) {
@@ -149,7 +157,9 @@ render: function(ctx) {
             ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 4&& this.rightLeft !== 0){
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        }
+        } else if(this.choice === 5){
+            ctx.drawImage(g_images.gun,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,25,25);
+        } 
     } catch(undefined){
             
     }

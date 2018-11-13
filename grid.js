@@ -25,7 +25,18 @@ Grid.prototype.startingPos = {};
 
 Grid.prototype.time = 0;
 
-
+/*
+0 = enginn kubbur
+1 = kubbur
+2 = eldur
+3 = vatn
+4 = hurð
+5 = hopp
+6 = vinstri hopp
+7 = hægri hopp
+8 = byssa
+9 = lítið hopp
+*/
 
 Grid.prototype.createGrid = function(){
 
@@ -72,7 +83,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
@@ -85,11 +96,11 @@ Grid.prototype.level1 = function(){
                      [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
                      [1,0,0,0,0,0,0,0,0,0,0,0,0,6,0,2,1],
                      [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-                     [1,0,0,0,0,0,5,0,0,0,0,5,0,0,0,0,1],
+                     [1,0,0,0,0,0,5,0,0,0,0,9,0,0,0,0,1],
                      [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
-    //this.currentLevel = this.solution;
+    this.currentLevel = this.solution;
 
     for (var i = 0; i < this.colLength; i++) {
         for (var j = 0; j < this.rowLength; j++) {
@@ -105,6 +116,10 @@ Grid.prototype.level1 = function(){
                 this.makeLeftJump(this.position[i][j]);
             } else if (this.currentLevel[i][j] === 7) {
                 this.makeRightJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 8) {
+                this.makeGun(this.position[i][j]);
+            } else if(this.currentLevel[i][j] === 9){
+                this.makeSmallJump(this.position[i][j]);
             }
         }
     }
@@ -152,6 +167,14 @@ Grid.prototype.level2 = function(){
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 4;
 };
+
+Grid.prototype.makeGun = function(pos){
+    entityManager.generateGun({
+        cx  :   pos.cx,
+        cy  :   pos.cy
+    });    
+};
+
 Grid.prototype.makeFire = function(pos){
     entityManager.generateFire({
         cx  :   pos.cx,
@@ -175,6 +198,13 @@ Grid.prototype.makeDoor = function(pos){
 
 Grid.prototype.makeJump = function(pos){
     entityManager.generateJump({
+        cx  :   pos.cx,
+        cy  :   pos.cy
+    });
+};
+
+Grid.prototype.makeSmallJump = function(pos){
+    entityManager.generateSmallJump({
         cx  :   pos.cx,
         cy  :   pos.cy
     });
@@ -224,7 +254,10 @@ Grid.prototype.changeBlock = function(x,y){
             this.currentLevel[realy][realx] = 7;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
-        } 
+        } else if(this.choice === 5){
+            this.currentLevel[realy][realx] = 8;
+            this.makeGun(this.position[realy][realx]);
+        }
     }
 };
 

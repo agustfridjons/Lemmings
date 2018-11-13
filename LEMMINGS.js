@@ -111,6 +111,8 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 var KEY_3 = keyCode('3');
 var KEY_4 = keyCode('4');
+var KEY_5 = keyCode('5');
+var KEY_6 = keyCode('6');
 
 var KEY_K = keyCode('K');
 
@@ -136,6 +138,8 @@ function processDiagnostics() {
     if (eatKey(KEY_2)) entityManager.changeChoice(2); 
     if (eatKey(KEY_3)) entityManager.changeChoice(3);
     if (eatKey(KEY_4)) entityManager.changeChoice(4);  
+    if (eatKey(KEY_5)) entityManager.changeChoice(5);  
+    if (eatKey(KEY_6)) entityManager.changeChoice(6);  
 
     if (eatKey(KEY_K)) entityManager.killNearestShip(
         g_mouseX, g_mouseY);
@@ -215,6 +219,11 @@ function requestPreloads() {
         jump3   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump2.png",
         jump4   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump3.png",
 
+        smalljump1 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump0.png",
+        smalljump2 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump1.png",
+        smalljump3 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump2.png",
+        smalljump4 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump3.png",
+
         side1   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump0.png",
         side2   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump1.png",
         side3   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump2.png",
@@ -235,6 +244,8 @@ function requestPreloads() {
         explosion2 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion2.png",
         explosion3 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion3.png",
 
+        gun : "https://notendur.hi.is/~fth29/Kalli/Gun.png",
+
         background : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/background.png",
         block : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/sprite_Background0.png"
     };
@@ -253,18 +264,20 @@ function preloadDone() {
     var water = [g_images.water1,g_images.water2,g_images.water3,g_images.water4];
     var door = [g_images.door1,g_images.door2];
     var jump = [g_images.jump1,g_images.jump2,g_images.jump3,g_images.jump4];
+    var smallJump = [g_images.smalljump1,g_images.smalljump2,g_images.smalljump3,g_images.smalljump4];
     var side = [g_images.side1,g_images.side2,g_images.side3,g_images.side4];
     var right = [g_images.right1,g_images.right2,g_images.right3,g_images.right4];
     var buttons = [g_images.button0,g_images.button1,g_images.button2,g_images.button3];
     var explosion = [g_images.explosion0,g_images.explosion1,g_images.explosion2,g_images.explosion3];
-    background = new Image(g_images.background);
-    block = new Image(g_images.block);
+    var gun = [g_images.gun];
+    g_sprites.gun = new Sprite(gun);
     g_sprites.reverse = new Sprite(reverse);
     g_sprites.img0 = new Sprite(images);
     g_sprites.fire1 = new Sprite(fire);
     g_sprites.water1 = new Sprite(water);
     g_sprites.door1 = new Sprite(door);
     g_sprites.jump1 = new Sprite(jump);
+    g_sprites.smalljump = new Sprite(smallJump);
     g_sprites.side1 = new Sprite(side);
     g_sprites.right1 = new Sprite(right);
     g_sprites.button1 = new Sprite(buttons);
