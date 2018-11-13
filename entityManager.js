@@ -101,6 +101,10 @@ generateRightJump : function(descr) {
     this._entities.push(new RightJump(descr));
 },
 
+generateBullet : function(descr){
+    this._entities.push(new Bullet(descr));
+},
+
 changeMouse : function(x,y){
     this.mouseX = x;
     this.mouseY = y;

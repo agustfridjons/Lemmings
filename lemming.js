@@ -214,6 +214,12 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         this.isLeaving = true;
         this.currentIMG = 8;
         this.velX = 0;
+    } else if(BlocksID[1] === 8 && this.cx < currentBlockPos.cx + 2 && this.cx > currentBlockPos.cx - 2){
+        entityManager.generateBullet({
+            cx : this.cx,
+            cy : this.cy,
+            vel : this.velX * 2
+        })
     }
 };
 
