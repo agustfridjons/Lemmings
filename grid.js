@@ -21,6 +21,8 @@ Grid.prototype.blockIMG = new Image();
 
 Grid.prototype.numberOfLemmings = 0;
 Grid.prototype.maxLemmings = 0;
+Grid.prototype.lemmingsLeft = 0;
+
 Grid.prototype.startingPos = {};
 
 Grid.prototype.time = 0;

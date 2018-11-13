@@ -37,6 +37,7 @@ rightLeft : 0,
 leftLeft  : 0,
 blocksLeft: 0,
 isChosen  : false,
+rotation  : false,
 grid      : Object,
 // "PRIVATE" METHODS
 
@@ -108,11 +109,7 @@ changeMouse : function(x,y){
 changeChoice : function(type){
     this.choice = type;
     this.grid.changeChoice(type);
-    if(type !== 0){
-        this.isChosen = true;
-    } else {
-        this.isChosen = false;
-    }
+    this.isChosen = true;
 },
 
 init: function() {
@@ -158,7 +155,7 @@ render: function(ctx) {
         } else if(this.choice === 4&& this.rightLeft !== 0){
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 5){
-            ctx.drawImage(g_images.gun,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,25,25);
+            ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
         } else if(this.choice === 6){
             ctx.drawImage(g_images.smalljump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         }
