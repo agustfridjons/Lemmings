@@ -14,12 +14,14 @@ Grid.prototype.hardBlocks = [];
 Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
+Grid.prototype.solution = [];
 
 Grid.prototype.background = new Image();
 Grid.prototype.blockIMG = new Image();
 
 Grid.prototype.numberOfLemmings = 0;
 Grid.prototype.maxLemmings = 0;
+Grid.prototype.startingPos = {};
 
 Grid.prototype.time = 0;
 
@@ -59,18 +61,73 @@ Grid.prototype.createGrid = function(){
 };
 
 Grid.prototype.level1 = function(){
+    this.startingPos = this.position[9][1];
+    this.maxLemmings = 8;
+    this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    
+    this.solution = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,0,0,0,1,1,1,0,5,0,0,0,0,0,0,0,1],
+                     [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
+                     [1,0,0,0,0,0,0,0,0,0,0,0,0,6,0,2,1],
+                     [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+                     [1,0,0,0,0,0,5,0,0,0,0,5,0,0,0,0,1],
+                     [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    
+    //this.currentLevel = this.solution;
+
+    for (var i = 0; i < this.colLength; i++) {
+        for (var j = 0; j < this.rowLength; j++) {
+            if (this.currentLevel[i][j] === 2) {
+                this.makeFire(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 3) {
+                this.makeWater(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 4) {
+                this.makeDoor(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 5) {
+                this.makeJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 6) {
+                this.makeLeftJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 7) {
+                this.makeRightJump(this.position[i][j]);
+            }
+        }
+    }
+    entityManager.jumpsLeft = 5;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 2;
+    entityManager.rightLeft = 2;
+};
+
+Grid.prototype.level2 = function(){
+    this.startingPos = this.position[9][8];
     this.maxLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1],
-                         [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,4,1],
-                         [1,0,1,0,0,0,0,1,0,0,0,0,1,1,1,1,1],
-                         [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
-                         [1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,1],
+                         [1,0,2,0,0,1,1,1,1,1,1,1,0,0,2,0,1],
+                         [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
     for (var i = 0; i < this.colLength; i++) {
@@ -187,8 +244,8 @@ Grid.prototype.update = function(du) {
         && this.time % 25 === 0
         && this.time > 25){
         entityManager.generateLemming({
-            cx : 20,
-            cy : 348,
+            cx : this.startingPos.cx,
+            cy : this.startingPos.cy + 8,
             velX : 1.5
         });
         this.numberOfLemmings++;

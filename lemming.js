@@ -179,7 +179,7 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         this.isDropping = true;
     } else if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
         this.isDropping = true;
-        this.velY = -4;
+        this.velY = -4.5;
     } else if (BlocksID[1] === 7) {
         if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
             this.velY = -1.5;
