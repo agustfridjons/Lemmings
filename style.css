@@ -1,3 +1,8 @@
+@font-face{
+    src: url(fonts/Fipps-Regular.otf);
+    font-family: Fipps;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -6,9 +11,9 @@ body {
 }
 
 h1 {
-    font-family: 'Patua One', cursive;
-    font-size: 64px;
-    color: #1150b2;
+    font-family: 'Fipps', cursive;
+    font-size: 65px;
+    color: #7c5a43fd;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 20px;

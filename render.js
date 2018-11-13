@@ -15,7 +15,7 @@ var TOGGLE_UNDO_BOX = 'U'.charCodeAt(0);
 var TOGGLE_FLIPFLOP = 'F'.charCodeAt(0);
 var TOGGLE_RENDER = 'R'.charCodeAt(0);
 
-function render(ctx,ctx2) {
+function render(ctx) {
     
     // Process various option toggles
     //
@@ -28,10 +28,8 @@ function render(ctx,ctx2) {
     // I've pulled the clear out of `renderSimulation()` and into
     // here, so that it becomes part of our "diagnostic" wrappers
     //
-    if (g_doClear){
-        util.clearCanvas(ctx);
-        //util.clearCanvas2(ctx2);
-    }
+    if (g_doClear) util.clearCanvas(ctx);
+   
 
     // The main purpose of the box is to demonstrate that it is
     // always deleted by the subsequent "undo" before you get to

@@ -44,6 +44,14 @@ var g_ctx = g_canvas.getContext("2d");
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
+// =====================
+// Gamestate
+// =====================
+var gamestate = 0;
+
+function setGamestate(state) {
+    gamestate = state;
+}
 
 // ====================
 // CREATE INITIAL Lemming
@@ -243,7 +251,7 @@ function preloadDone() {
 
     entityManager.init();
     createInitialLemming();
-
+    
     main.init();
 }
 

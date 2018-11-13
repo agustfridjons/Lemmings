@@ -8,69 +8,94 @@
     } 
 }
 */
-function Menu(descr) {
-
-    // Common inherited setup logic from Entity
-    this.setup(descr);
-
-    this.sprite = this.sprite || g_sprites.button1;
+var menu = {
+    currentLevel : 1,
+    buttonW : 200,
+    buttonH : 50,
+    currentS : 0,
+    currentC : 0,
+    renderContr: false,
+    mpress: false
 };
 
-Menu.prototype = new Entity();
+    menu.nextLevel = function(){
+        this.currentLevel++;
+    };
 
-Menu.prototype.currentLevel = 1;
+    menu.levelString = function(){
+        return "Level " + this.currentLevel;
+    };
 
-Menu.prototype.KEY_MENU  = 'M'.charCodeAt(0);
-Menu.prototype.doMenu = false;
+    menu.update = function(du){
 
-Menu.prototype.buttonW = 200;
-Menu.prototype.buttonH = 50;
-Menu.prototype.imageS = 0;
-Menu.prototype.imageC = 0;
+        this.currentS = 0;
+        this.currentC = 2;
+        //if mouse is hovering a button changes sprites
+        if(menu.mouseOnButton(200,150,this.buttonW,this.buttonH)){
+            this.currentS++;
+        }
+        if(menu.mouseOnButton(200,250,this.buttonW,this.buttonH)){
+            this.currentC++;
+        }
 
-Menu.prototype.nextLevel = function(){
-    this.currentLevel++;
-};
+        //react if buttons are clicked
+        if(menu.mouseOnButton(200,150,this.buttonW,this.buttonH) 
+           && this.mpress){
+            setGamestate(1);
+            this.mpress = false;
+        }
+        if(menu.mouseOnButton(200,250,this.buttonW,this.buttonH) 
+           && this.mpress){
+            this.renderContr = true;
+            this.mpress = false;
+        }
+    };
 
-Menu.prototype.levelString = function(){
-    return "Level " + this.currentLevel;
-};
+    menu.render = function(ctx){
+        util.clearCanvas(ctx);
+        if(this.renderContr){
+            menu.renderControls(ctx);
+            return;
+        }
+        util.fillBox(ctx, 0, 0, ctx.canvas.width, 
+                     ctx.canvas.height,"#704F5F");
+        util.drawText(ctx, '26px Fipps',"#E",this.levelString(),
+                      ctx.canvas.width/2 - 75, 100);
+        ctx.drawImage(menu.getImage(this.currentS), 200, 150);
+        ctx.drawImage(menu.getImage(this.currentC), 200, 250);                           
+    };
 
-Menu.prototype.update = function(du){
-    this.imageS = 0;
-    this.imageC = 2;
-    //if mouse is hovering a button changes sprites
-    if(this.mouseOnButton(200,150,this.buttonW,this.buttonH)){
-        this.imageS++;
-    }if(this.mouseOnButton(200,250,this.buttonW,this.buttonH)){
-        this.imageC++;
+    menu.renderControls = function(ctx){
+        util.fillBox(ctx, 0, 0, ctx.canvas.width, 
+                     ctx.canvas.height,"#704F5F");
+        util.drawText(ctx, '26px Fipps',"#E",getText(0),
+                     ctx.canvas.width/2 - 75, 100);
+        util.drawText(ctx, '13px Fipps',"#E",getText(1),
+                     ctx.canvas.width/2 - 75, 150);
+    };
+
+    menu.mousePress = function(button){
+        this.mpress = button;
+    };
+
+    menu.getText = function(index){
+        var texts = ["CONTROLS",
+                     "Use number keys 1 - 5 to select elements to put on the map."];
+        return texts[index];
     }
 
-    if(eatKey(this.KEY_MENU)){
-        this.doMenu = !this.doMenu;
-    }
-};
+    menu.getImage = function(index){
+        var images = [g_images.button0,g_images.button1,
+                      g_images.button2,g_images.button3];
+        return images[index];
+    };
 
-Menu.prototype.render = function(ctx){
-    if(!this.doMenu) return;
-    console.log("menu");
-    util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height,"#704F5F");
-    util.drawText(ctx, '700 25px Arial',"#E2E2E2",
-                  this.levelString(), ctx.canvas.width/2 - 100, 100);
-    this.sprite.drawAt(ctx, 200, 150, this.imageS);
-    this.sprite.drawAt(ctx, 200, 250, this.imageC);                           
-};
-
-Menu.prototype.buttonPress = function(press){
-    return press;
-};
-
-Menu.prototype.mouseOnButton = function(x, y, w, h){
-    if(x < g_mouseX 
-       && g_mouseX < x + w
-       && y < g_mouseY
-       && g_mouseY < y + h){
-        return true;
-       }
-    return false;
-};
+    menu.mouseOnButton = function(x, y, w, h){
+        if(x < g_mouseX 
+        && g_mouseX < x + w
+        && y < g_mouseY
+        && g_mouseY < y + h){
+            return true;
+        }
+        return false;
+    };

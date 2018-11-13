@@ -65,10 +65,14 @@ main._iterCore = function (dt) {
         return;
     }
     
-    gatherInputs();
-    update(dt);
-    render(g_ctx);
-    //render(g_ctx,g_ctx2);
+    if(gamestate == 0){
+        menu.update(dt);
+        menu.render(g_ctx)
+    }else{
+        gatherInputs();
+        update(dt);
+        render(g_ctx);
+    }
 };
 
 main._isGameOver = false;
