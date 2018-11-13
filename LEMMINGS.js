@@ -246,6 +246,8 @@ function requestPreloads() {
         button1 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton1.png",
         button2 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton0.png",
         button3 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton1.png",
+        button4 : "https://notendur.hi.is/agf6/lemmingSprites/closeButton.png",
+        button5 : "https://notendur.hi.is/agf6/lemmingSprites/closeButtonL.png",
 
         explosion0 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion0.png",
         explosion1 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion1.png",
