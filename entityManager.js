@@ -29,6 +29,7 @@ var entityManager = {
 _blocks   : [],
 _lemmings : [],
 _entities : [],
+_doors    : [],
 mouseX    : 0,
 mouseY    : 0,
 jumpsLeft : 0,
@@ -56,7 +57,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._lemmings,this._entities];
+    this._categories = [this._doors,this._lemmings,this._entities];
 },
 /*
 generateShip : function(descr) {
@@ -76,11 +77,19 @@ generateWater :  function(descr) {
 },
 
 generateDoor  : function(descr) {
-    this._entities.push(new Door(descr));
+    this._doors.push(new Door(descr));
+},
+
+generateGun : function(descr){
+    this._entities.push(new Gun(descr));
 },
 
 generateJump   : function(descr){
     this._entities.push(new Jump(descr));
+},
+
+generateSmallJump   : function(descr){
+    this._entities.push(new SmallJump(descr));
 },
 
 generateLeftJump : function(descr) {
@@ -109,12 +118,6 @@ changeChoice : function(type){
 init: function() {
     this.generateGrid();
     this.grid.level1();
-    
-    
-    this.generateLemming({
-        cx : 122,
-        cy : 277    
-    });
     
 },
 
@@ -154,6 +157,10 @@ render: function(ctx) {
             ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 4&& this.rightLeft !== 0){
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        } else if(this.choice === 5){
+            ctx.drawImage(g_images.gun,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,25,25);
+        } else if(this.choice === 6){
+            ctx.drawImage(g_images.smalljump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         }
     } catch(undefined){
             

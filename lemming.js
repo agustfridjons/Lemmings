@@ -18,11 +18,14 @@ function lemming(descr) {
     // Common inherited setup logic from Entity
     this.rememberResets();
     this.setup(descr);
+    
+    
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.img0;
-    
+
+    //this.radius = this.sprite.width/2;
     // Set normal drawing scale, and warp state off
-    this._scale = 1.2;
+    this._scale = 1;
 };
 
 lemming.prototype = new Entity();
@@ -44,8 +47,8 @@ lemming.prototype.KEY_GRAVITY  = 'Z'.charCodeAt(0);
 lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
 
 // Initial, inheritable, default values
-lemming.prototype.cx = 200;
-lemming.prototype.cy = 200;
+lemming.prototype.cx = 60;
+lemming.prototype.cy = 348;
 lemming.prototype.velX = -1.5;
 lemming.prototype.velY = 0;
 lemming.prototype.isGoingRight = true;
@@ -53,6 +56,10 @@ lemming.prototype.numSubSteps = 3;
 
 lemming.prototype.lifeSpan = 1500 / NOMINAL_UPDATE_INTERVAL;
 lemming.prototype.isDying = false;
+lemming.prototype.explodingIMG = 0; 
+lemming.prototype.isExploding = false;
+lemming.prototype.isLeaving = false;
+lemming.prototype.isDropping = false;
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
@@ -60,20 +67,41 @@ lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
+
+    if(this.velX < 0){
+        this.sprite = g_sprites.reverse;
+    } else if(this.velX > 0){
+        this.sprite = g_sprites.img0;
+    }
     
-    // Change current image at certain interval    
-    if (this.time % 10 === 0) {
-        if (this.currentIMG < 3) {
-            this.currentIMG++;
-        } else {
-            this.currentIMG = 0;
+    // Change current image at certain interval
+    if(!this.isExploding){    
+        if (this.time % 10 === 0) {
+            if (this.currentIMG < 7) {
+                this.currentIMG++;
+            } else {
+                this.currentIMG = 0;
+            }
         }
+    } else if(this.isLeaving){
+        this.currentIMG = 8;
+    }else {
+        if (this.time % 10 === 0) {
+            if (this.currentIMG < 3) {
+                this.currentIMG++;
+            } else {
+                this.currentIMG = 0;
+            }
+        }
+    }
+    if(this.isExploding){
+        this.lifeSpan -= du*2;
     }
     this.time++;
     // Unregister and check for death
     spatialManager.unregister(this);
 
-    // Check if entity is dead
+    // Check if lemming is dead
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
     }
@@ -87,11 +115,15 @@ lemming.prototype.update = function (du) {
     // Compute my provisional new position (barring collisions)
     var nextX = prevX + this.velX * du;
     var nextY = prevY + this.velY * du;
+    var temp = entityManager.grid.findCurrentBlock(this.cx,this.cy);
+    //var belowTop = entityManager.grid.position[temp.y+1][temp.x].cy - entityManager.grid.halfHeight;
+
 
     // Block collision
     if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
         if (this.velY > 0) {
             this.velY = 0;
+            this.isDropping = false;
         } else {
             this.velY *= -1;
         }
@@ -119,6 +151,8 @@ lemming.prototype.update = function (du) {
         this.velX = 0;
         this.velY = 0;
     }
+
+    
     // Get the id of current block and bottom blocks
     var BlocksID = entityManager.grid.getBottomBlockID(this.cx, this.cy);
     // Get position of adjacent blocks
@@ -126,8 +160,9 @@ lemming.prototype.update = function (du) {
     // React to specialBlocks
     this.specialReaction(BlocksID, adBlocks, du);
     
-
-
+    if (this.isDropping) {
+        this.velY += NOMINAL_GRAVITY;
+    }
     // Move lemming
     this.cx += this.velX * du;
     this.cy += this.velY * du;
@@ -140,21 +175,27 @@ var NOMINAL_GRAVITY = 0.1;
 lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
     var currentBlockPos = adBlocks[1][1];
     if (BlocksID[0] != 1) {
-        this.velY += NOMINAL_GRAVITY;
-    } else if (BlocksID[1] === 5) {
-        this.velY = -4;
+        this.isDropping = true;
+    } else if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
+        this.isDropping = true;
+        this.velY = -4.5;
+    } else if (BlocksID[1] === 9 && this.cy > currentBlockPos.cy) {
+        this.isDropping = true;
+        this.velY = -3.2;
     } else if (BlocksID[1] === 7) {
         if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
             this.velY = -1.5;
             this.velX = -1.5;
         } else {
+            this.isDropping = true;
             this.velY = -4;
             this.velX = 1.5;
         }
     } else if (BlocksID[1] === 6) {
-        if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
+        if (currentBlockPos.cy < this.cy + (this.radius)) {
             this.velY = -1.5;
         } else {
+            this.isDropping = true;
             this.velY = -4;
             this.velX = -1.5;
         }
@@ -163,9 +204,16 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         this.currentIMG = 1;
         this.velX /= 1.02;
     } else if (BlocksID[1] === 2) {
-        //this.lifeSpan -= du * 2;
-        //if (currentBlockPos)
-        // WORK IN PROGRESS MOTHERFUCKERS
+        this.isExploding = true;
+        if(this.currentIMG >3) this.currentIMG = 0;
+        this.sprite = g_sprites.explosion;
+        this.velX = 0;
+        this.velY = 0;
+    } else if(BlocksID[1] === 4 && this.cx < currentBlockPos.cx + 1 && this.cx > currentBlockPos.cx - 1){
+        this.lifeSpan -= du*4;
+        this.isLeaving = true;
+        this.currentIMG = 8;
+        this.velX = 0;
     }
 };
 

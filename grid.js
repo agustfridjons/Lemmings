@@ -14,28 +14,47 @@ Grid.prototype.hardBlocks = [];
 Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
+Grid.prototype.solution = [];
+
 Grid.prototype.background = new Image();
 Grid.prototype.blockIMG = new Image();
 
+Grid.prototype.numberOfLemmings = 0;
+Grid.prototype.maxLemmings = 0;
+Grid.prototype.startingPos = {};
 
+Grid.prototype.time = 0;
+
+/*
+0 = enginn kubbur
+1 = kubbur
+2 = eldur
+3 = vatn
+4 = hurð
+5 = hopp
+6 = vinstri hopp
+7 = hægri hopp
+8 = byssa
+9 = lítið hopp
+*/
 
 Grid.prototype.createGrid = function(){
 
-    this.background.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/sprite_Background0.png";
+    this.background.src = "https://notendur.hi.is/~fth29/Kalli/Forest.png";
     this.blockIMG.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png";
 
     this.position = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-                   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+                     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
 
     var x = -this.halfWidth;
     var y = -this.halfHeight;
@@ -53,19 +72,77 @@ Grid.prototype.createGrid = function(){
 };
 
 Grid.prototype.level1 = function(){
-
-
+    this.startingPos = this.position[9][1];
+    this.maxLemmings = 8;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,2,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1],
-                         [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                         [1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,1],
+                         [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    
+    this.solution = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,1],
+                     [1,0,0,0,1,1,1,9,0,0,0,0,0,0,0,0,1],
+                     [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
+                     [1,0,0,0,0,0,0,0,0,0,0,0,0,6,0,2,1],
+                     [1,0,0,0,0,0,0,0,0,0,0,9,0,1,1,1,1],
+                     [1,0,0,0,0,0,9,0,0,0,9,1,0,0,0,0,1],
+                     [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
+                     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    
+    this.currentLevel = this.solution;
+
+    for (var i = 0; i < this.colLength; i++) {
+        for (var j = 0; j < this.rowLength; j++) {
+            if (this.currentLevel[i][j] === 2) {
+                this.makeFire(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 3) {
+                this.makeWater(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 4) {
+                this.makeDoor(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 5) {
+                this.makeJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 6) {
+                this.makeLeftJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 7) {
+                this.makeRightJump(this.position[i][j]);
+            } else if (this.currentLevel[i][j] === 8) {
+                this.makeGun(this.position[i][j]);
+            } else if(this.currentLevel[i][j] === 9){
+                this.makeSmallJump(this.position[i][j]);
+            }
+        }
+    }
+    entityManager.jumpsLeft = 5;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 2;
+    entityManager.rightLeft = 2;
+};
+
+Grid.prototype.level2 = function(){
+    this.startingPos = this.position[9][8];
+    this.maxLemmings = 5;
+    this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,2,0,0,1,1,1,1,1,1,1,0,0,2,0,1],
+                         [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
     for (var i = 0; i < this.colLength; i++) {
@@ -90,6 +167,14 @@ Grid.prototype.level1 = function(){
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 4;
 };
+
+Grid.prototype.makeGun = function(pos){
+    entityManager.generateGun({
+        cx  :   pos.cx,
+        cy  :   pos.cy
+    });    
+};
+
 Grid.prototype.makeFire = function(pos){
     entityManager.generateFire({
         cx  :   pos.cx,
@@ -113,6 +198,13 @@ Grid.prototype.makeDoor = function(pos){
 
 Grid.prototype.makeJump = function(pos){
     entityManager.generateJump({
+        cx  :   pos.cx,
+        cy  :   pos.cy
+    });
+};
+
+Grid.prototype.makeSmallJump = function(pos){
+    entityManager.generateSmallJump({
         cx  :   pos.cx,
         cy  :   pos.cy
     });
@@ -162,6 +254,12 @@ Grid.prototype.changeBlock = function(x,y){
             this.currentLevel[realy][realx] = 7;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
+        } else if(this.choice === 5){
+            this.currentLevel[realy][realx] = 8;
+            this.makeGun(this.position[realy][realx]);
+        } else if(this.choice === 6){
+            this.currentLevel[realy][realx] = 9;
+            this.makeSmallJump(this.position[realy][realx]);
         }
     }
 };
@@ -172,13 +270,29 @@ Grid.prototype.getBottomBlockID = function(cx, cy) {
             this.currentLevel[currentBlockPos.y][currentBlockPos.x]];
 };
 
-Grid.prototype.update = function(du) {
+Grid.prototype.print = function(){
+    //console.log(this.maxLemmings,this.numberOfLemmings);
+};
 
+Grid.prototype.update = function(du) {
+    //console.log(this.numberOfLemmings,this.maxLemmings);
+    if(this.numberOfLemmings < this.maxLemmings 
+        && this.time % 25 === 0
+        && this.time > 25){
+        entityManager.generateLemming({
+            cx : this.startingPos.cx,
+            cy : this.startingPos.cy + 8,
+            velX : 1.5
+        });
+        this.numberOfLemmings++;
+    }
+    this.time++;
 };
 
 
 Grid.prototype.render = function(ctx){
 
+    ctx.drawImage(this.background,0,0,610,400);
 
     for (var i = 0; i < this.colLength; i++) {
         for (var j = 0; j < this.rowLength; j++) {
@@ -187,16 +301,15 @@ Grid.prototype.render = function(ctx){
                              this.position[i][j].cy - this.halfHeight,
                               this.halfWidth*2, this.halfHeight*2);
             } else {
-                ctx.drawImage(this.background, this.position[i][j].cx - this.halfWidth,
-                            this.position[i][j].cy - this.halfHeight,
-                            this.halfWidth*2, this.halfHeight*2);
+                //ctx.drawImage(this.background, this.position[i][j].cx - this.halfWidth,
+                  //          this.position[i][j].cy - this.halfHeight,
+                    //        this.halfWidth*2, this.halfHeight*2);
             }
         }
     }
+   
 };
 
-Grid.prototype.update = function(){
-};
 
 Grid.prototype.findCurrentBlock = function(xPos, yPos){
     var realX = Math.round((xPos+this.halfWidth)/(this.halfWidth*2));
