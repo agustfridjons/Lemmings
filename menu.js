@@ -9,7 +9,7 @@
 }
 */
 var menu = {
-    currentLevel : 1,
+    currentLevel : 3,
     buttonW : 200,
     buttonH : 50,
     currentS : 0,
@@ -41,6 +41,7 @@ var menu = {
         //react if buttons are clicked
         if(menu.mouseOnButton(200,150,this.buttonW,this.buttonH) 
            && this.mpress){
+            entityManager.init(this.currentLevel);
             setGamestate(1);
             this.mpress = false;
         }
