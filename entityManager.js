@@ -159,7 +159,9 @@ render: function(ctx) {
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 5){
             ctx.drawImage(g_images.gun,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,25,25);
-        } 
+        } else if(this.choice === 6){
+            ctx.drawImage(g_images.smalljump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        }
     } catch(undefined){
             
     }

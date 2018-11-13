@@ -257,6 +257,9 @@ Grid.prototype.changeBlock = function(x,y){
         } else if(this.choice === 5){
             this.currentLevel[realy][realx] = 8;
             this.makeGun(this.position[realy][realx]);
+        } else if(this.choice === 6){
+            this.currentLevel[realy][realx] = 9;
+            this.makeSmallJump(this.position[realy][realx]);
         }
     }
 };
