@@ -139,11 +139,11 @@ render: function(ctx) {
 
     this.grid.render(ctx);
 
-    for (var i = 0; i < this._lemmings.length; i++) {
-        this._lemmings[i].render(ctx);
-    }
     for (var i = 0; i < this._doors.length; i++) {
         this._doors[i].render(ctx);
+    }
+    for (var i = 0; i < this._lemmings.length; i++) {
+        this._lemmings[i].render(ctx);
     }
     for (var i = 0; i < this._entities.length; i++) {
         this._entities[i].render(ctx);
