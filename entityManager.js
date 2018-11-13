@@ -60,11 +60,7 @@ KILL_ME_NOW : -1,
 deferredSetup : function () {
     this._categories = [this._doors,this._lemmings,this._entities];
 },
-/*
-generateShip : function(descr) {
-    this._ships.push(new Ship(descr));
-},
-*/
+
 generateLemming : function(descr) {
     this._lemmings.push(new lemming(descr));
 },
@@ -112,9 +108,23 @@ changeChoice : function(type){
     this.isChosen = true;
 },
 
-init: function() {
+clearCatagories: function() {
+    this._doors = [];
+    this._entities = [];
+},
+
+init: function(level) {
+    console.log("init");
+    this.clearCatagories();
     this.generateGrid();
-    this.grid.level1();
+
+    if (level === 1) {
+        this.grid.level1();
+    } else if (level === 2) {
+        this.grid.level2();
+    } else if (level === 3) {
+        this.grid.level3();
+    }
     
 },
 
@@ -128,20 +138,24 @@ generateGrid: function(){
 render: function(ctx) {
 
     this.grid.render(ctx);
-    var debugX = 10, debugY = 100;
 
-    for (var c = 0; c < this._categories.length; ++c) {
-
-        var aCategory = this._categories[c];
-
-        for (var i = 0; i < aCategory.length; ++i) {
-
-            aCategory[i].render(ctx);
-            //debug.text(".", debugX + i * 10, debugY);
-
-        }
-        debugY += 10;
+    for (var i = 0; i < this._lemmings.length; i++) {
+        this._lemmings[i].render(ctx);
     }
+    for (var i = 0; i < this._doors.length; i++) {
+        this._doors[i].render(ctx);
+    }
+    for (var i = 0; i < this._entities.length; i++) {
+        this._entities[i].render(ctx);
+    }
+
+/*     for (var c = 0; c < this._categories.length; ++c) {
+        var aCategory = this._categories[c];
+        for (var i = 0; i < aCategory.length; ++i) {
+            aCategory[i].render(ctx);
+        }
+    } */
+
     if(this.isChosen){
         ctx.globalAlpha = 0.65;
         try{
@@ -183,15 +197,40 @@ updateStats : function(){
 update: function(du) {
     this.updateStats();
     this.grid.update();
-    for (var c = 0; c < this._categories.length; ++c) {
 
+    var i = 0;
+    while (i < this._doors.length) {
+        var status = this._doors[i].update(du);
+        if (status === this.KILL_ME_NOW) {
+            this._doors.splice(i,1);
+        } else {
+            ++i;
+        }
+    }
+    i = 0;
+    while (i < this._lemmings.length) {
+        var status = this._lemmings[i].update(du);
+        if (status === this.KILL_ME_NOW) {
+            this._lemmings.splice(i,1);
+        } else {
+            ++i;
+        }
+    }
+    i = 0;
+    while (i < this._entities.length) {
+        var status = this._entities[i].update(du);
+        if (status === this.KILL_ME_NOW) {
+            this._entities.splice(i,1);
+        } else {
+            ++i;
+        }
+    }
+
+/*     for (var c = 0; c < this._categories.length; ++c) {
         var aCategory = this._categories[c];
         var i = 0;
-
         while (i < aCategory.length) {
-
             var status = aCategory[i].update(du);
-
             if (status === this.KILL_ME_NOW) {
                 // remove the dead guy, and shuffle the others down to
                 // prevent a confusing gap from appearing in the array
@@ -201,7 +240,7 @@ update: function(du) {
                 ++i;
             }
         }
-    }
+    } */
 }
 }
 

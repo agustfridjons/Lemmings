@@ -54,6 +54,7 @@ var menu = {
         //react if buttons are clicked
         if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50,
                                this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress){
+            entityManager.init(this.currentLevel);
             setGamestate(1);
             this.mpress = false;
         }
