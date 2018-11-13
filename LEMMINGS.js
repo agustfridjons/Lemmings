@@ -126,31 +126,16 @@ var KEY_K = keyCode('K');
 
 function processDiagnostics() {
 
-    if (eatKey(KEY_MIXED))
-        g_allowMixedActions = !g_allowMixedActions;
-
-    if (eatKey(KEY_GRAVITY)) g_useGravity = !g_useGravity;
-
-    if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
-
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
-
-    if (eatKey(KEY_HALT)) entityManager.haltShips();
 
     if (eatKey(KEY_RESET)) entityManager.resetShips();
 
-    if (eatKey(KEY_0)) entityManager.changeChoice(0);
-
     if (eatKey(KEY_1)) entityManager.changeChoice(1);
-
     if (eatKey(KEY_2)) entityManager.changeChoice(2); 
     if (eatKey(KEY_3)) entityManager.changeChoice(3);
     if (eatKey(KEY_4)) entityManager.changeChoice(4);  
     if (eatKey(KEY_5)) entityManager.changeChoice(5);  
     if (eatKey(KEY_6)) entityManager.changeChoice(6);  
-
-    if (eatKey(KEY_K)) entityManager.killNearestShip(
-        g_mouseX, g_mouseY);
 }
 
 
@@ -252,7 +237,8 @@ function requestPreloads() {
         explosion2 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion2.png",
         explosion3 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion3.png",
 
-        gun : "https://notendur.hi.is/~fth29/Kalli/Gun.png",
+        gun1 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun0.png",
+        gun2 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun1.png",
 
         background : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/background.png",
         block : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/sprite_Background0.png"
@@ -277,7 +263,7 @@ function preloadDone() {
     var right = [g_images.right1,g_images.right2,g_images.right3,g_images.right4];
     var buttons = [g_images.button0,g_images.button1,g_images.button2,g_images.button3];
     var explosion = [g_images.explosion0,g_images.explosion1,g_images.explosion2,g_images.explosion3];
-    var gun = [g_images.gun];
+    var gun = [g_images.gun1,g_images.gun2];
     g_sprites.gun = new Sprite(gun);
     g_sprites.reverse = new Sprite(reverse);
     g_sprites.img0 = new Sprite(images);
