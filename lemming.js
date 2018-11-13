@@ -124,7 +124,6 @@ lemming.prototype.update = function (du) {
         if (this.velY > 0) {
             this.velY = 0;
             this.isDropping = false;
-            //this.cy = belowTop - this.radius - 0.5;
         } else {
             this.velY *= -1;
         }
