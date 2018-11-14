@@ -25,6 +25,10 @@ Fire.prototype._scale = 1;
 
 Fire.prototype.update = function () {
     
+    var BlocksID = entityManager.grid.getBlocksID(this.cx, this.cy);
+    if (BlocksID[1] != 2) {
+        return entityManager.KILL_ME_NOW;
+    }
 
     // Change current image at certain interval    
     if (this.time % 10 === 0) {

@@ -37,22 +37,18 @@ lemming.prototype.rememberResets = function () {
     this.reset_rotation = this.rotation;
 };
 
-lemming.prototype.KEY_JUMP = 'W'.charCodeAt(0);
-lemming.prototype.KEY_LEFT   = 'A'.charCodeAt(0);
-lemming.prototype.KEY_RIGHT  = 'D'.charCodeAt(0);
-lemming.prototype.KEY_DOWN  = 'S'.charCodeAt(0);
-lemming.prototype.KEY_STOP  = 'E'.charCodeAt(0);
-lemming.prototype.KEY_GRAVITY  = 'Z'.charCodeAt(0);
-
-lemming.prototype.KEY_FIRE   = ' '.charCodeAt(0);
-
 // Initial, inheritable, default values
 lemming.prototype.cx = 60;
 lemming.prototype.cy = 348;
 lemming.prototype.velX = -1.5;
 lemming.prototype.velY = 0;
 lemming.prototype.isGoingRight = true;
-lemming.prototype.numSubSteps = 6;
+lemming.prototype.numSubSteps = 3;
+
+lemming.prototype.speedX = 1.5;
+lemming.prototype.sideJumpSPEED = 4.5;
+lemming.prototype.bigJumpSPEED = 4.5;
+lemming.prototype.smallJumpSPEED = 3.2;
 
 lemming.prototype.lifeSpan = 1500 / NOMINAL_UPDATE_INTERVAL;
 lemming.prototype.isDying = false;
@@ -60,6 +56,7 @@ lemming.prototype.explodingIMG = 0;
 lemming.prototype.isExploding = false;
 lemming.prototype.isLeaving = false;
 lemming.prototype.isDropping = false;
+lemming.prototype.isOnRamp = false;
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
@@ -97,8 +94,6 @@ lemming.prototype.update = function (du) {
         this.lifeSpan -= du*2;
     }
     this.time++;
-    // Unregister and check for death
-    spatialManager.unregister(this);
 
     // Check if lemming is dead
     if (this._isDeadNow) {
@@ -115,36 +110,11 @@ lemming.prototype.update = function (du) {
     }
 
     this.computeSubsteps(du/this.numSubSteps);
-
-    var temp = entityManager.grid.findCurrentBlock(this.cx,this.cy);
-    //var belowTop = entityManager.grid.position[temp.y+1][temp.x].cy - entityManager.grid.halfHeight;
-
-    
-    if (eatKey(this.KEY_JUMP)) {
-        this.velY = -4;
-        //this.velX = 0;
-    }
-    if (eatKey(this.KEY_DOWN)) {
-        this.velY = 1;
-    }
-    if (eatKey(this.KEY_RIGHT)) {
-        this.velX *= -1;
-        this.velY = 0;
-    }
-    if (eatKey(this.KEY_LEFT)) {
-        this.velX *= -1;
-        this.velY = 0;
-    }
-    if (eatKey(this.KEY_STOP)) {
-        this.velX = 0;
-        this.velY = 0;
-    }
-
     
     // Get the id of current block and bottom blocks
-    var BlocksID = entityManager.grid.getBottomBlockID(this.cx, this.cy);
-    var BlocksIDleft = entityManager.grid.getBottomBlockID(this.cx-this.radius, this.cy);
-    var BlocksIDright = entityManager.grid.getBottomBlockID(this.cx+this.radius, this.cy);
+    var BlocksID = entityManager.grid.getBlocksID(this.cx, this.cy);
+    var BlocksIDleft = entityManager.grid.getBlocksID(this.cx-this.radius, this.cy);
+    var BlocksIDright = entityManager.grid.getBlocksID(this.cx+this.radius, this.cy);
     // Get position of adjacent blocks
     var adBlocks = entityManager.grid.findAdjacentBlocks(this.cx, this.cy);
     // React to specialBlocks
@@ -152,12 +122,12 @@ lemming.prototype.update = function (du) {
     
     if (this.isDropping) {
         this.velY += NOMINAL_GRAVITY;
+    } else if (!this.isOnRamp){
+        this.cy = adBlocks[1][1].cy + this.radius - 3;
     }
     // Move lemming
-    this.cx += this.velX * du;
-    this.cy += this.velY * du;
-
-    spatialManager.register(this);
+    this.cx += (this.velX/1.2) * du;
+    this.cy += (this.velY/1.2) * du;
 };
 
 lemming.prototype.computeSubsteps = function(du) {
@@ -168,6 +138,7 @@ lemming.prototype.computeSubsteps = function(du) {
     // Compute my provisional new position (barring collisions)
     var nextX = prevX + this.velX * du;
     var nextY = prevY + this.velY * du;
+
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
             if (this.velY > 0) {
@@ -210,35 +181,36 @@ lemming.prototype.computeSubsteps = function(du) {
 var NOMINAL_GRAVITY = 0.1;
 
 lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du) {
-    //console.log(this.radius);
     var currentBlockPos = adBlocks[1][1];
     if (BlocksID[0] != 1 && BlocksIDleft[0] != 1 && BlocksIDright[0] != 1) {
         this.isDropping = true;
     }
-    /*if (BlocksID[0] != 1) {
+    if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
         this.isDropping = true;
-    } else*/ if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
-        this.isDropping = true;
-        this.velY = -4.5;
+        this.velY = -this.bigJumpSPEED;
     } else if (BlocksID[1] === 9 && this.cy > currentBlockPos.cy) {
         this.isDropping = true;
-        this.velY = -3.2;
+        this.velY = -this.smallJumpSPEED;
     } else if (BlocksID[1] === 7) {
-        if (currentBlockPos.cy < this.cy + (this.radius/1.5)) {
-            this.velY = -1.5;
-            this.velX = -1.5;
-        } else {
+        if (currentBlockPos.cy < this.cy) {
+            this.isOnRamp = true;
+            this.velY = -this.speedX;
+            this.velX = -this.speedX;
+        } else if (currentBlockPos.cy < this.cy + this.radius / 2){
             this.isDropping = true;
-            this.velY = -4;
-            this.velX = 1.5;
+            this.isOnRamp = false;
+            this.velY = -this.sideJumpSPEED;
+            this.velX = this.speedX;
         }
     } else if (BlocksID[1] === 6) {
-        if (currentBlockPos.cy < this.cy + (this.radius)) {
-            this.velY = -1.5;
-        } else {
+        if (currentBlockPos.cy < this.cy) {
+            this.isOnRamp = true;
+            this.velY = -this.speedX;
+        } else if (currentBlockPos.cy < this.cy + this.radius / 2) {
             this.isDropping = true;
-            this.velY = -4;
-            this.velX = -1.5;
+            this.isOnRamp = false;
+            this.velY = -this.sideJumpSPEED;
+            this.velX = -this.speedX;
         }
     } else if (BlocksID[1] === 3) {
         this.lifeSpan -= du;
@@ -261,7 +233,8 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
             cy : this.cy,
             vel : this.velX * 2
         });
-        }
+        entityManager.grid.removeBlock(this.cx, this.cy);
+    }
 };
 
 lemming.prototype.getRadius = function () {

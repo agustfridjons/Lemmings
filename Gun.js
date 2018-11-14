@@ -25,6 +25,12 @@ Gun.prototype._scale = 1;
 
 
 Gun.prototype.update = function () {
+    var BlocksID = entityManager.grid.getBlocksID(this.cx, this.cy);
+
+    if (BlocksID[1] != 8) {
+        return entityManager.KILL_ME_NOW;
+    } 
+
     if(this.time%30 === 0){
         if(this.currentIMG >= 1){
             this.currentIMG = 0;

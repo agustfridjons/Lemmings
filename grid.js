@@ -86,7 +86,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-                         [1,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
@@ -103,7 +103,7 @@ Grid.prototype.level1 = function(){
                      [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
-    this.currentLevel = this.solution;
+    //this.currentLevel = this.solution;
 
     this.createEntities();
     entityManager.jumpsLeft = 5;
@@ -216,7 +216,7 @@ Grid.prototype.getResults = function() {
 Grid.prototype.makeGun = function(pos){
     entityManager.generateGun({
         cx  :   pos.cx,
-        cy  :   pos.cy
+        cy  :   pos.cy + 2
     });    
 };
 
@@ -309,7 +309,13 @@ Grid.prototype.changeBlock = function(x,y){
     }
 };
 
-Grid.prototype.getBottomBlockID = function(cx, cy) {
+Grid.prototype.removeBlock = function(xPos, yPos) {
+    var currentPos = this.findCurrentBlock(xPos, yPos);
+    this.currentLevel[currentPos.y][currentPos.x] = 0;
+    console.log("Removing block: ", currentPos.y, " - ", currentPos.x);
+};
+
+Grid.prototype.getBlocksID = function(cx, cy) {
     var currentBlockPos = this.findCurrentBlock(cx, cy);
     return [this.currentLevel[currentBlockPos.y + 1][currentBlockPos.x],
             this.currentLevel[currentBlockPos.y][currentBlockPos.x]];
@@ -465,6 +471,33 @@ Grid.prototype.collidesHorizontal = function(prevX, prevY, nextX, nextY, r, vel)
                         }
                     }
             }
+
+            if (type === 6 && vel) {
+                var jumpPadEdge = adBlocks[i][j].cx + this.halfWidth;
+                // Check X coords
+                if ((nextX - r < jumpPadEdge && prevX - r >= jumpPadEdge) ||
+                    (nextX + r > jumpPadEdge && prevX + r <= jumpPadEdge)) {
+                    // Check Y coords
+                    if (nextY + r >= adBlocks[i][j].cy - this.halfWidth &&
+                        nextY - r <= adBlocks[i][j].cy + this.halfWidth) {
+                        // It's a hit!
+                        return true;
+                    }
+                }
+            }
+            if (type === 7 && !vel) {
+                var jumpPadEdge = adBlocks[i][j].cx - this.halfWidth;
+                // Check X coords
+                if ((nextX - r < jumpPadEdge && prevX - r >= jumpPadEdge) ||
+                    (nextX + r > jumpPadEdge && prevX + r <= jumpPadEdge)) {
+                    // Check Y coords
+                    if (nextY + r >= adBlocks[i][j].cy - this.halfWidth &&
+                        nextY - r <= adBlocks[i][j].cy + this.halfWidth) {
+                        // It's a hit!
+                        return true;
+                    }
+                }
+            } 
         }
     }
         // It's a miss!
