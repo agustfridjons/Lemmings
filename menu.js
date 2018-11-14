@@ -132,7 +132,7 @@ var menu = {
         var images =[g_images.button0,g_images.button1,
                     g_images.button2,g_images.button3,
                     g_images.button5,g_images.button4,
-                    g_images.background,g_images.smalljump1,
+                    g_images.blockIMG,g_images.smalljump1,
                     g_images.jump1,g_images.right1,
                     g_images.side1,g_images.gun1];
         return images[index];
