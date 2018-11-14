@@ -9,7 +9,7 @@
 }
 */
 var menu = {
-    currentLevel : 3,
+    currentLevel : 1,
     buttonHalfW : 100,
     buttonHalfH : 25,
     currentS : 0,

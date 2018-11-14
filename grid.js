@@ -325,7 +325,8 @@ Grid.prototype.update = function(du) {
         entityManager.generateLemming({
             cx : this.startingPos.cx,
             cy : this.startingPos.cy + 8,
-            velX : 1.5
+            velX : 1.5,
+            radius : 11
         });
         this.lemmingsInPlay++;
     }

@@ -52,7 +52,7 @@ lemming.prototype.cy = 348;
 lemming.prototype.velX = -1.5;
 lemming.prototype.velY = 0;
 lemming.prototype.isGoingRight = true;
-lemming.prototype.numSubSteps = 3;
+lemming.prototype.numSubSteps = 6;
 
 lemming.prototype.lifeSpan = 1500 / NOMINAL_UPDATE_INTERVAL;
 lemming.prototype.isDying = false;
@@ -143,10 +143,12 @@ lemming.prototype.update = function (du) {
     
     // Get the id of current block and bottom blocks
     var BlocksID = entityManager.grid.getBottomBlockID(this.cx, this.cy);
+    var BlocksIDleft = entityManager.grid.getBottomBlockID(this.cx-this.radius, this.cy);
+    var BlocksIDright = entityManager.grid.getBottomBlockID(this.cx+this.radius, this.cy);
     // Get position of adjacent blocks
     var adBlocks = entityManager.grid.findAdjacentBlocks(this.cx, this.cy);
     // React to specialBlocks
-    this.specialReaction(BlocksID, adBlocks, du);
+    this.specialReaction(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du);
     
     if (this.isDropping) {
         this.velY += NOMINAL_GRAVITY;
@@ -166,21 +168,24 @@ lemming.prototype.computeSubsteps = function(du) {
     // Compute my provisional new position (barring collisions)
     var nextX = prevX + this.velX * du;
     var nextY = prevY + this.velY * du;
-    
+
     for (var i = 0; i < this.numSubSteps; i++) {
         // Block collision
         if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
             if (this.velY > 0) {
                 this.velY = 0;
                 this.isDropping = false;
+                //console.log("its a hit");
                 return;
             } else {
                 this.velY *= -1;
+                //console.log("its a hit");
                 return;
             }
         }
         if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
             this.velX *= -1; // change direction of lemming
+            //console.log("its a hit");
             return;
         }
         prevX = nextX;
@@ -192,11 +197,15 @@ lemming.prototype.computeSubsteps = function(du) {
 
 var NOMINAL_GRAVITY = 0.1;
 
-lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
+lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du) {
+    //console.log(this.radius);
     var currentBlockPos = adBlocks[1][1];
-    if (BlocksID[0] != 1) {
+    if (BlocksID[0] != 1 && BlocksIDleft[0] != 1 && BlocksIDright[0] != 1) {
         this.isDropping = true;
-    } else if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
+    }
+    /*if (BlocksID[0] != 1) {
+        this.isDropping = true;
+    } else*/ if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
         this.isDropping = true;
         this.velY = -4.5;
     } else if (BlocksID[1] === 9 && this.cy > currentBlockPos.cy) {
