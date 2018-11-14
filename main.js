@@ -69,7 +69,6 @@ main._iterCore = function (dt) {
         menu.update(dt);
         menu.render(g_ctx)
     }else{
-        gatherInputs();
         update(dt);
         render(g_ctx);
     }

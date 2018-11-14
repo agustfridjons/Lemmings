@@ -63,7 +63,6 @@ lemming.prototype.isDropping = false;
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
-    
 
 
 lemming.prototype.update = function (du) {
@@ -106,7 +105,14 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    if (this.lifeSpan < 0) return entityManager.KILL_ME_NOW;
+    if (this.lifeSpan < 0) { 
+        if (this.isLeaving) {
+            entityManager.grid.removeLemming(false);
+        } else {
+            entityManager.grid.removeLemming(true);
+        }
+        return entityManager.KILL_ME_NOW;
+    }
 
     // Remember my previous position
     var prevX = this.cx;
@@ -214,7 +220,13 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
         this.isLeaving = true;
         this.currentIMG = 8;
         this.velX = 0;
-    }
+    } else if(BlocksID[1] === 8 && this.cx < currentBlockPos.cx + 2 && this.cx > currentBlockPos.cx - 2){
+        entityManager.generateBullet({
+            cx : this.cx,
+            cy : this.cy,
+            vel : this.velX * 2
+        });
+        }
 };
 
 lemming.prototype.getRadius = function () {

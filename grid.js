@@ -16,14 +16,17 @@ Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
 Grid.prototype.solution = [];
 
-Grid.prototype.background = new Image();
-Grid.prototype.blockIMG = new Image();
+Grid.prototype.deadLemmings = 0;
+Grid.prototype.savedLemmings = 0;
 
-Grid.prototype.numberOfLemmings = 0;
-Grid.prototype.maxLemmings = 0;
-Grid.prototype.lemmingsLeft = 0;
+Grid.prototype.totalLemmings = 0;
+Grid.prototype.lemmingsInPlay = 0;
 
 Grid.prototype.startingPos = {};
+
+Grid.prototype.background;
+Grid.prototype.blockIMG;
+
 
 Grid.prototype.time = 0;
 
@@ -41,10 +44,7 @@ Grid.prototype.time = 0;
 */
 
 Grid.prototype.createGrid = function(){
-
-    this.background.src = "https://notendur.hi.is/~fth29/Kalli/Forest.png";
-    this.blockIMG.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png";
-
+    this.blockIMG  = g_images.blockIMG;
     this.position = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -74,8 +74,9 @@ Grid.prototype.createGrid = function(){
 };
 
 Grid.prototype.level1 = function(){
+    this.background = g_images.background1;
     this.startingPos = this.position[9][1];
-    this.maxLemmings = 8;
+    this.totalLemmings = 8;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -104,27 +105,7 @@ Grid.prototype.level1 = function(){
     
     this.currentLevel = this.solution;
 
-    for (var i = 0; i < this.colLength; i++) {
-        for (var j = 0; j < this.rowLength; j++) {
-            if (this.currentLevel[i][j] === 2) {
-                this.makeFire(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 3) {
-                this.makeWater(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 4) {
-                this.makeDoor(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 5) {
-                this.makeJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 6) {
-                this.makeLeftJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 7) {
-                this.makeRightJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 8) {
-                this.makeGun(this.position[i][j]);
-            } else if(this.currentLevel[i][j] === 9){
-                this.makeSmallJump(this.position[i][j]);
-            }
-        }
-    }
+    this.createEntities();
     entityManager.jumpsLeft = 5;
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 2;
@@ -132,8 +113,9 @@ Grid.prototype.level1 = function(){
 };
 
 Grid.prototype.level2 = function(){
+    this.background = g_images.background2;
     this.startingPos = this.position[9][8];
-    this.maxLemmings = 5;
+    this.totalLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,1],
@@ -147,27 +129,88 @@ Grid.prototype.level2 = function(){
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
-    for (var i = 0; i < this.colLength; i++) {
-        for (var j = 0; j < this.rowLength; j++) {
-            if (this.currentLevel[i][j] === 2) {
-                this.makeFire(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 3) {
-                this.makeWater(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 4) {
-                this.makeDoor(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 5) {
-                this.makeJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 6) {
-                this.makeLeftJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 7) {
-                this.makeRightJump(this.position[i][j]);
-            }
-        }
-    }
+    this.createEntities();
     entityManager.jumpsLeft = 9;
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 4;
+};
+
+Grid.prototype.level3 = function() {
+    this.background = g_images.background3;
+    this.startingPos = this.position[9][1];
+    this.totalLemmings = 5;
+    this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+                         [1,4,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
+                         [1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
+                         [1,1,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1],
+                         [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,1,1,1,1,1,3,3,3,1,1,1,1,1,1,1,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
+    this.createEntities();
+    entityManager.jumpsLeft = 9;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 3;
+    entityManager.rightLeft = 4;
+};
+
+Grid.prototype.createEntities = function(){
+    for(var i = 0; i < this.colLength; i++){
+        for(var j = 0; j < this.rowLength; j++){
+          switch (this.currentLevel[i][j]) {
+              case 2:
+                  this.makeFire(this.position[i][j]);
+                  break;
+              case 3:
+                  this.makeWater(this.position[i][j]);
+                  break;
+              case 4:
+                  this.makeDoor(this.position[i][j]);
+                  break;            
+              case 5:
+                  this.makeJump(this.position[i][j]);
+                  break;
+              case 6:
+                  this.makeLeftJump(this.position[i][j]);
+                  break;
+              case 7:
+                  this.makeRightJump(this.position[i][j]);
+                  break;
+              case 8:
+                  this.makeGun(this.position[i][j]);
+                  break;
+              case 9:
+                  this.makeSmallJump(this.position[i][j]);
+                  break;
+              default:
+                  break;
+          }
+        }
+    }  
+  };
+
+Grid.prototype.removeLemming = function(dead) {
+    if (dead) {
+        this.deadLemmings++;
+    } else {
+        this.savedLemmings++;
+    }
+};
+
+Grid.prototype.getResults = function() {
+    if (this.totalLemmings === this.savedLemmings) {
+        console.log("Congratulations! You saved them all!");
+    } else {
+        console.log("What the actual fuck, you couldnt save them all you piece of shit");
+    }
+    return this.totalLemmings === this.savedLemmings;
+
 };
 
 Grid.prototype.makeGun = function(pos){
@@ -273,12 +316,10 @@ Grid.prototype.getBottomBlockID = function(cx, cy) {
 };
 
 Grid.prototype.print = function(){
-    //console.log(this.maxLemmings,this.numberOfLemmings);
 };
 
 Grid.prototype.update = function(du) {
-    //console.log(this.numberOfLemmings,this.maxLemmings);
-    if(this.numberOfLemmings < this.maxLemmings 
+    if(this.lemmingsInPlay < this.totalLemmings 
         && this.time % 25 === 0
         && this.time > 25){
         entityManager.generateLemming({
@@ -286,11 +327,26 @@ Grid.prototype.update = function(du) {
             cy : this.startingPos.cy + 8,
             velX : 1.5
         });
-        this.numberOfLemmings++;
+        this.lemmingsInPlay++;
     }
     this.time++;
+
+    if (this.totalLemmings === this.savedLemmings + this.deadLemmings) {
+        var results = this.getResults();
+        if (results) {
+            menu.nextLevel();
+        }
+        gamestate = 0;
+    }
+
+
 };
 
+Grid.prototype.reset = function() {
+    this.deadLemmings = 0;
+    this.savedLemmings = 0;
+    this.lemmingsInPlay = 0;
+};
 
 Grid.prototype.render = function(ctx){
 
@@ -302,10 +358,6 @@ Grid.prototype.render = function(ctx){
                 ctx.drawImage(this.blockIMG, this.position[i][j].cx - this.halfWidth,
                              this.position[i][j].cy - this.halfHeight,
                               this.halfWidth*2, this.halfHeight*2);
-            } else {
-                //ctx.drawImage(this.background, this.position[i][j].cx - this.halfWidth,
-                  //          this.position[i][j].cy - this.halfHeight,
-                    //        this.halfWidth*2, this.halfHeight*2);
             }
         }
     }
