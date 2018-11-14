@@ -114,29 +114,11 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    // Remember my previous position
-    var prevX = this.cx;
-    var prevY = this.cy;
-    
-    // Compute my provisional new position (barring collisions)
-    var nextX = prevX + this.velX * du;
-    var nextY = prevY + this.velY * du;
+    this.computeSubsteps(du/this.numSubSteps);
+
     var temp = entityManager.grid.findCurrentBlock(this.cx,this.cy);
     //var belowTop = entityManager.grid.position[temp.y+1][temp.x].cy - entityManager.grid.halfHeight;
 
-
-    // Block collision
-    if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
-        if (this.velY > 0) {
-            this.velY = 0;
-            this.isDropping = false;
-        } else {
-            this.velY *= -1;
-        }
-    }
-    if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
-        this.velX *= -1; // change direction of lemming
-    }
     
     if (eatKey(this.KEY_JUMP)) {
         this.velY = -4;
@@ -174,6 +156,38 @@ lemming.prototype.update = function (du) {
     this.cy += this.velY * du;
 
     spatialManager.register(this);
+};
+
+lemming.prototype.computeSubsteps = function(du) {
+    // Remember my previous position
+    var prevX = this.cx;
+    var prevY = this.cy;
+    
+    // Compute my provisional new position (barring collisions)
+    var nextX = prevX + this.velX * du;
+    var nextY = prevY + this.velY * du;
+    
+    for (var i = 0; i < this.numSubSteps; i++) {
+        // Block collision
+        if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
+            if (this.velY > 0) {
+                this.velY = 0;
+                this.isDropping = false;
+                return;
+            } else {
+                this.velY *= -1;
+                return;
+            }
+        }
+        if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
+            this.velX *= -1; // change direction of lemming
+            return;
+        }
+        prevX = nextX;
+        prevY = nextY;
+        nextX = prevX + this.velX * du;
+        nextY = prevY + this.velY * du;
+    }
 };
 
 var NOMINAL_GRAVITY = 0.1;
