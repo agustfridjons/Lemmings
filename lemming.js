@@ -219,8 +219,8 @@ lemming.prototype.specialReaction = function(BlocksID, adBlocks, du) {
             cx : this.cx,
             cy : this.cy,
             vel : this.velX * 2
-        })
-    }
+        });
+        }
 };
 
 lemming.prototype.getRadius = function () {
