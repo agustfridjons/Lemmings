@@ -107,27 +107,7 @@ Grid.prototype.level1 = function(){
     
     this.currentLevel = this.solution;
 
-    for (var i = 0; i < this.colLength; i++) {
-        for (var j = 0; j < this.rowLength; j++) {
-            if (this.currentLevel[i][j] === 2) {
-                this.makeFire(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 3) {
-                this.makeWater(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 4) {
-                this.makeDoor(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 5) {
-                this.makeJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 6) {
-                this.makeLeftJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 7) {
-                this.makeRightJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 8) {
-                this.makeGun(this.position[i][j]);
-            } else if(this.currentLevel[i][j] === 9){
-                this.makeSmallJump(this.position[i][j]);
-            }
-        }
-    }
+    this.createEntities();
     entityManager.jumpsLeft = 5;
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 2;
@@ -151,23 +131,7 @@ Grid.prototype.level2 = function(){
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
-    for (var i = 0; i < this.colLength; i++) {
-        for (var j = 0; j < this.rowLength; j++) {
-            if (this.currentLevel[i][j] === 2) {
-                this.makeFire(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 3) {
-                this.makeWater(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 4) {
-                this.makeDoor(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 5) {
-                this.makeJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 6) {
-                this.makeLeftJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 7) {
-                this.makeRightJump(this.position[i][j]);
-            }
-        }
-    }
+    this.createEntities();
     entityManager.jumpsLeft = 9;
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 3;
@@ -191,32 +155,47 @@ Grid.prototype.level3 = function() {
                          [1,1,1,1,1,1,3,3,3,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
-    for (var i = 0; i < this.colLength; i++) {
-        for (var j = 0; j < this.rowLength; j++) {
-            if (this.currentLevel[i][j] === 2) {
-                this.makeFire(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 3) {
-                this.makeWater(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 4) {
-                this.makeDoor(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 5) {
-                this.makeJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 6) {
-                this.makeLeftJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 7) {
-                this.makeRightJump(this.position[i][j]);
-            } else if (this.currentLevel[i][j] === 8) {
-                this.makeGun(this.position[i][j]);
-            } else if(this.currentLevel[i][j] === 9){
-                this.makeSmallJump(this.position[i][j]);
-            }
-        }
-    }
+    this.createEntities();
     entityManager.jumpsLeft = 9;
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 4;
 };
+
+Grid.prototype.createEntities = function(){
+    for(var i = 0; i < this.colLength; i++){
+        for(var j = 0; j < this.rowLength; j++){
+          switch (this.currentLevel[i][j]) {
+              case 2:
+                  this.makeFire(this.position[i][j]);
+                  break;
+              case 3:
+                  this.makeWater(this.position[i][j]);
+                  break;
+              case 4:
+                  this.makeDoor(this.position[i][j]);
+                  break;            
+              case 5:
+                  this.makeJump(this.position[i][j]);
+                  break;
+              case 6:
+                  this.makeLeftJump(this.position[i][j]);
+                  break;
+              case 7:
+                  this.makeRightJump(this.position[i][j]);
+                  break;
+              case 8:
+                  this.makeGun(this.position[i][j]);
+                  break;
+              case 9:
+                  this.makeSmallJump(this.position[i][j]);
+                  break;
+              default:
+                  break;
+          }
+        }
+    }  
+  };
 
 Grid.prototype.removeLemming = function(dead) {
     if (dead) {
