@@ -18,6 +18,11 @@ Bullet.prototype.update = function(du){
     var currentBlockID = entityManager.grid.getBlocksID(this.cx, this.cy);
     var topBlockID = entityManager.grid.getBlocksID(adBlocks[0][1].cx, adBlocks[0][1].cy);
 
+    if (this.cx + this.halfWidth > g_canvas.width || 
+        this.cx - this.halfWidth < 0) {
+        return entityManager.KILL_ME_NOW;
+    }
+
     if (currentBlockID[1] === 1) {
         if (topBlockID[1] != 1) {
             entityManager.grid.removeBlock(adBlocks[0][1].cx, adBlocks[0][1].cy);
