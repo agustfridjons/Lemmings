@@ -47,7 +47,7 @@ var g_ctx = g_canvas.getContext("2d");
 // =====================
 // Gamestate
 // =====================
-var gamestate = 0;
+
 
 function setGamestate(state) {
     gamestate = state;
@@ -231,6 +231,8 @@ function requestPreloads() {
         button1 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton1.png",
         button2 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton0.png",
         button3 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton1.png",
+        button4 : "https://notendur.hi.is/agf6/lemmingSprites/closeButton.png",
+        button5 : "https://notendur.hi.is/agf6/lemmingSprites/closeButtonL.png",
 
         explosion0 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion0.png",
         explosion1 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion1.png",
@@ -276,14 +278,7 @@ function preloadDone() {
     g_sprites.right1 = new Sprite(right);
     g_sprites.button1 = new Sprite(buttons);
     g_sprites.explosion = new Sprite(explosion);
-    //g_sprites.ship  = new Sprite(g_images.ship);
-    //g_sprites.ship2 = new Sprite(g_images.ship2);
-    //g_sprites.rock  = new Sprite(g_images.rock);
 
-    //g_sprites.bullet = new Sprite(g_images.ship);
-    //g_sprites.bullet.scale = 0.25;
-
-    entityManager.init();
     main.init();
 }
 

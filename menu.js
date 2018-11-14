@@ -10,12 +10,17 @@
 */
 var menu = {
     currentLevel : 1,
-    buttonW : 200,
-    buttonH : 50,
+    buttonHalfW : 100,
+    buttonHalfH : 25,
     currentS : 0,
     currentC : 0,
-    renderContr: false,
-    mpress: false
+    currentCl : 0,
+    renderContr : false,
+    mpress: false,
+    cColumnX1: 20,
+    cColumnX2: 300,
+    buttonMargin: 50,
+    margin: 30
 };
 
     menu.nextLevel = function(){
@@ -30,23 +35,38 @@ var menu = {
 
         this.currentS = 0;
         this.currentC = 2;
+        this.currentCl = 4;
+
         //if mouse is hovering a button changes sprites
-        if(menu.mouseOnButton(200,150,this.buttonW,this.buttonH)){
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50,
+                              this.buttonHalfW*2,this.buttonHalfH*2)){
             this.currentS++;
         }
-        if(menu.mouseOnButton(200,250,this.buttonW,this.buttonH)){
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50,
+                              this.buttonHalfW*2,this.buttonHalfH*2)){
             this.currentC++;
+        }
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 70,
+                              this.buttonHalfW*2,this.buttonHalfH*2)){
+            this.currentCl++;
         }
 
         //react if buttons are clicked
-        if(menu.mouseOnButton(200,150,this.buttonW,this.buttonH) 
-           && this.mpress){
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50,
+                               this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress){
+            entityManager.init(this.currentLevel);
             setGamestate(1);
             this.mpress = false;
         }
-        if(menu.mouseOnButton(200,250,this.buttonW,this.buttonH) 
-           && this.mpress){
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50,
+                              this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress){
             this.renderContr = true;
+            this.mpress = false;
+        }
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 70,
+                              this.buttonHalfW*2,this.buttonHalfH*2) 
+                              && this.mpress && this.renderContr){
+            this.renderContr = false;
             this.mpress = false;
         }
     };
@@ -61,17 +81,33 @@ var menu = {
                      ctx.canvas.height,"#704F5F");
         util.drawText(ctx, '26px Fipps',"#E",this.levelString(),
                       ctx.canvas.width/2 - 75, 100);
-        ctx.drawImage(menu.getImage(this.currentS), 200, 150);
-        ctx.drawImage(menu.getImage(this.currentC), 200, 250);                           
+        ctx.drawImage(menu.getImage(this.currentS), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50);
+        ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);                           
     };
 
     menu.renderControls = function(ctx){
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
-        util.drawText(ctx, '26px Fipps',"#E",getText(0),
-                     ctx.canvas.width/2 - 75, 100);
-        util.drawText(ctx, '13px Fipps',"#E",getText(1),
-                     ctx.canvas.width/2 - 75, 150);
+        util.drawText(ctx, '26px Fipps',"#E",menu.getText(0),
+                     ctx.canvas.width/2 - 100, 50);
+        util.drawText(ctx, '13px Fipps',"#E",menu.getText(1),
+                     this.cColumnX1, 75);
+        util.drawText(ctx, '13px Fipps',"#E",menu.getText(2),
+                     this.cColumnX1, 95);
+        var posY = 100;
+        for(var i = 3; i < 10; i++){
+            posY += this.margin; 
+            util.drawText(ctx, '13px Fipps',"#E",menu.getText(i),
+                          this.cColumnX1, posY);
+
+        }
+        posY = 80;
+        for(var i = 6; i <= 11; i++){
+            posY += this.margin;
+            ctx.drawImage(menu.getImage(i),this.cColumnX2,posY);
+        }
+        ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 70);
+
     };
 
     menu.mousePress = function(button){
@@ -80,13 +116,25 @@ var menu = {
 
     menu.getText = function(index){
         var texts = ["CONTROLS",
-                     "Use number keys 1 - 5 to select elements to put on the map."];
+                    "Use number keys 1 - 7 to select elements",
+                    "to put on the map.",
+                    "1 Key: Solid block",
+                    "2 Key: Low jump",
+                    "3 Key: High jump",
+                    "4 Key: Right side jump",
+                    "5 Key: Left side jump",
+                    "6 Key: Gun",
+                    "7 Key: Gravity change"];
         return texts[index];
     }
 
     menu.getImage = function(index){
-        var images = [g_images.button0,g_images.button1,
-                      g_images.button2,g_images.button3];
+        var images =[g_images.button0,g_images.button1,
+                    g_images.button2,g_images.button3,
+                    g_images.button5,g_images.button4,
+                    g_images.background,g_images.smalljump1,
+                    g_images.jump1,g_images.right1,
+                    g_images.side1,g_images.gun];
         return images[index];
     };
 
