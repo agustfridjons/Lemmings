@@ -24,7 +24,12 @@ function handleMouse(evt) {
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
     menu.mousePress(button);
     if (!button) return;
-    entityManager.grid.changeBlock(g_mouseX,g_mouseY);
+    try {
+        entityManager.grid.changeBlock(g_mouseX,g_mouseY);
+    
+    } catch (undefined) {
+        console.log("waiting for init");
+    }
 }
 
 
