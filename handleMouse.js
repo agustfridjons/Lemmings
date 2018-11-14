@@ -28,7 +28,7 @@ function handleMouse(evt) {
         entityManager.grid.changeBlock(g_mouseX,g_mouseY);
     
     } catch (undefined) {
-        
+        console.log("waiting for init");
     }
 }
 
