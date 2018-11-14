@@ -170,11 +170,6 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        /*img0   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings0.png",
-        img1  : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings1.png",
-        img2   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings2.png",
-        img3   : "https://notendur.hi.is/~fth29/Kalli/LemmingSprite/sprite_lemmings3.png",
-        */
         img0 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm0.png",
         img1 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm1.png",
         img2 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm2.png",
@@ -242,16 +237,16 @@ function requestPreloads() {
         gun1 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun0.png",
         gun2 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun1.png",
 
-        background : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/background.png",
-        block : "https://notendur.hi.is/~fth29/Kalli/BackgroundImg/sprite_Background0.png"
+        background1 : "https://notendur.hi.is/~fth29/Kalli/Background/Sky.jpeg",
+        background2 : "https://notendur.hi.is/~fth29/Kalli/Background/Forest.png",
+        background3 : "https://notendur.hi.is/~fth29/Kalli/Background/Landscape.jpeg",
+        blockIMG : "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
 }
 
 var g_sprites = {};
-var background;
-var block;
 
 function preloadDone() {
     var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3,g_images.img4,g_images.img5,g_images.img6,g_images.img7,g_images.backside];

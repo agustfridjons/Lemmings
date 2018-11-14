@@ -24,8 +24,8 @@ Grid.prototype.lemmingsInPlay = 0;
 
 Grid.prototype.startingPos = {};
 
-Grid.prototype.background = new Image();
-Grid.prototype.blockIMG = new Image();
+Grid.prototype.background;
+Grid.prototype.blockIMG;
 
 
 Grid.prototype.time = 0;
@@ -44,9 +44,7 @@ Grid.prototype.time = 0;
 */
 
 Grid.prototype.createGrid = function(){
-
-    this.blockIMG.src = "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png";
-
+    this.blockIMG  = g_images.blockIMG;
     this.position = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -76,7 +74,7 @@ Grid.prototype.createGrid = function(){
 };
 
 Grid.prototype.level1 = function(){
-    this.background.src = "https://notendur.hi.is/~fth29/Kalli/Forest.png";
+    this.background = g_images.background1;
     this.startingPos = this.position[9][1];
     this.totalLemmings = 8;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -115,7 +113,7 @@ Grid.prototype.level1 = function(){
 };
 
 Grid.prototype.level2 = function(){
-    this.background.src = "https://notendur.hi.is/~fth29/Kalli/Forest.png";
+    this.background = g_images.background2;
     this.startingPos = this.position[9][8];
     this.totalLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -139,7 +137,7 @@ Grid.prototype.level2 = function(){
 };
 
 Grid.prototype.level3 = function() {
-    this.background.src = "https://notendur.hi.is/~fth29/Kalli/Forest.png";
+    this.background = g_images.background3;
     this.startingPos = this.position[9][1];
     this.totalLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -360,10 +358,6 @@ Grid.prototype.render = function(ctx){
                 ctx.drawImage(this.blockIMG, this.position[i][j].cx - this.halfWidth,
                              this.position[i][j].cy - this.halfHeight,
                               this.halfWidth*2, this.halfHeight*2);
-            } else {
-                //ctx.drawImage(this.background, this.position[i][j].cx - this.halfWidth,
-                  //          this.position[i][j].cy - this.halfHeight,
-                    //        this.halfWidth*2, this.halfHeight*2);
             }
         }
     }
