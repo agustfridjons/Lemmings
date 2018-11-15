@@ -79,7 +79,7 @@ var menu = {
         }
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
-        util.drawText(ctx, '26px Fipps',"#E",this.levelString(),
+        util.drawText(ctx, '26px Fipps',"#330033",this.levelString(),
                       ctx.canvas.width/2 - 75, 100);
         ctx.drawImage(menu.getImage(this.currentS), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50);
         ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);                           
@@ -88,17 +88,19 @@ var menu = {
     menu.renderControls = function(ctx){
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
-        util.drawText(ctx, '26px Fipps',"#E",menu.getText(0),
+        util.drawText(ctx, '26px Fipps',"#330033",menu.getText(0),
                      ctx.canvas.width/2 - 100, 50);
-        util.drawText(ctx, '13px Fipps',"#E",menu.getText(1),
+        util.drawText(ctx, '13px Fipps',"#330033",menu.getText(1),
                      this.cColumnX1, 75);
-        util.drawText(ctx, '13px Fipps',"#E",menu.getText(2),
+        util.drawText(ctx, '13px Fipps',"#330033",menu.getText(2),
                      this.cColumnX1, 95);
         var posY = 100;
         for(var i = 3; i < 10; i++){
             posY += this.margin; 
-            util.drawText(ctx, '13px Fipps',"#E",menu.getText(i),
+            util.drawText(ctx, '13px Fipps',"#330033",menu.getText(i),
                           this.cColumnX1, posY);
+            util.drawText(ctx, '13px Fipps',"#330033",menu.getText(7+i),
+                          this.cColumnX2 + this.margin, posY);
 
         }
         posY = 80;
@@ -124,7 +126,15 @@ var menu = {
                     "4 Key: Right side jump",
                     "5 Key: Left side jump",
                     "6 Key: Gun",
-                    "7 Key: Gravity change"];
+                    "7 Key: Gravity change",
+                    "Normal block no reaction",
+                    "Gives a small jump boost",
+                    "Gives a big jump boost",
+                    "Gives a right boost jump",
+                    "Gives a left boost jump",
+                    "Fries a bullet that",
+                    "breaks solid blocks"];
+                    
         return texts[index];
     }
 
