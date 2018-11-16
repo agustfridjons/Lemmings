@@ -33,6 +33,8 @@ var menu = {
 
     menu.update = function(du){
 
+        g_menuSong.fadeIN();
+
         this.currentS = 0;
         this.currentC = 2;
         this.currentCl = 4;
@@ -95,7 +97,7 @@ var menu = {
         util.drawText(ctx, '13px Fipps',"#330033",menu.getText(2),
                      this.cColumnX1, 95);
         var posY = 100;
-        for(var i = 3; i < 10; i++){
+        for(var i = 3; i < 9; i++){
             posY += this.margin; 
             util.drawText(ctx, '13px Fipps',"#330033",menu.getText(i),
                           this.cColumnX1, posY);
@@ -126,7 +128,7 @@ var menu = {
                     "4 Key: Right side jump",
                     "5 Key: Left side jump",
                     "6 Key: Gun",
-                    "7 Key: Gravity change",
+                    " ",
                     "Normal block no reaction",
                     "Gives a small jump boost",
                     "Gives a big jump boost",

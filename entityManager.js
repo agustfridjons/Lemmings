@@ -30,6 +30,7 @@ _blocks   : [],
 _lemmings : [],
 _entities : [],
 _doors    : [],
+_portals  : [],
 mouseX    : 0,
 mouseY    : 0,
 blocksLeft: 0,
@@ -103,6 +104,14 @@ generateBullet : function(descr){
     this._entities.push(new Bullet(descr));
 },
 
+generateBlockExplosion : function(descr){
+    this._entities.push(new BlockExplosion(descr));
+},
+
+generatePortal : function(descr){
+    //this._portals.push(new Portal(descr));
+},
+
 changeMouse : function(x,y){
     this.mouseX = x;
     this.mouseY = y;
@@ -148,6 +157,9 @@ render: function(ctx) {
     for (var i = 0; i < this._doors.length; i++) {
         this._doors[i].render(ctx);
     }
+    for(var i = 0; i < this._portals.length; i++){
+        this._portals[i].render(ctx);
+    }
     for (var i = 0; i < this._lemmings.length; i++) {
         this._lemmings[i].render(ctx);
     }
@@ -168,15 +180,15 @@ render: function(ctx) {
         var i = this.grid.findCurrentBlock(this.mouseX,this.mouseY);
         if(this.choice === 1 && this.blocksLeft !== 0){
             ctx.drawImage(this.grid.blockIMG,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 2 && this.jumpsLeft !== 0){
+        } else if(this.choice === 3 && this.jumpsLeft !== 0){
             ctx.drawImage(g_images.jump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 3 && this.leftLeft !== 0){
+        } else if(this.choice === 5 && this.leftLeft !== 0){
             ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 4&& this.rightLeft !== 0){
+        } else if(this.choice === 4 && this.rightLeft !== 0){
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 5){
-            ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
         } else if(this.choice === 6){
+            ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
+        } else if(this.choice === 2){
             ctx.drawImage(g_images.smalljump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         }
     } catch(undefined){
@@ -184,7 +196,6 @@ render: function(ctx) {
     }
         ctx.globalAlpha = 1;
     }
-    
 },
 
 updateStats : function(){
@@ -209,6 +220,15 @@ update: function(du) {
         var status = this._doors[i].update(du);
         if (status === this.KILL_ME_NOW) {
             this._doors.splice(i,1);
+        } else {
+            ++i;
+        }
+    }
+    i = 0;
+    while (i < this._portals.length) {
+        var status = this._portals[i].update(du);
+        if (status === this.KILL_ME_NOW) {
+            this._portals.splice(i,1);
         } else {
             ++i;
         }

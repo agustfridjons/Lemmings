@@ -14,8 +14,6 @@ function Fire(descr) {
 
 Fire.prototype = new Entity();
 
-
-
 Fire.prototype.cx = 180;
 Fire.prototype.cy = 200;
 Fire.prototype.currentIMG = 0;
@@ -25,6 +23,10 @@ Fire.prototype._scale = 1;
 
 Fire.prototype.update = function () {
     
+    var BlocksID = entityManager.grid.getBlocksID(this.cx, this.cy);
+    if (BlocksID[1] != 2) {
+        return entityManager.KILL_ME_NOW;
+    }
 
     // Change current image at certain interval    
     if (this.time % 10 === 0) {
@@ -40,6 +42,7 @@ Fire.prototype.update = function () {
 Fire.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
+
     this.sprite.scale = this._scale;
     this.sprite.drawCentredAt(
 	ctx, this.cx, this.cy, this.rotation, this.currentIMG
