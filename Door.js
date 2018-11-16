@@ -25,10 +25,11 @@ Door.prototype._scale = 1;
 
 
 Door.prototype.update = function () {
-    
-
-    // Change current image at certain interval    
-    this.currentIMG = 0;
+    if(entityManager.grid.endLevelTimer > 0){
+        this.currentIMG = 1;
+    } else {
+        this.currentIMG = 0;
+    }
 };
 
 Door.prototype.render = function (ctx) {

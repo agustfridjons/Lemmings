@@ -15,6 +15,7 @@ Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
 Grid.prototype.solution = [];
+Grid.prototype.endLevelTimer = 0;
 
 Grid.prototype.deadLemmings = 0;
 Grid.prototype.savedLemmings = 0;
@@ -26,6 +27,8 @@ Grid.prototype.startingPos = {};
 
 Grid.prototype.background;
 Grid.prototype.blockIMG;
+
+Grid.prototype.gameSong;
 
 
 Grid.prototype.time = 0;
@@ -41,9 +44,11 @@ Grid.prototype.time = 0;
 7 = hægri hopp
 8 = byssa
 9 = lítið hopp
+10 = portal
 */
 
 Grid.prototype.createGrid = function(){
+
     this.blockIMG  = g_images.blockIMG;
     this.position = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -58,6 +63,9 @@ Grid.prototype.createGrid = function(){
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
 
+    
+                    
+
     var x = -this.halfWidth;
     var y = -this.halfHeight;
     for (var i = 0; i < this.colLength; i++) {
@@ -71,6 +79,8 @@ Grid.prototype.createGrid = function(){
         y += (this.halfHeight*2);
         x = -this.halfWidth;
     }
+    g_gameSong.resetTime();
+    g_gameSong.play();
 };
 
 Grid.prototype.level1 = function(){
@@ -86,7 +96,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
@@ -188,6 +198,8 @@ Grid.prototype.createEntities = function(){
               case 9:
                   this.makeSmallJump(this.position[i][j]);
                   break;
+              case 10:
+                  this.makePortal(this.position[i][j]);
               default:
                   break;
           }
@@ -213,6 +225,12 @@ Grid.prototype.getResults = function() {
 
 };
 
+Grid.prototype.makePortal = function(pos){
+    entityManager.generatePortal({
+        cx  :   pos.cx,
+        cy  :   pos.cy
+    });
+};
 Grid.prototype.makeGun = function(pos){
     entityManager.generateGun({
         cx  :   pos.cx,
@@ -288,31 +306,47 @@ Grid.prototype.changeBlock = function(x,y){
             this.currentLevel[realy][realx] = 1;
             entityManager.blocksLeft--;
         } else if(this.choice === 2 && entityManager.jumpsLeft !== 0){
+            this.currentLevel[realy][realx] = 9;
+            this.makeSmallJump(this.position[realy][realx]);
+            entityManager.jumpsLeft--;
+        } else if(this.choice === 3 && entityManager.jumpsLeft !== 0){
             this.currentLevel[realy][realx] = 5;
             this.makeJump(this.position[realy][realx]);
             entityManager.jumpsLeft--;
-        } else if(this.choice === 3 && entityManager.leftLeft !== 0){
-            this.currentLevel[realy][realx] = 6;
-            this.makeLeftJump(this.position[realy][realx]);
-            entityManager.leftLeft--;
         } else if(this.choice === 4 && entityManager.rightLeft !== 0){
             this.currentLevel[realy][realx] = 7;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
         } else if(this.choice === 5){
+            this.currentLevel[realy][realx] = 6;
+            this.makeLeftJump(this.position[realy][realx]);
+            entityManager.leftLeft--;
+        } else if(this.choice === 6){
             this.currentLevel[realy][realx] = 8;
             this.makeGun(this.position[realy][realx]);
-        } else if(this.choice === 6){
-            this.currentLevel[realy][realx] = 9;
-            this.makeSmallJump(this.position[realy][realx]);
         }
     }
 };
 
-Grid.prototype.removeBlock = function(xPos, yPos) {
+Grid.prototype.removeBlock = function(xPos, yPos, isExploding) {
     var currentPos = this.findCurrentBlock(xPos, yPos);
     this.currentLevel[currentPos.y][currentPos.x] = 0;
-    console.log("Removing block: ", currentPos.y, " - ", currentPos.x);
+    if (isExploding) {
+        var speedX = -0.1;
+        for (var i = 0; i < 5; i++) {
+            entityManager.generateBlockExplosion({
+                blockX : this.position[currentPos.y][currentPos.x].cx,
+                blockY : this.position[currentPos.y][currentPos.x].cy,
+                xVel : 0,
+                yVel : -1.5,
+                xSpeed : speedX,
+                scale : (Math.random()*0.5) + 0.2,
+                rotationSpeed : 4,
+                img : this.blockIMG
+            });
+            speedX += 0.1;
+        }
+    }
 };
 
 Grid.prototype.getBlocksID = function(cx, cy) {
@@ -341,12 +375,21 @@ Grid.prototype.update = function(du) {
     if (this.totalLemmings === this.savedLemmings + this.deadLemmings) {
         var results = this.getResults();
         if (results) {
-            menu.nextLevel();
+            this.endLevelTimer++;
+            if(this.endLevelTimer > 100){
+                menu.nextLevel();
+                gamestate = 0;
+            }
+        } else {
+            gamestate = 0;
         }
-        gamestate = 0;
-    }
+        
+     }
+    g_gameSong.fadeIN();
+};
 
-
+Grid.prototype.fadeout = function() {
+    this.gameSong.fadeOUT();
 };
 
 Grid.prototype.reset = function() {
@@ -362,6 +405,7 @@ Grid.prototype.render = function(ctx){
     for (var i = 0; i < this.colLength; i++) {
         for (var j = 0; j < this.rowLength; j++) {
             if (this.currentLevel[i][j] === 1) {
+
                 ctx.drawImage(this.blockIMG, this.position[i][j].cx - this.halfWidth,
                              this.position[i][j].cy - this.halfHeight,
                               this.halfWidth*2, this.halfHeight*2);

@@ -67,10 +67,14 @@ main._iterCore = function (dt) {
     
     if(gamestate === 0){
         menu.update(dt);
-        menu.render(g_ctx)
+        menu.render(g_ctx);
+
+        g_gameSong.fadeOUT();
     }else{
         update(dt);
         render(g_ctx);
+
+        g_menuSong.fadeOUT();
     }
 };
 
@@ -131,6 +135,12 @@ main.init = function () {
 
     // We'll be working on a black background here,
     // so let's use a fillStyle which works against that...
+
+    g_gameSong = new sound("Sounds/GameSound.mp3");
+    g_menuSong = new sound("Sounds/MenuSound.mp3");
+
+    g_gameSong.loop();
+    g_menuSong.loop();
 
     this._requestNextIteration();
 };
