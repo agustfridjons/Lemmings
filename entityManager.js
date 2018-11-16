@@ -101,6 +101,10 @@ generateBullet : function(descr){
     this._entities.push(new Bullet(descr));
 },
 
+generateBlockExplosion : function(descr){
+    this._entities.push(new BlockExplosion(descr));
+},
+
 changeMouse : function(x,y){
     this.mouseX = x;
     this.mouseY = y;
@@ -166,15 +170,15 @@ render: function(ctx) {
         var i = this.grid.findCurrentBlock(this.mouseX,this.mouseY);
         if(this.choice === 1 && this.blocksLeft !== 0){
             ctx.drawImage(this.grid.blockIMG,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 2 && this.jumpsLeft !== 0){
+        } else if(this.choice === 3 && this.jumpsLeft !== 0){
             ctx.drawImage(g_images.jump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 3 && this.leftLeft !== 0){
+        } else if(this.choice === 5 && this.leftLeft !== 0){
             ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 4&& this.rightLeft !== 0){
+        } else if(this.choice === 4 && this.rightLeft !== 0){
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 5){
-            ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
         } else if(this.choice === 6){
+            ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
+        } else if(this.choice === 2){
             ctx.drawImage(g_images.smalljump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         }
     } catch(undefined){
@@ -182,7 +186,6 @@ render: function(ctx) {
     }
         ctx.globalAlpha = 1;
     }
-    
 },
 
 updateStats : function(){

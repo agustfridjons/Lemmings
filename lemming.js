@@ -109,7 +109,6 @@ lemming.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    this.computeSubsteps(du/this.numSubSteps);
     
     // Get the id of current block and bottom blocks
     var BlocksID = entityManager.grid.getBlocksID(this.cx, this.cy);
@@ -126,11 +125,26 @@ lemming.prototype.update = function (du) {
         this.cy = adBlocks[1][1].cy + this.radius - 3;
     }
     // Move lemming
+
+    var collision = this.computeSubsteps(du/this.numSubSteps, du);
+
+    if (!collision.vCollide) {
+        this.cy += (this.velY/1.2) * du;
+    }
+    if (!collision.hCollide) {
+        this.cx += (this.velX/1.2) * du;
+    }
+};
+
+lemming.prototype.moveX = function(du) {
     this.cx += (this.velX/1.2) * du;
+};
+
+lemming.prototype.moveY = function(du) {
     this.cy += (this.velY/1.2) * du;
 };
 
-lemming.prototype.computeSubsteps = function(du) {
+lemming.prototype.computeSubsteps = function(du, realDU) {
     // Remember my previous position
     var prevX = this.cx;
     var prevY = this.cy;
@@ -139,15 +153,24 @@ lemming.prototype.computeSubsteps = function(du) {
     var nextX = prevX + this.velX * du;
     var nextY = prevY + this.velY * du;
 
+    var verticalCollide = false;
+    var horizontalCollide = false;
+
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
             if (this.velY > 0) {
                 this.velY = 0;
                 this.isDropping = false;
+                verticalCollide = true;
+
+                this.moveY(realDU);
                 //console.log("its a hit");
                 break;
             } else {
                 this.velY *= -1;
+
+                verticalCollide = true;
+                this.moveY(realDU);
                 //console.log("its a hit");
                 break;
             }
@@ -168,6 +191,9 @@ lemming.prototype.computeSubsteps = function(du) {
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
             this.velX *= -1; // change direction of lemming
+
+            horizontalCollide = true;
+            this.moveX(realDU);
             //console.log("its a hit");
             break;
         }
@@ -175,6 +201,10 @@ lemming.prototype.computeSubsteps = function(du) {
         prevY = nextY;
         nextX = prevX + this.velX * du;
         nextY = prevY + this.velY * du;
+    }
+    return {
+        vCollide : verticalCollide,
+        hCollide : horizontalCollide
     }
 };
 

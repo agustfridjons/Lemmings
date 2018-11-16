@@ -240,7 +240,7 @@ function requestPreloads() {
         background1 : "https://notendur.hi.is/~fth29/Kalli/Background/Sky.jpeg",
         background2 : "https://notendur.hi.is/~fth29/Kalli/Background/Forest.png",
         background3 : "https://notendur.hi.is/~fth29/Kalli/Background/Landscape.jpeg",
-        blockIMG : "https://notendur.hi.is/~fth29/Kalli//BackgroundImg/background.png"
+        blockIMG : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/woodBlock.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
