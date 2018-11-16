@@ -65,7 +65,7 @@ main._iterCore = function (dt) {
         return;
     }
     
-    if(gamestate == 0){
+    if(gamestate === 0){
         menu.update(dt);
         menu.render(g_ctx)
     }else{
