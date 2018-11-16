@@ -44,6 +44,7 @@ Grid.prototype.time = 0;
 7 = hægri hopp
 8 = byssa
 9 = lítið hopp
+10 = portal
 */
 
 Grid.prototype.createGrid = function(){
@@ -95,7 +96,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
@@ -197,6 +198,8 @@ Grid.prototype.createEntities = function(){
               case 9:
                   this.makeSmallJump(this.position[i][j]);
                   break;
+              case 10:
+                  this.makePortal(this.position[i][j]);
               default:
                   break;
           }
@@ -222,6 +225,12 @@ Grid.prototype.getResults = function() {
 
 };
 
+Grid.prototype.makePortal = function(pos){
+    entityManager.generatePortal({
+        cx  :   pos.cx,
+        cy  :   pos.cy
+    });
+};
 Grid.prototype.makeGun = function(pos){
     entityManager.generateGun({
         cx  :   pos.cx,
@@ -375,7 +384,7 @@ Grid.prototype.update = function(du) {
             gamestate = 0;
         }
         
-    }
+     }
     g_gameSong.fadeIN();
 };
 
