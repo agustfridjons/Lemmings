@@ -15,6 +15,7 @@ Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
 Grid.prototype.solution = [];
+Grid.prototype.endLevelTimer = 0;
 
 Grid.prototype.deadLemmings = 0;
 Grid.prototype.savedLemmings = 0;
@@ -364,10 +365,13 @@ Grid.prototype.update = function(du) {
 
     if (this.totalLemmings === this.savedLemmings + this.deadLemmings) {
         var results = this.getResults();
-        if (results) {
-            menu.nextLevel();
+        if(this.endLevelTimer > 100){
+            if (results) {
+                menu.nextLevel();
+                gamestate = 0;
+            }
         }
-        gamestate = 0;
+        this.endLevelTimer++;
     }
     g_gameSong.fadeIN();
 };
