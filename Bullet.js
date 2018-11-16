@@ -37,5 +37,6 @@ Bullet.prototype.update = function(du){
 Bullet.prototype.render = function(ctx){
     ctx.fillStyle = "lightgreen";
     ctx.fillRect(this.cx,this.cy,this.halfWidth*2,this.halfHeight*2);
+    ctx.fillStyle = "black";
 };
 
