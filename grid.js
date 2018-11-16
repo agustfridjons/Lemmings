@@ -365,13 +365,16 @@ Grid.prototype.update = function(du) {
 
     if (this.totalLemmings === this.savedLemmings + this.deadLemmings) {
         var results = this.getResults();
-        if(this.endLevelTimer > 100){
-            if (results) {
+        if (results) {
+            this.endLevelTimer++;
+            if(this.endLevelTimer > 100){
                 menu.nextLevel();
                 gamestate = 0;
             }
+        } else {
+            gamestate = 0;
         }
-        this.endLevelTimer++;
+        
     }
     g_gameSong.fadeIN();
 };
