@@ -35,7 +35,6 @@ Portal.prototype.update = function () {
         }
     } else if(this.time%3 === 0 && this.time > 200 && this.time < 1000){
         if(this.alpha > 0) this.alpha -= 0.09;
-        console.log(this.currentIMG);
         if(this.currentIMG !== 6){
             this.currentIMG++;
         }else {
@@ -54,4 +53,5 @@ Portal.prototype.render = function (ctx) {
 	ctx, this.cx, this.cy, this.rotation, this.currentIMG
     );
     this.sprite.scale = origScale;
+    ctx.globalAlpha = 1;
 };

@@ -143,8 +143,10 @@ clearCatagories: function() {
 init: function(level) {
     console.log("init");
     this.clearCatagories();
+    canvas2.solutionGiven = false;
     this.generateGrid();
     this.isChosen = false;
+    this.killALL = false;  
     if (level === 1) {
         this.grid.level1();
     } else if (level === 2) {
