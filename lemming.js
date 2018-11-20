@@ -63,7 +63,6 @@ lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
-
     if(this.velX < 0){
         this.sprite = g_sprites.reverse;
     } else if(this.velX > 0){
@@ -81,13 +80,10 @@ lemming.prototype.update = function (du) {
         }
     } else if(this.isLeaving){
         this.currentIMG = 8;
-        console.log("blag");
     } else {
         if (this.time % 10 === 0) {
             if (this.currentIMG < 3) {
-                this.currentIMG++;
-            } else {
-                this.currentIMG = 0;
+                this.currentIMG+=1;
             }
         }
     }
@@ -103,7 +99,7 @@ lemming.prototype.update = function (du) {
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
     }
-
+    
     if (this.lifeSpan < 0) { 
         if (this.isLeaving) {
             entityManager.grid.removeLemming(false);
@@ -112,6 +108,7 @@ lemming.prototype.update = function (du) {
         }
         return entityManager.KILL_ME_NOW;
     }
+    console.log(this.currentIMG);
 
     
     // Get the id of current block and bottom blocks
