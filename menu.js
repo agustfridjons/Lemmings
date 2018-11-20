@@ -9,7 +9,7 @@
 }
 */
 var menu = {
-    currentLevel : 1,
+    currentLevel : 4,
     buttonHalfW : 100,
     buttonHalfH : 25,
     currentS : 0,
@@ -81,8 +81,10 @@ var menu = {
         }
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
+        util.fillTriangle(ctx, 380, 85, "#8e1212");
+        util.fillreverseTriangle(ctx, 410, 85, "#8e1212");
         util.drawText(ctx, '26px Fipps',"#E",this.levelString(),
-                      ctx.canvas.width/2 - 75, 100);
+                      ctx.canvas.width/2 - 100, 100);
         ctx.drawImage(menu.getImage(this.currentS), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50);
         ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);                           
     };

@@ -137,8 +137,9 @@ init: function(level) {
         this.grid.level2();
     } else if (level === 3) {
         this.grid.level3();
+    } else if (level === 4) {
+        this.grid.level4();
     }
-    
 },
 
 generateGrid: function(){

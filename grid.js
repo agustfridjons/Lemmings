@@ -170,6 +170,31 @@ Grid.prototype.level3 = function() {
     entityManager.rightLeft = 4;
 };
 
+Grid.prototype.level4 = function() {
+    this.background = g_images.background1;
+
+    this.startingPos = this.position[1][1];
+    this.totalLemmings = 5;
+    this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,3,1,1,1,1,1,1,1,3,3,3,3,3,3,3,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
+    this.createEntities();
+    entityManager.jumpsLeft = 9;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 3;
+    entityManager.rightLeft = 4;
+};
+
 Grid.prototype.createEntities = function(){
     for(var i = 0; i < this.colLength; i++){
         for(var j = 0; j < this.rowLength; j++){
