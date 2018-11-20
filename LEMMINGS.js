@@ -106,9 +106,7 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 
 var KEY_MIXED   = keyCode('M');;
-var KEY_GRAVITY = keyCode('G');
-var KEY_AVE_VEL = keyCode('V');
-var KEY_SPATIAL = keyCode('X');
+
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -126,9 +124,6 @@ var KEY_K = keyCode('K');
 
 function processDiagnostics() {
 
-    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
-
-    if (eatKey(KEY_RESET)) entityManager.resetShips();
 
     if (eatKey(KEY_1)) entityManager.changeChoice(1);
     if (eatKey(KEY_2)) entityManager.changeChoice(2); 
@@ -157,7 +152,6 @@ function renderSimulation(ctx) {
 
     entityManager.render(ctx);
 
-    if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
 
@@ -170,22 +164,25 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        img0 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm0.png",
-        img1 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm1.png",
-        img2 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm2.png",
-        img3 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm3.png",
-        img4 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm4.png",
-        img5 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm5.png",
-        img6 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm6.png",
-        img7 : "https://notendur.hi.is/~fth29/Kalli/NewLemm/sprite_NewLemm7.png",
-        img8 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_0.png",
-        img9 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_1.png",
-        img10 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_2.png",
-        img11 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_3.png",
-        img12 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_4.png",
-        img13 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_5.png",
-        img14 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_6.png",
-        img15 : "https://notendur.hi.is/~fth29/Kalli/Reverse/sprite_7.png",
+        img0 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_0.png",
+        img1 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_1.png",
+        img2 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_2.png",
+        img3 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_3.png",
+        img4 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_4.png",
+        img5 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_5.png",
+        img6 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_6.png",
+        img7 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_7.png",
+        img8 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_0.png",
+        img9 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_1.png",
+        img10 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_2.png",
+        img11 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_3.png",
+        img12 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_4.png",
+        img13 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_5.png",
+        img14 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_6.png",
+        img15 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_7.png",
+
+        lemmingJump : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_8.png",
+        lemmingJumpReverse : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse8.png",
 
         backside : "https://notendur.hi.is/~fth29/Kalli/New%20Piskel.png",
 
@@ -257,8 +254,10 @@ function requestPreloads() {
 var g_sprites = {};
 
 function preloadDone() {
-    var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3,g_images.img4,g_images.img5,g_images.img6,g_images.img7,g_images.backside];
-    var reverse = [g_images.img8, g_images.img9, g_images.img10, g_images.img11,g_images.img12,g_images.img13,g_images.img14,g_images.img15,g_images.backside];
+    var images = [g_images.img0, g_images.img1, g_images.img2, g_images.img3,g_images.img4,
+                  g_images.img5,g_images.img6,g_images.img7,g_images.backside, g_images.lemmingJump];
+    var reverse = [g_images.img8, g_images.img9, g_images.img10, g_images.img11,g_images.img12,
+                   g_images.img13,g_images.img14,g_images.img15,g_images.backside, g_images.lemmingJumpReverse];
     var fire = [g_images.fire1,g_images.fire2,g_images.fire3,g_images.fire4];
     var water = [g_images.water1,g_images.water2,g_images.water3,g_images.water4];
     var door = [g_images.door1,g_images.door2];
