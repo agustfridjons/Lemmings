@@ -300,7 +300,6 @@ lemming.prototype.render = function (ctx) {
     if (this.lifeSpan < 0) {
         ctx.globalAlpha = 0;
     }
-    console.log(this.currentIMG);
     if (!this.isLeaving) {
         this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation, this.currentIMG

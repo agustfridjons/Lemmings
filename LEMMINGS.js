@@ -49,6 +49,8 @@ var g_ctx = g_canvas.getContext("2d");
 // =====================
 
 var gamestate = 0;
+
+
 function setGamestate(state) {
     gamestate = state;
 }
