@@ -230,13 +230,15 @@ update: function(du) {
             ++i;
         }
     }
-    i = 0;
-    while (i < this._lemmings.length) {
-        var status = this._lemmings[i].update(du);
-        if (status === this.KILL_ME_NOW) {
-            this._lemmings.splice(i,1);
-        } else {
-            ++i;
+    if(!canvas2.isPaused){
+        i = 0;
+        while (i < this._lemmings.length) {
+            var status = this._lemmings[i].update(du);
+            if (status === this.KILL_ME_NOW) {
+                this._lemmings.splice(i,1);
+            } else {
+                ++i;
+            }
         }
     }
     i = 0;

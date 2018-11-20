@@ -8,6 +8,8 @@ body {
     flex-direction: column;
     align-content: center;
     background-image: url("space.jpg");
+    user-select: none;
+    -moz-user-select: none;
 }
 
 h1 {
