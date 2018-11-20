@@ -42,6 +42,15 @@ var canvas2 = {
     },
 
     update : function() {
+        if (gamestate === 0) {
+            var currentLevel = menu.getCurrentLevel();
+            this.powerUps = g_levelINFO[currentLevel-1];
+        } else {
+            var info = entityManager.getLevelInfo();
+            this.powerUps = [info.blocks, info.smalljumps,
+                             info.bigjumps, info.rightjumps,
+                             info.leftjumps, info.gunsleft];
+        }
 
     },
 

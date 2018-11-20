@@ -28,8 +28,6 @@ Grid.prototype.startingPos = {};
 Grid.prototype.background;
 Grid.prototype.blockIMG;
 
-Grid.prototype.gameSong;
-
 
 Grid.prototype.time = 0;
 
@@ -79,8 +77,13 @@ Grid.prototype.createGrid = function(){
         y += (this.halfHeight*2);
         x = -this.halfWidth;
     }
+
     g_gameSong.resetTime();
     g_gameSong.play();
+};
+
+Grid.prototype.getLevelINFO = function() {
+    return this.levelINFO;
 };
 
 Grid.prototype.level1 = function(){
@@ -176,7 +179,7 @@ Grid.prototype.level3 = function() {
                          [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1],
-                         [1,1,1,0,0,1,0,0,0,0,0,0,1,1,0,0,1],
+                         [1,1,1,1,0,1,0,0,0,0,0,0,1,1,0,0,1],
                          [1,10,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,3,3,3,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];

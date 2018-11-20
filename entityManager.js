@@ -113,6 +113,17 @@ generatePortal : function(descr){
     this._portals.push(new Portal(descr));
 },
 
+getLevelInfo : function() {
+    return {
+        blocks     : this.blocksLeft,
+        smalljumps : this.sjumpLeft,
+        bigjumps   : this.jumpsLeft,
+        rightjumps : this.rightLeft,
+        leftjumps  : this.leftLeft,
+        gunsleft   : this.gunsLeft
+    }
+},
+
 changeMouse : function(x,y){
     this.mouseX = x;
     this.mouseY = y;
@@ -150,6 +161,7 @@ init: function(level) {
 generateGrid: function(){
     this.grid = new Grid();
     this.grid.createGrid();
+    console.log("jea");
 },
 
 
