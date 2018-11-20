@@ -186,6 +186,12 @@ function requestPreloads() {
         img14 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_6.png",
         img15 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_7.png",
 
+        mute   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/mute.png",
+        unmute : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/unmute.png",
+        pause  : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/pause.png",
+        play   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/play.png",
+        bomb   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/bomb.svg",
+
         lemmingJump : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_8.png",
         lemmingJumpReverse : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse8.png",
 
@@ -274,6 +280,7 @@ function preloadDone() {
     var explosion = [g_images.explosion0,g_images.explosion1,g_images.explosion2,g_images.explosion3];
     var portal = [g_images.portal1,g_images.portal2,g_images.portal3,g_images.portal4,g_images.portal5,g_images.portal6,g_images.portal7];
     var gun = [g_images.gun1,g_images.gun2];
+
     g_sprites.portal = new Sprite(portal);
     g_sprites.gun = new Sprite(gun);
     g_sprites.reverse = new Sprite(reverse);
