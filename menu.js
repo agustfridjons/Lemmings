@@ -10,6 +10,7 @@
 */
 var menu = {
     currentLevel : 1,
+    levelUnlocked: 5,
     buttonHalfW : 100,
     buttonHalfH : 25,
     currentS : 0,
@@ -24,8 +25,21 @@ var menu = {
 };
 
     menu.nextLevel = function(){
-        this.currentLevel++;
+        if(this.currentLevel === this.levelUnlocked){
+            this.levelUnlocked++;
+            this.currentLevel = this.levelUnlocked;
+        }
     };
+
+    menu.changeLevel = function(level){
+        if((this.currentLevel + level) < 1 || 
+           (this.currentLevel + level) > this.levelUnlocked){
+            return;
+        }else{
+            this.currentLevel += level;
+            console.log("changelevel");
+        }
+    }
 
     menu.levelString = function(){
         return "Level " + this.currentLevel;
@@ -38,6 +52,16 @@ var menu = {
         this.currentS = 0;
         this.currentC = 2;
         this.currentCl = 4;
+
+        //Arrow buttons handeling
+        if(menu.mouseOnButton(370, 75, 30, 20) && this.mpress){
+            menu.changeLevel(-1);
+            this.mpress = false;
+        }
+        if(menu.mouseOnButton(390, 75, 30, 20) && this.mpress){
+            menu.changeLevel(1);
+            this.mpress = false;
+        } 
 
         //if mouse is hovering a button changes sprites
         if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50,
