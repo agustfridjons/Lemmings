@@ -134,6 +134,7 @@ init: function(level) {
     this.clearCatagories();
     this.generateGrid();
     this.isChosen = false;
+    this.killALL = false;  
     if (level === 1) {
         this.grid.level1();
     } else if (level === 2) {
