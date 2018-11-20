@@ -223,17 +223,17 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         if(!this.isExploding) this.isDropping = true;
     }
     if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
-        this.isDropping = true;
+        if(!this.isExploding) this.isDropping = true;
         this.velY = -this.bigJumpSPEED;
     } else if (BlocksID[1] === 9 && this.cy > currentBlockPos.cy) {
-        this.isDropping = true;
+        if(!this.isExploding) this.isDropping = true;
         this.velY = -this.smallJumpSPEED;
     } else if (BlocksID[1] === 7) {
         if (currentBlockPos.cy < this.cy) {
             this.isOnRamp = true;
             this.velY = -this.speedX;
         } else if (currentBlockPos.cy < this.cy + this.radius / 2){
-            this.isDropping = true;
+            if(!this.isExploding) this.isDropping = true;
             this.isOnRamp = false;
             this.velY = -this.sideJumpSPEED;
             this.velX = this.speedX;
@@ -243,7 +243,7 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
             this.isOnRamp = true;
             this.velY = -this.speedX;
         } else if (currentBlockPos.cy < this.cy + this.radius / 2) {
-            this.isDropping = true;
+            if(!this.isExploding) this.isDropping = true;
             this.isOnRamp = false;
             this.velY = -this.sideJumpSPEED;
             this.velX = -this.speedX;
