@@ -109,7 +109,7 @@ generateBlockExplosion : function(descr){
 },
 
 generatePortal : function(descr){
-    this._portals.push(new Portal(descr));
+    //this._portals.push(new Portal(descr));
 },
 
 changeMouse : function(x,y){
