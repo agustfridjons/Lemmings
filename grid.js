@@ -120,6 +120,8 @@ Grid.prototype.level1 = function(){
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 2;
     entityManager.rightLeft = 2;
+    entityManager.sjumpLeft = 4;
+    entityManager.gunsLeft = 2;
 };
 
 Grid.prototype.level2 = function(){
@@ -144,6 +146,8 @@ Grid.prototype.level2 = function(){
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 4;
+    entityManager.sjumpLeft = 4;
+    entityManager.gunsLeft = 2;
 };
 
 Grid.prototype.level3 = function() {
@@ -168,6 +172,8 @@ Grid.prototype.level3 = function() {
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 4;
+    entityManager.sjumpLeft = 4;
+    entityManager.gunsLeft = 2;
 };
 
 Grid.prototype.level4 = function() {
@@ -330,10 +336,10 @@ Grid.prototype.changeBlock = function(x,y){
         if(this.choice === 1 && entityManager.blocksLeft !== 0){
             this.currentLevel[realy][realx] = 1;
             entityManager.blocksLeft--;
-        } else if(this.choice === 2 && entityManager.jumpsLeft !== 0){
+        } else if(this.choice === 2 && entityManager.sjumpLeft !== 0){
             this.currentLevel[realy][realx] = 9;
             this.makeSmallJump(this.position[realy][realx]);
-            entityManager.jumpsLeft--;
+            entityManager.sjumpLeft--;
         } else if(this.choice === 3 && entityManager.jumpsLeft !== 0){
             this.currentLevel[realy][realx] = 5;
             this.makeJump(this.position[realy][realx]);
@@ -342,13 +348,14 @@ Grid.prototype.changeBlock = function(x,y){
             this.currentLevel[realy][realx] = 7;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
-        } else if(this.choice === 5){
+        } else if(this.choice === 5 && entityManager.leftLeft !== 0){
             this.currentLevel[realy][realx] = 6;
             this.makeLeftJump(this.position[realy][realx]);
             entityManager.leftLeft--;
-        } else if(this.choice === 6){
+        } else if(this.choice === 6 && entityManager.gunsLeft !== 0){
             this.currentLevel[realy][realx] = 8;
             this.makeGun(this.position[realy][realx]);
+            entityManager.gunsLeft--;
         }
     }
 };
