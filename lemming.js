@@ -25,7 +25,7 @@ function lemming(descr) {
 
     //this.radius = this.sprite.width/2;
     // Set normal drawing scale, and warp state off
-    this._scale = 1;
+    this._scale = 0.6;
 };
 
 lemming.prototype = new Entity();
@@ -71,8 +71,8 @@ lemming.prototype.update = function (du) {
     }
     
     // Change current image at certain interval
-    if(!this.isExploding){    
-        if (this.time % 10 === 0) {
+    if(!this.isExploding && !this.isLeaving){    
+        if (this.time % 5 === 0) {
             if (this.currentIMG < 7) {
                 this.currentIMG++;
             } else {
@@ -81,7 +81,8 @@ lemming.prototype.update = function (du) {
         }
     } else if(this.isLeaving){
         this.currentIMG = 8;
-    }else {
+        console.log("blag");
+    } else {
         if (this.time % 10 === 0) {
             if (this.currentIMG < 3) {
                 this.currentIMG++;
@@ -89,6 +90,9 @@ lemming.prototype.update = function (du) {
                 this.currentIMG = 0;
             }
         }
+    }
+    if (this.isDropping) {
+        this.currentIMG = 9;
     }
     if(this.isExploding){
         this.lifeSpan -= du*2;
@@ -225,7 +229,6 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         if (currentBlockPos.cy < this.cy) {
             this.isOnRamp = true;
             this.velY = -this.speedX;
-            this.velX = -this.speedX;
         } else if (currentBlockPos.cy < this.cy + this.radius / 2){
             this.isDropping = true;
             this.isOnRamp = false;
@@ -288,9 +291,13 @@ lemming.prototype.render = function (ctx) {
     if (this.lifeSpan < 0) {
         ctx.globalAlpha = 0;
     }
-    this.sprite.drawCentredAt(
-	ctx, this.cx, this.cy, this.rotation, this.currentIMG
-    );
+    if (!this.isLeaving) {
+        this.sprite.drawCentredAt(
+        ctx, this.cx, this.cy, this.rotation, this.currentIMG
+        );
+    } else {
+        
+    }
     this.sprite.scale = origScale;
     ctx.globalAlpha = 1;
 };
