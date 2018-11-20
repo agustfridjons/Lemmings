@@ -186,6 +186,12 @@ function requestPreloads() {
         img14 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_6.png",
         img15 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_7.png",
 
+        mute   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/mute.png",
+        unmute : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/unmute.png",
+        pause  : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/pause.png",
+        play   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/play.png",
+        bomb   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/bomb.svg",
+
         lemmingJump : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_8.png",
         lemmingJumpReverse : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse8.png",
 
@@ -250,6 +256,13 @@ function requestPreloads() {
         background1 : "https://notendur.hi.is/~fth29/Kalli/Background/Sky.jpeg",
         background2 : "https://notendur.hi.is/~fth29/Kalli/Background/Forest.png",
         background3 : "https://notendur.hi.is/~fth29/Kalli/Background/Landscape.jpeg",
+        background4 : "https://notendur.hi.is/agf6/lemmingSprites/lvl4.png",
+        background5 : "https://notendur.hi.is/agf6/lemmingSprites/lvl5.png",
+        background6 : "https://notendur.hi.is/agf6/lemmingSprites/lvl6.png",
+        background7 : "https://notendur.hi.is/agf6/lemmingSprites/lvl7.png",
+        background8 : "https://notendur.hi.is/agf6/lemmingSprites/lvl8.png",
+
+
         blockIMG : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/woodBlock.png"
     };
 
@@ -274,6 +287,7 @@ function preloadDone() {
     var explosion = [g_images.explosion0,g_images.explosion1,g_images.explosion2,g_images.explosion3];
     var portal = [g_images.portal1,g_images.portal2,g_images.portal3,g_images.portal4,g_images.portal5,g_images.portal6,g_images.portal7];
     var gun = [g_images.gun1,g_images.gun2];
+
     g_sprites.portal = new Sprite(portal);
     g_sprites.gun = new Sprite(gun);
     g_sprites.reverse = new Sprite(reverse);

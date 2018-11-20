@@ -12,7 +12,10 @@ Evil, ugly (but "necessary") globals, which everyone can use.
 /* jshint browser: true, devel: true, globalstrict: true */
 
 var g_canvas = document.getElementById("myCanvas");
+var g_canvas2 = document.getElementById("myCanvas2");
+
 var g_ctx = g_canvas.getContext("2d");
+var g_ctx2 = g_canvas2.getContext("2d");
 
 var g_gameSong;
 var g_menuSong;

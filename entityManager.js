@@ -143,6 +143,8 @@ init: function(level) {
         this.grid.level3();
     } else if (level === 4) {
         this.grid.level4();
+    } else if (level === 5){
+        this.grid.level5();
     }
 },
 
@@ -194,21 +196,7 @@ render: function(ctx) {
     }
 },
 
-updateStats : function(){
-    var level = document.getElementById("level");
-    level.innerHTML = "Level: 1";
-    var blocks = document.getElementById("blocks");
-    blocks.innerHTML = "Blocks: " + this.blocksLeft;
-    var jumps = document.getElementById("jumps");
-    jumps.innerHTML = "Jumps: " + this.jumpsLeft;
-    var right = document.getElementById("right");
-    right.innerHTML = "Right Jumps: " + this.rightLeft;
-    var left = document.getElementById("left");
-    left.innerHTML ="Left Jumps: " + this.leftLeft;
-},
-
 update: function(du) {
-    this.updateStats();
     this.grid.update();
 
     var i = 0;
