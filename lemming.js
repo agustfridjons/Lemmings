@@ -63,11 +63,6 @@ lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
-    //If player wants to kill all to restart.
-    if(entityManager.killALL && !this.isExploding){
-        this.explode();
-        console.log("BOOM");
-    }
     // Which way is lemming walking
     if(this.velX < 0 && !this.isExploding){
         this.sprite = g_sprites.reverse;
@@ -126,6 +121,10 @@ lemming.prototype.update = function (du) {
     // React to specialBlocks
     this.specialReaction(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du);
     
+    //If player wants to kill all to restart.
+    if(entityManager.killALL && !this.isExploding){
+        this.explode();
+    }
     if (this.isDropping) {
         this.velY += NOMINAL_GRAVITY;
     } else if (!this.isOnRamp){
