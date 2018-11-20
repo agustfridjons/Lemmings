@@ -108,7 +108,7 @@ lemming.prototype.update = function (du) {
         }
         return entityManager.KILL_ME_NOW;
     }
-    console.log(this.currentIMG);
+    //console.log(this.currentIMG);
 
     
     // Get the id of current block and bottom blocks

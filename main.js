@@ -68,13 +68,16 @@ main._iterCore = function (dt) {
     if(gamestate === 0){
         menu.update(dt);
         menu.render(g_ctx);
-
+        canvas2.render(g_ctx2);
         g_gameSong.fadeOUT();
+
+
     }else{
         update(dt);
         render(g_ctx);
-
         g_menuSong.fadeOUT();
+
+
     }
 };
 
@@ -138,6 +141,8 @@ main.init = function () {
 
     g_gameSong = new sound("Sounds/GameSound.mp3");
     g_menuSong = new sound("Sounds/MenuSound.mp3");
+
+    canvas2.init();
 
     g_gameSong.loop();
     g_menuSong.loop();
