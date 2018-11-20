@@ -119,6 +119,8 @@ var KEY_3 = keyCode('3');
 var KEY_4 = keyCode('4');
 var KEY_5 = keyCode('5');
 var KEY_6 = keyCode('6');
+var KEY_SOLUTION = keyCode('L');
+var KEY_KILL_ALL = keyCode('U');
 
 var KEY_K = keyCode('K');
 
@@ -131,6 +133,9 @@ function processDiagnostics() {
     if (eatKey(KEY_4)) entityManager.changeChoice(4);  
     if (eatKey(KEY_5)) entityManager.changeChoice(5);  
     if (eatKey(KEY_6)) entityManager.changeChoice(6);  
+
+    if(eatKey(KEY_KILL_ALL)) entityManager.killALL = true;
+    if(eatKey(KEY_SOLUTION)) entityManager.grid.giveSolution();
 }
 
 
