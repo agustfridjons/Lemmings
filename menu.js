@@ -37,7 +37,6 @@ var menu = {
             return;
         }else{
             this.currentLevel += level;
-            console.log("changelevel");
         }
     }
 
@@ -55,12 +54,12 @@ var menu = {
 
         //Arrow buttons handeling
         if(menu.mouseOnButton(370, 75, 30, 20) && this.mpress){
-            menu.changeLevel(-1);
             this.mpress = false;
+            menu.changeLevel(-1);
         }
         if(menu.mouseOnButton(390, 75, 30, 20) && this.mpress){
-            menu.changeLevel(1);
             this.mpress = false;
+            menu.changeLevel(1);
         } 
 
         //if mouse is hovering a button changes sprites
