@@ -33,11 +33,13 @@ _doors    : [],
 _portals  : [],
 mouseX    : 0,
 mouseY    : 0,
+sjumpLeft : 0,
 jumpsLeft : 0,
 rightLeft : 0,
 leftLeft  : 0,
 blocksLeft: 0,
 killALL   : false,
+gunsLeft  : 0,
 isChosen  : false,
 rotation  : false,
 grid      : Object,
@@ -131,15 +133,16 @@ init: function(level) {
     console.log("init");
     this.clearCatagories();
     this.generateGrid();
-
+    this.isChosen = false;
     if (level === 1) {
         this.grid.level1();
     } else if (level === 2) {
         this.grid.level2();
     } else if (level === 3) {
         this.grid.level3();
+    } else if (level === 4) {
+        this.grid.level4();
     }
-    
 },
 
 generateGrid: function(){
@@ -166,13 +169,6 @@ render: function(ctx) {
         this._entities[i].render(ctx);
     }
 
-/*     for (var c = 0; c < this._categories.length; ++c) {
-        var aCategory = this._categories[c];
-        for (var i = 0; i < aCategory.length; ++i) {
-            aCategory[i].render(ctx);
-        }
-    } */
-
     if(this.isChosen){
         ctx.globalAlpha = 0.65;
         try{
@@ -185,9 +181,9 @@ render: function(ctx) {
             ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 4 && this.rightLeft !== 0){
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 6){
+        } else if(this.choice === 6 && this.gunsLeft !== 0){
             ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
-        } else if(this.choice === 2){
+        } else if(this.choice === 2 && this.sjumpLeft !== 0){
             ctx.drawImage(g_images.smalljump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         }
     } catch(undefined){

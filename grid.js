@@ -120,6 +120,8 @@ Grid.prototype.level1 = function(){
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 2;
     entityManager.rightLeft = 2;
+    entityManager.sjumpLeft = 4;
+    entityManager.gunsLeft = 2;
 };
 
 Grid.prototype.level2 = function(){
@@ -158,6 +160,8 @@ Grid.prototype.level2 = function(){
     entityManager.blocksLeft = 3;
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 4;
+    entityManager.sjumpLeft = 4;
+    entityManager.gunsLeft = 2;
 };
 
 Grid.prototype.level3 = function() {
@@ -189,6 +193,33 @@ Grid.prototype.level3 = function() {
                          [1,10,0,0,6,1,0,0,0,0,0,0,0,0,0,6,1],
                          [1,1,1,1,1,1,3,3,3,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    this.createEntities();
+    entityManager.jumpsLeft = 9;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 3;
+    entityManager.rightLeft = 4;
+    entityManager.sjumpLeft = 4;
+    entityManager.gunsLeft = 2;
+};
+
+Grid.prototype.level4 = function() {
+    this.background = g_images.background1;
+
+    this.startingPos = this.position[1][1];
+    this.totalLemmings = 5;
+    this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,3,1,1,1,1,1,1,1,3,3,3,3,3,3,3,1],
+                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
     this.createEntities();
     entityManager.jumpsLeft = 9;
     entityManager.blocksLeft = 3;
@@ -373,10 +404,10 @@ Grid.prototype.changeBlock = function(x,y){
         if(this.choice === 1 && entityManager.blocksLeft !== 0){
             this.currentLevel[realy][realx] = 1;
             entityManager.blocksLeft--;
-        } else if(this.choice === 2 && entityManager.jumpsLeft !== 0){
+        } else if(this.choice === 2 && entityManager.sjumpLeft !== 0){
             this.currentLevel[realy][realx] = 9;
             this.makeSmallJump(this.position[realy][realx]);
-            entityManager.jumpsLeft--;
+            entityManager.sjumpLeft--;
         } else if(this.choice === 3 && entityManager.jumpsLeft !== 0){
             this.currentLevel[realy][realx] = 5;
             this.makeJump(this.position[realy][realx]);
@@ -385,13 +416,14 @@ Grid.prototype.changeBlock = function(x,y){
             this.currentLevel[realy][realx] = 7;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
-        } else if(this.choice === 5){
+        } else if(this.choice === 5 && entityManager.leftLeft !== 0){
             this.currentLevel[realy][realx] = 6;
             this.makeLeftJump(this.position[realy][realx]);
             entityManager.leftLeft--;
-        } else if(this.choice === 6){
+        } else if(this.choice === 6 && entityManager.gunsLeft !== 0){
             this.currentLevel[realy][realx] = 8;
             this.makeGun(this.position[realy][realx]);
+            entityManager.gunsLeft--;
         }
     }
 };

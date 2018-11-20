@@ -9,7 +9,7 @@
 }
 */
 var menu = {
-    currentLevel : 1,
+    currentLevel : 4,
     buttonHalfW : 100,
     buttonHalfH : 25,
     currentS : 0,
@@ -55,13 +55,13 @@ var menu = {
 
         //react if buttons are clicked
         if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50,
-                               this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress){
+                               this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress && !this.renderContr){
             entityManager.init(this.currentLevel);
             setGamestate(1);
             this.mpress = false;
         }
         if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50,
-                              this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress){
+                              this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress && !this.renderContr){
             this.renderContr = true;
             this.mpress = false;
         }
@@ -81,8 +81,10 @@ var menu = {
         }
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
-        util.drawText(ctx, '26px Fipps',"#E",this.levelString(),
-                      ctx.canvas.width/2 - 75, 100);
+        util.fillTriangle(ctx, 380, 85, "#8e1212");
+        util.fillreverseTriangle(ctx, 410, 85, "#8e1212");
+        util.drawText(ctx, '26px Fipps',"#10021A",this.levelString(),
+                      ctx.canvas.width/2 - 100, 100);
         ctx.drawImage(menu.getImage(this.currentS), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50);
         ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);                           
     };
@@ -90,16 +92,16 @@ var menu = {
     menu.renderControls = function(ctx){
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
-        util.drawText(ctx, '26px Fipps',"#E",menu.getText(0),
+        util.drawText(ctx, '26px Fipps',"#10021A",menu.getText(0),
                      ctx.canvas.width/2 - 100, 50);
-        util.drawText(ctx, '13px Fipps',"#E",menu.getText(1),
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(1),
                      this.cColumnX1, 75);
-        util.drawText(ctx, '13px Fipps',"#E",menu.getText(2),
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(2),
                      this.cColumnX1, 95);
         var posY = 100;
         for(var i = 3; i < 9; i++){
             posY += this.margin; 
-            util.drawText(ctx, '13px Fipps',"#E",menu.getText(i),
+            util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(i),
                           this.cColumnX1, posY);
 
         }
