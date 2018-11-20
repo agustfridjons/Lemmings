@@ -191,12 +191,12 @@ render: function(ctx) {
         } else if(this.choice === 3 && this.jumpsLeft !== 0){
             ctx.drawImage(g_images.jump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 5 && this.leftLeft !== 0){
-            ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 4 && this.rightLeft !== 0){
             ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 6){
+        } else if(this.choice === 4 && this.rightLeft !== 0){
+            ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        } else if(this.choice === 6 && this.gunleft !== 0){
             ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
-        } else if(this.choice === 2){
+        } else if(this.choice === 2 && this.smalljleft !== 0){
             ctx.drawImage(g_images.smalljump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         }
     } catch(undefined){

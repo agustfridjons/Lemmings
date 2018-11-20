@@ -312,11 +312,11 @@ Grid.prototype.changeBlock = function(x,y){
             this.currentLevel[realy][realx] = 1;
             entityManager.blocksLeft--;
         } else if(this.choice === 2 && entityManager.smalljleft !== 0){
-            this.currentLevel[realy][realx] = 5;
+            this.currentLevel[realy][realx] = 9;
             this.makeSmallJump(this.position[realy][realx]);
             entityManager.smalljleft--;
         } else if(this.choice === 3 && entityManager.jumpsLeft !== 0){
-            this.currentLevel[realy][realx] = 6;
+            this.currentLevel[realy][realx] = 5;
             this.makeJump(this.position[realy][realx]);
             entityManager.jumpsLeft--;
         } else if(this.choice === 4 && entityManager.leftLeft !== 0){
@@ -324,11 +324,11 @@ Grid.prototype.changeBlock = function(x,y){
             this.makeLeftJump(this.position[realy][realx]);
             entityManager.leftLeft--;
         } else if(this.choice === 5 && entityManager.rightLeft !== 0){
-            this.currentLevel[realy][realx] = 8;
+            this.currentLevel[realy][realx] = 6;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
         } else if(this.choice === 6 && entityManager.gunleft !== 0){
-            this.currentLevel[realy][realx] = 9;
+            this.currentLevel[realy][realx] = 8;
             this.makeGun(this.position[realy][realx]);
             entityManager.gunleft--;
         }
