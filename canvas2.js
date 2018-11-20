@@ -72,7 +72,6 @@ var canvas2 = {
     },
 
     update : function() {
-
     },
 
     setGrid : function(ctx) {
