@@ -33,7 +33,8 @@ Portal.prototype.update = function () {
         } else {
             this.currentIMG = 0;
         }
-    } else if(this.time%3 === 0 && this.time > 200 && this.time < 1000){
+    } else if(this.time%3 === 0 && this.time > 200 && this.time < 1000 && 
+        entityManager.grid.lemmingsInPlay === entityManager.grid.totalLemmings){
         if(this.alpha > 0) this.alpha -= 0.09;
         if(this.currentIMG !== 6){
             this.currentIMG++;

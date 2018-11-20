@@ -69,6 +69,7 @@ main._iterCore = function (dt) {
         menu.update(dt);
         menu.render(g_ctx);
         canvas2.render(g_ctx2);
+        canvas2.update();
         g_gameSong.fadeOUT();
 
 
@@ -77,6 +78,8 @@ main._iterCore = function (dt) {
         render(g_ctx);
         g_menuSong.fadeOUT();
 
+        canvas2.render(g_ctx2);
+        canvas2.update();
 
     }
 };
