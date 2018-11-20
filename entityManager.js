@@ -148,7 +148,22 @@ generateGrid: function(){
     this.grid.createGrid();
 },
 
-
+updateStats : function(){
+    var level = document.getElementById("level");
+    level.innerHTML = "Level: " + menu.getLevel();
+    var blocks = document.getElementById("blocks");
+    blocks.innerHTML = "Blocks: " + this.blocksLeft;
+    var jumps = document.getElementById("bjumps");
+    jumps.innerHTML = "Big Jumps: " + this.jumpsLeft;
+    var right = document.getElementById("rjumps");
+    right.innerHTML = "Right Jumps: " + this.rightLeft;
+    var left = document.getElementById("ljumps");
+    left.innerHTML ="Left Jumps: " + this.leftLeft;
+    var sjump = document.getElementById("sjumps");
+    sjump.innerHTML ="Small Jumps: " + this.smalljleft;
+    var gun = document.getElementById("gun");
+    gun.innerHTML ="Guns: " + this.gunleft;
+},
 
 render: function(ctx) {
 
@@ -167,13 +182,6 @@ render: function(ctx) {
         this._entities[i].render(ctx);
     }
 
-/*     for (var c = 0; c < this._categories.length; ++c) {
-        var aCategory = this._categories[c];
-        for (var i = 0; i < aCategory.length; ++i) {
-            aCategory[i].render(ctx);
-        }
-    } */
-
     if(this.isChosen){
         ctx.globalAlpha = 0.65;
         try{
@@ -183,9 +191,9 @@ render: function(ctx) {
         } else if(this.choice === 3 && this.jumpsLeft !== 0){
             ctx.drawImage(g_images.jump1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 5 && this.leftLeft !== 0){
-            ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
-        } else if(this.choice === 4 && this.rightLeft !== 0){
             ctx.drawImage(g_images.right1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
+        } else if(this.choice === 4 && this.rightLeft !== 0){
+            ctx.drawImage(g_images.side1,this.grid.position[i.y][i.x].cx-20,this.grid.position[i.y][i.x].cy-20,40,40);
         } else if(this.choice === 6){
             ctx.drawImage(g_images.gun2,this.grid.position[i.y][i.x].cx-11,this.grid.position[i.y][i.x].cy-11,22,22);
         } else if(this.choice === 2){
@@ -196,19 +204,6 @@ render: function(ctx) {
     }
         ctx.globalAlpha = 1;
     }
-},
-
-updateStats : function(){
-    var level = document.getElementById("level");
-    level.innerHTML = "Level: 1";
-    var blocks = document.getElementById("blocks");
-    blocks.innerHTML = "Blocks: " + this.blocksLeft;
-    var jumps = document.getElementById("jumps");
-    jumps.innerHTML = "Jumps: " + this.jumpsLeft;
-    var right = document.getElementById("right");
-    right.innerHTML = "Right Jumps: " + this.rightLeft;
-    var left = document.getElementById("left");
-    left.innerHTML ="Left Jumps: " + this.leftLeft;
 },
 
 update: function(du) {
@@ -252,21 +247,6 @@ update: function(du) {
         }
     }
 
-/*     for (var c = 0; c < this._categories.length; ++c) {
-        var aCategory = this._categories[c];
-        var i = 0;
-        while (i < aCategory.length) {
-            var status = aCategory[i].update(du);
-            if (status === this.KILL_ME_NOW) {
-                // remove the dead guy, and shuffle the others down to
-                // prevent a confusing gap from appearing in the array
-                aCategory.splice(i,1);
-            }
-            else {
-                ++i;
-            }
-        }
-    } */
 }
 }
 

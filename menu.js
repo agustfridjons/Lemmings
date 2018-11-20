@@ -27,6 +27,10 @@ var menu = {
         this.currentLevel++;
     };
 
+    menu.getLevel = function(){
+        return this.currentLevel;
+    };
+
     menu.levelString = function(){
         return "Level " + this.currentLevel;
     };
@@ -97,7 +101,7 @@ var menu = {
         util.drawText(ctx, '13px Fipps',"#330033",menu.getText(2),
                      this.cColumnX1, 95);
         var posY = 100;
-        for(var i = 3; i < 9; i++){
+        for(var i = 3; i < 10; i++){
             posY += this.margin; 
             util.drawText(ctx, '13px Fipps',"#330033",menu.getText(i),
                           this.cColumnX1, posY);
