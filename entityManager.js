@@ -30,6 +30,7 @@ _blocks   : [],
 _lemmings : [],
 _entities : [],
 _doors    : [],
+_portals  : [],
 mouseX    : 0,
 mouseY    : 0,
 jumpsLeft : 0,
@@ -105,6 +106,10 @@ generateBlockExplosion : function(descr){
     this._entities.push(new BlockExplosion(descr));
 },
 
+generatePortal : function(descr){
+    //this._portals.push(new Portal(descr));
+},
+
 changeMouse : function(x,y){
     this.mouseX = x;
     this.mouseY = y;
@@ -149,6 +154,9 @@ render: function(ctx) {
 
     for (var i = 0; i < this._doors.length; i++) {
         this._doors[i].render(ctx);
+    }
+    for(var i = 0; i < this._portals.length; i++){
+        this._portals[i].render(ctx);
     }
     for (var i = 0; i < this._lemmings.length; i++) {
         this._lemmings[i].render(ctx);
@@ -210,6 +218,15 @@ update: function(du) {
         var status = this._doors[i].update(du);
         if (status === this.KILL_ME_NOW) {
             this._doors.splice(i,1);
+        } else {
+            ++i;
+        }
+    }
+    i = 0;
+    while (i < this._portals.length) {
+        var status = this._portals[i].update(du);
+        if (status === this.KILL_ME_NOW) {
+            this._portals.splice(i,1);
         } else {
             ++i;
         }

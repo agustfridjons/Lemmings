@@ -234,6 +234,14 @@ function requestPreloads() {
         gun1 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun0.png",
         gun2 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun1.png",
 
+        portal1 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal0.png",
+        portal2 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal1.png",
+        portal3 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal2.png",
+        portal4 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal3.png",
+        portal5 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal4.png",
+        portal6 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal5.png",
+        portal7 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal6.png",
+
         background1 : "https://notendur.hi.is/~fth29/Kalli/Background/Sky.jpeg",
         background2 : "https://notendur.hi.is/~fth29/Kalli/Background/Forest.png",
         background3 : "https://notendur.hi.is/~fth29/Kalli/Background/Landscape.jpeg",
@@ -259,7 +267,9 @@ function preloadDone() {
     var right = [g_images.right1,g_images.right2,g_images.right3,g_images.right4];
     var buttons = [g_images.button0,g_images.button1,g_images.button2,g_images.button3];
     var explosion = [g_images.explosion0,g_images.explosion1,g_images.explosion2,g_images.explosion3];
+    var portal = [g_images.portal1,g_images.portal2,g_images.portal3,g_images.portal4,g_images.portal5,g_images.portal6,g_images.portal7];
     var gun = [g_images.gun1,g_images.gun2];
+    g_sprites.portal = new Sprite(portal);
     g_sprites.gun = new Sprite(gun);
     g_sprites.reverse = new Sprite(reverse);
     g_sprites.img0 = new Sprite(images);

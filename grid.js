@@ -15,6 +15,7 @@ Grid.prototype.position = [];
 Grid.prototype.currentLevel = [];
 Grid.prototype.choice = 0;
 Grid.prototype.solution = [];
+Grid.prototype.endLevelTimer = 0;
 
 Grid.prototype.deadLemmings = 0;
 Grid.prototype.savedLemmings = 0;
@@ -43,6 +44,7 @@ Grid.prototype.time = 0;
 7 = hægri hopp
 8 = byssa
 9 = lítið hopp
+10 = portal
 */
 
 Grid.prototype.createGrid = function(){
@@ -94,7 +96,7 @@ Grid.prototype.level1 = function(){
                          [1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
                          [1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1],
-                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                         [1,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                          [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                          [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
@@ -196,6 +198,8 @@ Grid.prototype.createEntities = function(){
               case 9:
                   this.makeSmallJump(this.position[i][j]);
                   break;
+              case 10:
+                  this.makePortal(this.position[i][j]);
               default:
                   break;
           }
@@ -221,6 +225,12 @@ Grid.prototype.getResults = function() {
 
 };
 
+Grid.prototype.makePortal = function(pos){
+    entityManager.generatePortal({
+        cx  :   pos.cx,
+        cy  :   pos.cy
+    });
+};
 Grid.prototype.makeGun = function(pos){
     entityManager.generateGun({
         cx  :   pos.cx,
@@ -365,10 +375,16 @@ Grid.prototype.update = function(du) {
     if (this.totalLemmings === this.savedLemmings + this.deadLemmings) {
         var results = this.getResults();
         if (results) {
-            menu.nextLevel();
+            this.endLevelTimer++;
+            if(this.endLevelTimer > 100){
+                menu.nextLevel();
+                gamestate = 0;
+            }
+        } else {
+            gamestate = 0;
         }
-        gamestate = 0;
-    }
+        
+     }
     g_gameSong.fadeIN();
 };
 
