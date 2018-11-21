@@ -1,5 +1,5 @@
 // ==========
-// SHIP STUFF
+// LEMMING STUFF
 // ==========
 
 "use strict";
@@ -19,12 +19,10 @@ function lemming(descr) {
     this.rememberResets();
     this.setup(descr);
     
-    
     // Default sprite, if not otherwise specified
     this.sprite = this.sprite || g_sprites.img0;
 
-    //this.radius = this.sprite.width/2;
-    // Set normal drawing scale, and warp state off
+    // Set normal drawing scale
     this._scale = 0.6;
 };
 
@@ -42,7 +40,6 @@ lemming.prototype.cx = 60;
 lemming.prototype.cy = 348;
 lemming.prototype.velX = -1.5;
 lemming.prototype.velY = 0;
-lemming.prototype.isGoingRight = true;
 lemming.prototype.numSubSteps = 3;
 
 lemming.prototype.speedX = 1.5;
@@ -62,13 +59,16 @@ lemming.prototype.soundE = ["Sounds/water.mp3",
                             "Sounds/zap.mp3",
                             "Sounds/flame.mp3"]; 
 
-lemming.prototype.currentIMG = 0;
-lemming.prototype.time = 0;
+lemming.prototype.currentIMG = 0; // Index of image to use
+
+// Used to change currentIMG at certain interval
+lemming.prototype.time = 0;       
 
 
 lemming.prototype.update = function (du) {
     du = 1;
-    // Which way is lemming walking
+
+    // Change sprite if lemming turns around
     if(this.velX < 0 && !this.isExploding){
         this.sprite = g_sprites.reverse;
     } else if(this.velX > 0 && !this.isExploding){
@@ -84,9 +84,9 @@ lemming.prototype.update = function (du) {
                 this.currentIMG = 0;
             }
         }
-    } else if(this.isLeaving){
-        this.currentIMG = 8;
-    } 
+    }
+    // If lemming is exploding, change image 
+    // at different interval
     if(this.isExploding){
         if (this.time % 10 === 0) {
             if (this.currentIMG < 3) {
@@ -96,9 +96,11 @@ lemming.prototype.update = function (du) {
             }
         }
     }
+    // Change to jumping lemming
     if (this.isDropping) {
-        this.currentIMG = 9;
+        this.currentIMG = 8;
     }
+    // Decrease life of exploding lemming
     if(this.isExploding){
         this.lifeSpan -= du*2;
     }
@@ -108,8 +110,8 @@ lemming.prototype.update = function (du) {
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
     }
-    
     if (this.lifeSpan < 0) { 
+        // Check if lemming made it to the door or not
         if (this.isLeaving) {
             entityManager.grid.removeLemming(false);
         } else {
@@ -131,15 +133,18 @@ lemming.prototype.update = function (du) {
     if(entityManager.killALL && !this.isExploding){
         this.explode();
     }
+    // Apply gravity if lemming is dropping
     if (this.isDropping) {
         this.velY += NOMINAL_GRAVITY;
+    // Fix lemming position when walking    
     } else if (!this.isOnRamp){
         this.cy = adBlocks[1][1].cy + this.radius - 3;
     }
-    // Move lemming
-    
+
+    // React to collision
     var collision = this.computeSubsteps(du/this.numSubSteps, du);
     
+    // If collision did not occur, move lemming
     if (!collision.vCollide) {
         this.cy += (this.velY/1.2) * du;
     }
@@ -148,14 +153,18 @@ lemming.prototype.update = function (du) {
     }
 };
 
+// Function to move lemming on the x-axis.
 lemming.prototype.moveX = function(du) {
     this.cx += (this.velX/1.2) * du;
 };
 
+// Function to move lemming on the y-axis.
 lemming.prototype.moveY = function(du) {
     this.cy += (this.velY/1.2) * du;
 };
 
+// For more accurate collision detection, 
+// we divide du into substeps
 lemming.prototype.computeSubsteps = function(du, realDU) {
     // Remember my previous position
     var prevX = this.cx;
@@ -168,6 +177,7 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
     var verticalCollide = false;
     var horizontalCollide = false;
 
+    // Check for horizontal collision
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
             this.velX *= -1; // change direction of lemming
@@ -183,7 +193,6 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
         nextY = prevY + this.velY * du;
     }
 
-
     // Remember my previous position
     prevX = this.cx;
     prevY = this.cy;
@@ -192,7 +201,7 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
     nextX = prevX + this.velX * du;
     nextY = prevY + this.velY * du;
 
-
+    // Check for vertical collision
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
             if (this.velY > 0) {
@@ -217,6 +226,8 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
         nextX = prevX + this.velX * du;
         nextY = prevY + this.velY * du;
     }
+    // Returns an object containing info 
+    // whether a vertical or horizontal collision occurred.
     return {
         vCollide : verticalCollide,
         hCollide : horizontalCollide
@@ -225,6 +236,8 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
 
 var NOMINAL_GRAVITY = 0.1;
 
+
+// Play soundeffects 
 lemming.prototype.playEffect = function(index){
     if(!canvas2.getIsMuted()){
         var S = new sound(this.soundE[index]);
@@ -232,8 +245,11 @@ lemming.prototype.playEffect = function(index){
     }
 }
 
+// React to water, fire, jumps or door.
 lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du) {
-    var currentBlockPos = adBlocks[1][1];
+
+    var currentBlockPos = adBlocks[1][1]; // Lemming current position
+
     if (BlocksID[0] != 1 && BlocksIDleft[0] != 1 && BlocksIDright[0] != 1) {
         if(!this.isExploding) this.isDropping = true;
     }
