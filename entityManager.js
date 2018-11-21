@@ -42,6 +42,7 @@ killALL   : false,
 gunsLeft  : 0,
 isChosen  : false,
 rotation  : false,
+portalSp  : true,
 grid      : Object,
 // "PRIVATE" METHODS
 
@@ -146,7 +147,8 @@ init: function(level) {
     canvas2.solutionGiven = false;
     this.generateGrid();
     this.isChosen = false;
-    this.killALL = false;  
+    this.killALL = false;
+    this.portalSp = true;  
     if (level === 1) {
         this.grid.level1();
     } else if (level === 2) {
@@ -180,6 +182,13 @@ render: function(ctx) {
     for (var i = 0; i < this._doors.length; i++) {
         this._doors[i].render(ctx);
     }
+
+    if(!canvas2.getIsMuted() && this.portalSp){   
+        var S = new sound ("Sounds/portal.ogg");
+        S.playSoundE(); 
+        this.portalSp = false;
+    }
+
     for(var i = 0; i < this._portals.length; i++){
         this._portals[i].render(ctx);
     }
