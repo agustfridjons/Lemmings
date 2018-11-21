@@ -11,7 +11,7 @@
 var menu = {
     currentLevel : 1,
     menuState : 0,
-    levelUnlocked: 1,
+    levelUnlocked: 6,
     finalLevel:  10,    
     buttonHalfW : 100,
     buttonHalfH : 25,

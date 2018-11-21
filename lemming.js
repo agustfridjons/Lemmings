@@ -67,7 +67,7 @@ lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
-    du = 1;
+    //du = 1;
     // Which way is lemming walking
     if(this.velX < 0 && !this.isExploding){
         this.sprite = g_sprites.reverse;
@@ -180,7 +180,7 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
                 break;
             } else {
                 this.velY *= -1;
-
+    
                 verticalCollide = true;
                 this.moveY(realDU);
                 //console.log("its a hit");
@@ -199,11 +199,11 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
     // Compute my provisional new position (barring collisions)
     nextX = prevX + this.velX * du;
     nextY = prevY + this.velY * du;
-
+    
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
             this.velX *= -1; // change direction of lemming
-
+            
             horizontalCollide = true;
             this.moveX(realDU);
             //console.log("its a hit");
