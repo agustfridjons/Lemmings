@@ -9,9 +9,10 @@
 }
 */
 var menu = {
-    currentLevel : 2,
+    currentLevel : 1,
     menuState : 0,
-    levelUnlocked: 8,
+    levelUnlocked: 1,
+    finalLevel:  10,    
     buttonHalfW : 100,
     buttonHalfH : 25,
     currentS : 0,
@@ -21,17 +22,20 @@ var menu = {
     mpress: false,
     cColumnX1: 20,
     cColumnX2: 300,
+    cColumnX3: 330,
     buttonMargin: 50,
     margin: 30,
     results: {}
 };
 
     menu.nextLevel = function(){
-        if(this.currentLevel === this.levelUnlocked){
+        if (this.currentLevel === this.finalLevel){
+            this.menuState = 3;
+        } else if(this.levelUnlocked === this.currentLevel) {
             this.levelUnlocked++;
             this.currentLevel = this.levelUnlocked;
+            this.menuState = 1;
         }
-        this.menuState = 1;
     };
 
     menu.notnextLevel = function() {
@@ -65,10 +69,8 @@ var menu = {
     menu.update = function(du){
         if (this.menuState === 0) {
             this.update1(du);
-        } else if (this.menuState === 1) {
+        } else {
             this.update2(du);
-        } else if (this.menuState === 2) {
-            this.update3(du);
         }
     };
 
@@ -125,11 +127,18 @@ var menu = {
 
     menu.update2 = function(du) {
         // keyrist þegar leikmaður vinnur
+        this.currentCl = 4;
 
-    };
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160,
+            this.buttonHalfW*2,this.buttonHalfH*2)){
+            this.currentCl++;
+        }
 
-    menu.update3 = function(du) {
-        // keyrist þegar leikmaður tapar
+        if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160,
+            this.buttonHalfW*2,this.buttonHalfH*2) && this.mpress){
+            this.menuState = 0;
+            this.mpress = false;
+        }
     };
 
     menu.render = function(ctx){
@@ -139,6 +148,8 @@ var menu = {
             this.render2(ctx);
         } else if (this.menuState === 2) {
             this.render3(ctx);
+        } else if (this.menuState === 3) {
+            this.render4(ctx);
         }
     };
 
@@ -210,6 +221,32 @@ var menu = {
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
 
+    menu.render4 = function(ctx) {
+        // keyrist þegar leikmaður tapar
+
+        util.clearCanvas(ctx);
+        util.fillBox(ctx, 0, 0, ctx.canvas.width, 
+            ctx.canvas.height,"#080f21");
+            
+        util.fillBox(ctx, 0, 60-5,ctx.canvas.width, 
+            (ctx.canvas.height / 4) + 10,"#4c7264");
+
+        util.fillBox(ctx, 0, 60, ctx.canvas.width, 
+            ctx.canvas.height / 4,"#aa1e70");
+
+        
+        var win1 = "Congratulations!";
+        var win2 = "You beat the game!";
+        
+        util.drawText(ctx, '30px Georgia',"#10021A", win1 ,
+        ctx.canvas.width/2 - 140, 100);
+
+        util.drawText(ctx, '30px Georgia',"#10021A", win2 ,
+        ctx.canvas.width/2 - 170, 140);
+
+        ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
+    };
+
 
     menu.renderControls = function(ctx){
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
@@ -232,6 +269,12 @@ var menu = {
             posY += this.margin;
             ctx.drawImage(menu.getImage(i),this.cColumnX2,posY);
         }
+
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(9),
+                      this.cColumnX3, posY);
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(10),
+                      this.cColumnX3, posY + this.margin);
+
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 70);
 
     };
@@ -249,7 +292,9 @@ var menu = {
                     "3 Key: High jump",
                     "4 Key: Right side jump",
                     "5 Key: Left side jump",
-                    "6 Key: Gun"];
+                    "6 Key: Gun",
+                    "Tip!: Gun shoots a lazer",
+                    "that breaks solid blocks."];
         return texts[index];
     }
 
