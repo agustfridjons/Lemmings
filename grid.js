@@ -316,15 +316,15 @@ Grid.prototype.level10 = function() {
                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     this.createEntities();
     entityManager.jumpsLeft = 4;
-    entityManager.blocksLeft = 4;
-    entityManager.leftLeft = 4;
-    entityManager.rightLeft = 4;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 2;
+    entityManager.rightLeft = 2;
     entityManager.sjumpLeft = 4;
     entityManager.gunsLeft = 1;
 };
 
 Grid.prototype.level9 = function() {
-    this.background = g_images.background7;
+    this.background = g_images.background9;
     this.totalLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
@@ -398,7 +398,7 @@ Grid.prototype.level8 = function() {
 };
 
 Grid.prototype.level7 = function() {
-    this.background = g_images.background8;
+    this.background = g_images.background7;
     this.totalLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,4,1],

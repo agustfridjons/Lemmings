@@ -29,7 +29,7 @@ var g_levelINFO = [[4, 4, 4, 4, 4, 2],
                    [2, 3, 6, 3, 3, 3],
                    [0, 4, 6, 0, 0, 0],
                    [4, 5, 1, 1, 1, 0],
-                   [4, 4, 4, 4, 4, 1]];
+                   [3, 4, 4, 2, 2, 1]];
 
 //var g_canvas2 = document.getElementById("myInfoCanvas");
 //var g_ctx2 = g_canvas2.getContext("2d");

@@ -11,7 +11,7 @@
 var menu = {
     currentLevel : 1,
     menuState : 0,
-    levelUnlocked: 1,
+    levelUnlocked: 10,
     finalLevel:  10,    
     buttonHalfW : 100,
     buttonHalfH : 25,
@@ -274,6 +274,11 @@ var menu = {
                       this.cColumnX3, posY);
         util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(10),
                       this.cColumnX3, posY + this.margin);
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(11),
+                      this.cColumnX3, posY - this.margin * 3);
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(12),
+                      this.cColumnX3, posY - this.margin*2);
+        
 
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 70);
 
@@ -285,7 +290,7 @@ var menu = {
 
     menu.getText = function(index){
         var texts = ["CONTROLS",
-                    "Use number keys 1 - 7 to select elements",
+                    "Use number keys 1 - 6 to select elements",
                     "to put on the map.",
                     "1 Key: Solid block",
                     "2 Key: Low jump",
@@ -293,8 +298,10 @@ var menu = {
                     "4 Key: Right side jump",
                     "5 Key: Left side jump",
                     "6 Key: Gun",
-                    "Tip!: Gun shoots a lazer",
-                    "that breaks solid blocks."];
+                    "Gun shoots a lazer",
+                    "that breaks solid blocks.",
+                    "Derect the lemmings to",
+                    "the door using blocks"];
         return texts[index];
     }
 
