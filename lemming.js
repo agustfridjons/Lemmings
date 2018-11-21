@@ -58,9 +58,7 @@ lemming.prototype.isLeaving = false;
 lemming.prototype.isDropping = false;
 lemming.prototype.isOnRamp = false;
 lemming.prototype.isDrowning = false;
-lemming.prototype.soundE = ["Sounds/water.mp3",
-                            "Sounds/zap.mp3",
-                            "Sounds/flame.mp3"];
+lemming.s
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
@@ -265,7 +263,6 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         this.currentIMG = 1;
         this.velX /= 1.02;
     } else if (BlocksID[1] === 2) {
-<<<<<<< HEAD
         if(!this.isExploding && !canvas2.getIsMuted()){
             this.playEffect(2);
         }
@@ -274,9 +271,7 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         this.sprite = g_sprites.explosion;
         this.velX = 0;
         this.velY = 0;
-=======
         this.explode();
->>>>>>> master
     } else if(BlocksID[1] === 4 && this.cx < currentBlockPos.cx + 1 && this.cx > currentBlockPos.cx - 1){
         this.lifeSpan -= du*4;
         this.isLeaving = true;
