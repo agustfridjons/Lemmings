@@ -562,6 +562,9 @@ Grid.prototype.makeRightJump = function(pos){
 //Function that checks if the "spot" the payer
 // wants to put a block is allowed
 Grid.prototype.isAllowed = function(x,y){
+    if(this.choice === 6 && this.currentLevel[y][x] === 0){
+        return true;
+    }
     if(this.currentLevel[y][x] === 0 && this.currentLevel[y+1][x] === 1){
         return true;
     } else{
