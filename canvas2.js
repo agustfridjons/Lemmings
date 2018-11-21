@@ -118,7 +118,7 @@ var canvas2 = {
         var cy = (this.yInterval * 2) + this.yInterval / 2;
 
         for (var i = 0; i < this.powerUps.length; i++) {
-            ctx.fillText(this.powerUps[i], cx, cy);
+            ctx.fillText(i+1, cx, cy);
             cy += this.yInterval;
         }
     },

@@ -167,7 +167,32 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
     
     var verticalCollide = false;
     var horizontalCollide = false;
+
+    for(var i = 0; i < this.numSubSteps; i++){
+        if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
+            this.velX *= -1; // change direction of lemming
+
+            horizontalCollide = true;
+            this.moveX(realDU);
+            //console.log("its a hit");
+            break;
+        }
+        prevX = nextX;
+        prevY = nextY;
+        nextX = prevX + this.velX * du;
+        nextY = prevY + this.velY * du;
+    }
+
+
+    // Remember my previous position
+    prevX = this.cx;
+    prevY = this.cy;
     
+    // Compute my provisional new position (barring collisions)
+    nextX = prevX + this.velX * du;
+    nextY = prevY + this.velY * du;
+
+
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
             if (this.velY > 0) {
@@ -186,28 +211,6 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
                 //console.log("its a hit");
                 break;
             }
-        }
-        prevX = nextX;
-        prevY = nextY;
-        nextX = prevX + this.velX * du;
-        nextY = prevY + this.velY * du;
-    }
-    // Remember my previous position
-    prevX = this.cx;
-    prevY = this.cy;
-    
-    // Compute my provisional new position (barring collisions)
-    nextX = prevX + this.velX * du;
-    nextY = prevY + this.velY * du;
-    
-    for(var i = 0; i < this.numSubSteps; i++){
-        if (entityManager.grid.collidesHorizontal(prevX, prevY, nextX, nextY, this.radius, this.velX < 0)) {
-            this.velX *= -1; // change direction of lemming
-            
-            horizontalCollide = true;
-            this.moveX(realDU);
-            //console.log("its a hit");
-            break;
         }
         prevX = nextX;
         prevY = nextY;

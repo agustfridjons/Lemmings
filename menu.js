@@ -11,7 +11,7 @@
 var menu = {
     currentLevel : 1,
     menuState : 0,
-    levelUnlocked: 6,
+    levelUnlocked: 1,
     finalLevel:  10,    
     buttonHalfW : 100,
     buttonHalfH : 25,
@@ -239,10 +239,10 @@ var menu = {
         var win2 = "You beat the game!";
         
         util.drawText(ctx, '30px Georgia',"#10021A", win1 ,
-        ctx.canvas.width/2 - 140, 100);
+        ctx.canvas.width/2 - 110, 100);
 
         util.drawText(ctx, '30px Georgia',"#10021A", win2 ,
-        ctx.canvas.width/2 - 170, 140);
+        ctx.canvas.width/2 - 130, 140);
 
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
