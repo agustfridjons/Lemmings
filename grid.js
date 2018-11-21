@@ -571,10 +571,6 @@ Grid.prototype.isAllowed = function(x,y){
 Grid.prototype.changeChoice = function(choice){
     this.choice = choice;
 };
-<<<<<<< HEAD
-// Changes the "spot" the player is clicking
-// to the choice selected with the 1-6 keys
-=======
 
 Grid.prototype.playSound = function(index){
     if(!canvas2.getIsMuted()){   
@@ -582,8 +578,9 @@ Grid.prototype.playSound = function(index){
         S.playSoundE(); 
     }
 }
+// Changes the "spot" the player is clicking
+// to the choice selected with the 1-6 keys
 
->>>>>>> 8f38d79eb04802484a95ad9f22f4e40a7204aa86
 Grid.prototype.changeBlock = function(x,y){
     var realx = this.findCurrentBlock(x,y).x;
     var realy = this.findCurrentBlock(x,y).y;
