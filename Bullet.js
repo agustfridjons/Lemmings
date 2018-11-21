@@ -23,7 +23,7 @@ Bullet.prototype.update = function(du){
     var topBlockID = entityManager.grid.getBlocksID(adBlocks[0][1].cx, adBlocks[0][1].cy);
 
     if (this.cx + this.halfWidth > g_canvas.width || 
-        this.cx - this.halfWidth < 0) {
+        this.cx - this.halfWidth < 0) {   
         return entityManager.KILL_ME_NOW;
     }
 

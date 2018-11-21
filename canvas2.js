@@ -45,6 +45,10 @@ var canvas2 = {
 
     },
 
+    getIsMuted : function(){
+        return this.isMuted;
+    },
+
     setGrid : function(ctx) {
         ctx.fillStyle = "BLACK";
         ctx.beginPath();
