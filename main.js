@@ -71,8 +71,6 @@ main._iterCore = function (dt) {
         canvas2.render(g_ctx2);
         canvas2.update();
         g_gameSong.fadeOUT();
-
-
     }else{
         update(dt);
         render(g_ctx);

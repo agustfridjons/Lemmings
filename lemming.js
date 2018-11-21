@@ -67,6 +67,7 @@ lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
+    du = 1;
     // Which way is lemming walking
     if(this.velX < 0 && !this.isExploding){
         this.sprite = g_sprites.reverse;

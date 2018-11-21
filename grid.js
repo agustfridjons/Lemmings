@@ -672,6 +672,8 @@ Grid.prototype.update = function(du) {
             }
         } else {
             gamestate = 0;
+            menu.setResults(this.savedLemmings, this.deadLemmings);
+            menu.notnextLevel();
         }
         
      }
