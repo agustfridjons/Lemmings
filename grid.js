@@ -45,6 +45,7 @@ Grid.prototype.time = 0;
 10 = portal
 */
 
+// Function to ? the grid so we can change it later.
 Grid.prototype.createGrid = function(){
 
     this.blockIMG  = g_images.blockIMG;
@@ -60,7 +61,6 @@ Grid.prototype.createGrid = function(){
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
-
     
                     
 
@@ -85,7 +85,7 @@ Grid.prototype.createGrid = function(){
 Grid.prototype.getLevelINFO = function() {
     return this.levelINFO;
 };
-
+// level 1 function.  
 Grid.prototype.level1 = function(){
     this.background = g_images.background1;
     this.startingPos = this.position[9][1];
