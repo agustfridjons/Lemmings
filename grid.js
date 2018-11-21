@@ -403,7 +403,7 @@ Grid.prototype.level9 = function() {
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,4,1],
                         [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                        [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,10,1],
                         [1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1],
                         [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1],
@@ -489,13 +489,7 @@ Grid.prototype.removeLemming = function(dead) {
 };
 //Checks if player saved all lemmings
 Grid.prototype.getResults = function() {
-    if (this.totalLemmings === this.savedLemmings) {
-        console.log("Congratulations! You saved them all!");
-    } else {
-        console.log("What the actual fuck, you couldnt save them all you piece of shit");
-    }
     return this.totalLemmings === this.savedLemmings;
-
 };
 // Functions to create generate the entities.
 Grid.prototype.makePortal = function(pos){
