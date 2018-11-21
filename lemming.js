@@ -58,7 +58,9 @@ lemming.prototype.isLeaving = false;
 lemming.prototype.isDropping = false;
 lemming.prototype.isOnRamp = false;
 lemming.prototype.isDrowning = false;
-lemming.s
+lemming.prototype.soundE = ["Sounds/water.mp3",
+                            "Sounds/zap.mp3",
+                            "Sounds/flame.mp3"];
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
