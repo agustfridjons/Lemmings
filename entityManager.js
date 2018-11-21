@@ -139,6 +139,7 @@ changeChoice : function(type){
 clearCatagories: function() {
     this._doors = [];
     this._entities = [];
+    this._portals = [];
 },
 
 init: function(level) {
