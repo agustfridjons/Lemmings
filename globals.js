@@ -20,6 +20,12 @@ var g_ctx2 = g_canvas2.getContext("2d");
 var g_gameSong;
 var g_menuSong;
 
+var g_levelINFO = [[4, 4, 4, 4, 4, 2],
+                   [4, 4, 4, 4, 4, 0],
+                   [2, 4, 4, 4, 4, 2],
+                   [2, 4, 4, 4, 4, 1],
+                   [0, 6, 4, 3, 3, 0]];
+
 //var g_canvas2 = document.getElementById("myInfoCanvas");
 //var g_ctx2 = g_canvas2.getContext("2d");
 // The "nominal interval" is the one that all of our time-based units are

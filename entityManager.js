@@ -113,6 +113,17 @@ generatePortal : function(descr){
     this._portals.push(new Portal(descr));
 },
 
+getLevelInfo : function() {
+    return {
+        blocks     : this.blocksLeft,
+        smalljumps : this.sjumpLeft,
+        bigjumps   : this.jumpsLeft,
+        rightjumps : this.rightLeft,
+        leftjumps  : this.leftLeft,
+        gunsleft   : this.gunsLeft
+    }
+},
+
 changeMouse : function(x,y){
     this.mouseX = x;
     this.mouseY = y;
@@ -132,8 +143,10 @@ clearCatagories: function() {
 init: function(level) {
     console.log("init");
     this.clearCatagories();
+    canvas2.solutionGiven = false;
     this.generateGrid();
     this.isChosen = false;
+    this.killALL = false;  
     if (level === 1) {
         this.grid.level1();
     } else if (level === 2) {
@@ -156,6 +169,7 @@ init: function(level) {
 generateGrid: function(){
     this.grid = new Grid();
     this.grid.createGrid();
+    console.log("jea");
 },
 
 
@@ -222,13 +236,15 @@ update: function(du) {
             ++i;
         }
     }
-    i = 0;
-    while (i < this._lemmings.length) {
-        var status = this._lemmings[i].update(du);
-        if (status === this.KILL_ME_NOW) {
-            this._lemmings.splice(i,1);
-        } else {
-            ++i;
+    if(!canvas2.isPaused){
+        i = 0;
+        while (i < this._lemmings.length) {
+            var status = this._lemmings[i].update(du);
+            if (status === this.KILL_ME_NOW) {
+                this._lemmings.splice(i,1);
+            } else {
+                ++i;
+            }
         }
     }
     i = 0;

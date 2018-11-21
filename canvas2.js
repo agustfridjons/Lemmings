@@ -8,12 +8,14 @@ var canvas2 = {
     pauseplayButtons : {},
     bombButton : 0,
 
-    blockCount     : 6,
-    smalljumpCount : 6,
-    largejumpCount : 6,
-    rightjumpCount : 6,
-    leftjumpCount  : 6,
-    gunCount       : 6,
+    solutionGiven : false,
+
+    blockCount     : "-",
+    smalljumpCount : "-",
+    largejumpCount : "-",
+    rightjumpCount : "-",
+    leftjumpCount  : "-",
+    gunCount       : "-",
 
     powerUps : [],
 
@@ -22,6 +24,33 @@ var canvas2 = {
     xInterval : g_canvas2.width / 2,
     yInterval : g_canvas2.height / 8,
 
+
+    mouseStuff : function(x,y){
+        if(gamestate !== 0){
+            if(y > 0 && y < this.yInterval){
+                if(x > 610 && x < (610 + this.xInterval)){
+                    this.isMuted = !this.isMuted;
+                    if(this.isMuted){
+                        g_gameSong.stop();
+                    } else {
+                        g_gameSong.play();
+                    }
+                } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2) {
+                    entityManager.killALL = true;
+                }
+            } else if(y > this.yInterval && y < this.yInterval*2){
+                if(x > 610 && x < (610 + this.xInterval)){
+                    this.isPaused = !this.isPaused;
+                } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2){
+                    if(!this.solutionGiven) {
+                        console.log("BOOM");
+                        entityManager.grid.giveSolution();
+                        this.solutionGiven = true;
+                    }
+                }
+            }
+        }
+    },
 
     init : function() {
         this.volumeButtons = {
@@ -32,6 +61,7 @@ var canvas2 = {
             pause : g_images.pause,
             play  : g_images.play
         }
+
         this.bombButton = g_images.bomb;
         this.powerUps = [this.blockCount, this.smalljumpCount,
                          this.largejumpCount, this.rightjumpCount,
@@ -42,6 +72,15 @@ var canvas2 = {
     },
 
     update : function() {
+        if (gamestate === 0) {
+            var currentLevel = menu.getCurrentLevel();
+            this.powerUps = g_levelINFO[currentLevel-1];
+        } else {
+            var info = entityManager.getLevelInfo();
+            this.powerUps = [info.blocks, info.smalljumps,
+                             info.bigjumps, info.rightjumps,
+                             info.leftjumps, info.gunsleft];
+        }
 
     },
 

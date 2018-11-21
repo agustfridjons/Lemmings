@@ -38,7 +38,11 @@ var menu = {
         }else{
             this.currentLevel += level;
         }
-    }
+    };
+
+    menu.getCurrentLevel = function() {
+        return this.currentLevel;
+    };
 
     menu.levelString = function(){
         return "Level " + this.currentLevel;

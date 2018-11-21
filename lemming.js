@@ -67,9 +67,10 @@ lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
-    if(this.velX < 0){
+    // Which way is lemming walking
+    if(this.velX < 0 && !this.isExploding){
         this.sprite = g_sprites.reverse;
-    } else if(this.velX > 0){
+    } else if(this.velX > 0 && !this.isExploding){
         this.sprite = g_sprites.img0;
     }
     
@@ -84,10 +85,12 @@ lemming.prototype.update = function (du) {
         }
     } else if(this.isLeaving){
         this.currentIMG = 8;
-    } else {
+    } else if(this.isExploding){
         if (this.time % 10 === 0) {
             if (this.currentIMG < 3) {
-                this.currentIMG+=1;
+                this.currentIMG++;
+            } else {
+                this.currentIMG = 3;
             }
         }
     }
@@ -98,7 +101,7 @@ lemming.prototype.update = function (du) {
         this.lifeSpan -= du*2;
     }
     this.time++;
-
+    
     // Check if lemming is dead
     if (this._isDeadNow) {
         return entityManager.KILL_ME_NOW;
@@ -112,8 +115,6 @@ lemming.prototype.update = function (du) {
         }
         return entityManager.KILL_ME_NOW;
     }
-    //console.log(this.currentIMG);
-
     
     // Get the id of current block and bottom blocks
     var BlocksID = entityManager.grid.getBlocksID(this.cx, this.cy);
@@ -124,15 +125,19 @@ lemming.prototype.update = function (du) {
     // React to specialBlocks
     this.specialReaction(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du);
     
+    //If player wants to kill all to restart.
+    if(entityManager.killALL && !this.isExploding){
+        this.explode();
+    }
     if (this.isDropping) {
         this.velY += NOMINAL_GRAVITY;
     } else if (!this.isOnRamp){
         this.cy = adBlocks[1][1].cy + this.radius - 3;
     }
     // Move lemming
-
+    
     var collision = this.computeSubsteps(du/this.numSubSteps, du);
-
+    
     if (!collision.vCollide) {
         this.cy += (this.velY/1.2) * du;
     }
@@ -157,17 +162,17 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
     // Compute my provisional new position (barring collisions)
     var nextX = prevX + this.velX * du;
     var nextY = prevY + this.velY * du;
-
+    
     var verticalCollide = false;
     var horizontalCollide = false;
-
+    
     for(var i = 0; i < this.numSubSteps; i++){
         if (entityManager.grid.collidesVertical(prevX, prevY, nextX, nextY, this.radius, this.velY  < 0)) {
             if (this.velY > 0) {
                 this.velY = 0;
-                this.isDropping = false;
+                if(!this.isExploding) this.isDropping = false;
                 verticalCollide = true;
-
+                
                 this.moveY(realDU);
                 //console.log("its a hit");
                 break;
@@ -223,20 +228,20 @@ lemming.prototype.playEffect = function(index){
 lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du) {
     var currentBlockPos = adBlocks[1][1];
     if (BlocksID[0] != 1 && BlocksIDleft[0] != 1 && BlocksIDright[0] != 1) {
-        this.isDropping = true;
+        if(!this.isExploding) this.isDropping = true;
     }
     if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
-        this.isDropping = true;
+        if(!this.isExploding) this.isDropping = true;
         this.velY = -this.bigJumpSPEED;
     } else if (BlocksID[1] === 9 && this.cy > currentBlockPos.cy) {
-        this.isDropping = true;
+        if(!this.isExploding) this.isDropping = true;
         this.velY = -this.smallJumpSPEED;
     } else if (BlocksID[1] === 7) {
         if (currentBlockPos.cy < this.cy) {
             this.isOnRamp = true;
             this.velY = -this.speedX;
         } else if (currentBlockPos.cy < this.cy + this.radius / 2){
-            this.isDropping = true;
+            if(!this.isExploding) this.isDropping = true;
             this.isOnRamp = false;
             this.velY = -this.sideJumpSPEED;
             this.velX = this.speedX;
@@ -246,7 +251,7 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
             this.isOnRamp = true;
             this.velY = -this.speedX;
         } else if (currentBlockPos.cy < this.cy + this.radius / 2) {
-            this.isDropping = true;
+            if(!this.isExploding) this.isDropping = true;
             this.isOnRamp = false;
             this.velY = -this.sideJumpSPEED;
             this.velX = -this.speedX;
@@ -260,6 +265,7 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         this.currentIMG = 1;
         this.velX /= 1.02;
     } else if (BlocksID[1] === 2) {
+<<<<<<< HEAD
         if(!this.isExploding && !canvas2.getIsMuted()){
             this.playEffect(2);
         }
@@ -268,6 +274,9 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         this.sprite = g_sprites.explosion;
         this.velX = 0;
         this.velY = 0;
+=======
+        this.explode();
+>>>>>>> master
     } else if(BlocksID[1] === 4 && this.cx < currentBlockPos.cx + 1 && this.cx > currentBlockPos.cx - 1){
         this.lifeSpan -= du*4;
         this.isLeaving = true;
@@ -282,6 +291,16 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         });
         entityManager.grid.removeBlock(this.cx, this.cy);
     }
+};
+
+lemming.prototype.explode = function(){
+    this.isDropping = false;
+    this.isLeaving = false;
+    this.isExploding = true;
+    this.currentIMG = 0;
+    this.sprite = g_sprites.explosion;
+    this.velX = 0;
+    this.velY = 0;  
 };
 
 lemming.prototype.getRadius = function () {
