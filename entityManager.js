@@ -157,6 +157,12 @@ init: function(level) {
         this.grid.level4();
     } else if (level === 5){
         this.grid.level5();
+    } else if (level === 6){
+        this.grid.level6();
+    } else if (level === 7){
+        this.grid.level7();
+    } else if (level === 8){
+        this.grid.level8();
     }
 },
 
