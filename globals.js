@@ -28,6 +28,7 @@ var g_levelINFO = [[4, 4, 4, 4, 4, 2],
                    [4, 4, 4, 4, 4, 2],
                    [0, 0, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 0]];
 
 //var g_canvas2 = document.getElementById("myInfoCanvas");

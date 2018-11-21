@@ -9,7 +9,7 @@
 }
 */
 var menu = {
-    currentLevel : 7,
+    currentLevel : 10,
     menuState : 0,
     levelUnlocked: 10,
     finalLevel:  10,    
