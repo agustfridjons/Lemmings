@@ -60,13 +60,14 @@ lemming.prototype.isOnRamp = false;
 lemming.prototype.isDrowning = false;
 lemming.prototype.soundE = ["Sounds/water.mp3",
                             "Sounds/zap.mp3",
-                            "Sounds/flame.mp3"];
+                            "Sounds/flame.mp3"]; 
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
+    du = 1;
     // Which way is lemming walking
     if(this.velX < 0 && !this.isExploding){
         this.sprite = g_sprites.reverse;
@@ -222,8 +223,10 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
 var NOMINAL_GRAVITY = 0.1;
 
 lemming.prototype.playEffect = function(index){
-    var S = new sound(this.soundE[index]);
-    S.playSoundE();
+    if(!canvas2.getIsMuted()){
+        var S = new sound(this.soundE[index]);
+        S.playSoundE();
+    }
 }
 
 lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du) {
@@ -258,7 +261,7 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
             this.velX = -this.speedX;
         }
     } else if (BlocksID[1] === 3) {
-        if(!this.isDrowning && !canvas2.getIsMuted()){
+        if(!this.isDrowning){
             this.playEffect(0);
         }
         this.isDrowning = true;
@@ -266,7 +269,7 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         this.currentIMG = 1;
         this.velX /= 1.02;
     } else if (BlocksID[1] === 2) {
-        if(!this.isExploding && !canvas2.getIsMuted()){
+        if(!this.isExploding){
             this.playEffect(2);
         }
         this.explode();

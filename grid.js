@@ -25,6 +25,11 @@ Grid.prototype.lemmingsInPlay = 0;
 
 Grid.prototype.startingPos = {};
 
+Grid.prototype.soundE =    ["Sounds/place1.mp3",
+                            "Sounds/place2.mp3",
+                            "Sounds/placeB.mp3",
+                            "Sounds/break.mp3"];
+
 Grid.prototype.background;
 Grid.prototype.blockIMG;
 
@@ -250,9 +255,9 @@ Grid.prototype.level5 = function() {
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                         [1,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,1],
-                        [1,10,0,0,0,0,0,0,0,1,1,0,1,1,0,0,1],
-                        [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                        [1,0,0,9,0,0,0,0,0,0,0,0,0,0,0,1,1],
+                        [1,10,0,0,0,0,0,0,1,1,1,0,1,1,0,0,1],
+                        [1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1],
+                        [1,0,0,9,0,9,0,0,0,0,0,0,0,0,1,1,1],
                         [1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1],
                         [1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1],
                         [1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1],
@@ -263,9 +268,9 @@ Grid.prototype.level5 = function() {
     this.solution =     [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                         [1,0,0,0,0,0,0,0,0,4,0,0,9,0,0,0,1],
-                        [1,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,1],
-                        [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,6,1],
-                        [1,0,0,9,0,9,0,9,0,9,0,9,0,9,0,1,1],
+                        [1,0,0,0,0,0,0,0,1,1,1,0,1,1,0,0,1],
+                        [1,1,0,0,0,0,0,8,0,0,0,0,0,1,0,6,1],
+                        [1,0,0,9,0,9,0,1,0,9,0,9,0,9,1,1,1],
                         [1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1],
                         [1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1],
                         [1,0,0,1,0,1,0,1,0,1,0,1,0,1,0,0,1],
@@ -273,12 +278,12 @@ Grid.prototype.level5 = function() {
                         [1,3,3,3,1,3,3,3,1,3,3,3,1,3,3,3,1],
                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     this.createEntities();
-    entityManager.jumpsLeft = 4;
-    entityManager.blocksLeft = 0;
+    entityManager.jumpsLeft = 0;
+    entityManager.blocksLeft = 1;
     entityManager.leftLeft = 3;
     entityManager.rightLeft = 3;
-    entityManager.sjumpLeft = 6;
-    entityManager.gunsLeft = 0;
+    entityManager.sjumpLeft = 5;
+    entityManager.gunsLeft = 1;
 };
 
 Grid.prototype.level6 = function() {
@@ -352,7 +357,7 @@ Grid.prototype.level7 = function() {
     entityManager.leftLeft = 1;
     entityManager.rightLeft = 3;
     entityManager.sjumpLeft = 6;
-    entityManager.gunsLeft = 0;
+    entityManager.gunsLeft = 3;
 };
 
 Grid.prototype.level8 = function() {
@@ -566,32 +571,49 @@ Grid.prototype.isAllowed = function(x,y){
 Grid.prototype.changeChoice = function(choice){
     this.choice = choice;
 };
+<<<<<<< HEAD
 // Changes the "spot" the player is clicking
 // to the choice selected with the 1-6 keys
+=======
+
+Grid.prototype.playSound = function(index){
+    if(!canvas2.getIsMuted()){   
+        var S = new sound (this.soundE[index]);
+        S.playSoundE(); 
+    }
+}
+
+>>>>>>> 8f38d79eb04802484a95ad9f22f4e40a7204aa86
 Grid.prototype.changeBlock = function(x,y){
     var realx = this.findCurrentBlock(x,y).x;
     var realy = this.findCurrentBlock(x,y).y;
     if(this.isAllowed(realx,realy)){
         if(this.choice === 1 && entityManager.blocksLeft !== 0){
+            this.playSound(2);
             this.currentLevel[realy][realx] = 1;
             entityManager.blocksLeft--;
         } else if(this.choice === 2 && entityManager.sjumpLeft !== 0){
+            this.playSound(0);
             this.currentLevel[realy][realx] = 9;
             this.makeSmallJump(this.position[realy][realx]);
             entityManager.sjumpLeft--;
         } else if(this.choice === 3 && entityManager.jumpsLeft !== 0){
+            this.playSound(0);
             this.currentLevel[realy][realx] = 5;
             this.makeJump(this.position[realy][realx]);
             entityManager.jumpsLeft--;
         } else if(this.choice === 4 && entityManager.rightLeft !== 0){
+            this.playSound(1);
             this.currentLevel[realy][realx] = 7;
             this.makeRightJump(this.position[realy][realx]);
             entityManager.rightLeft--;
         } else if(this.choice === 5 && entityManager.leftLeft !== 0){
+            this.playSound(1);
             this.currentLevel[realy][realx] = 6;
             this.makeLeftJump(this.position[realy][realx]);
             entityManager.leftLeft--;
         } else if(this.choice === 6 && entityManager.gunsLeft !== 0){
+            this.playSound(1);
             this.currentLevel[realy][realx] = 8;
             this.makeGun(this.position[realy][realx]);
             entityManager.gunsLeft--;
@@ -603,10 +625,7 @@ Grid.prototype.removeBlock = function(xPos, yPos, isExploding) {
     var currentPos = this.findCurrentBlock(xPos, yPos);
     this.currentLevel[currentPos.y][currentPos.x] = 0;
     if (isExploding) {
-        if(!canvas2.getIsMuted()){   
-            var S = new sound ("Sounds/break.mp3");
-            S.playSoundE(); 
-        }
+        this.playSound(3);
         var speedX = -0.1;
         for (var i = 0; i < 5; i++) {
             entityManager.generateBlockExplosion({
@@ -654,6 +673,8 @@ Grid.prototype.update = function(du) {
             }
         } else {
             gamestate = 0;
+            menu.setResults(this.savedLemmings, this.deadLemmings);
+            menu.notnextLevel();
         }
         
      }

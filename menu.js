@@ -9,8 +9,14 @@
 }
 */
 var menu = {
+<<<<<<< HEAD
     currentLevel : 1,
     levelUnlocked: 9,
+=======
+    currentLevel : 2,
+    menuState : 0,
+    levelUnlocked: 8,
+>>>>>>> 8f38d79eb04802484a95ad9f22f4e40a7204aa86
     buttonHalfW : 100,
     buttonHalfH : 25,
     currentS : 0,
@@ -21,7 +27,8 @@ var menu = {
     cColumnX1: 20,
     cColumnX2: 300,
     buttonMargin: 50,
-    margin: 30
+    margin: 30,
+    results: {}
 };
 
     menu.nextLevel = function(){
@@ -29,6 +36,11 @@ var menu = {
             this.levelUnlocked++;
             this.currentLevel = this.levelUnlocked;
         }
+        this.menuState = 1;
+    };
+
+    menu.notnextLevel = function() {
+        this.menuState = 2;
     };
 
     menu.changeLevel = function(level){
@@ -37,6 +49,13 @@ var menu = {
             return;
         }else{
             this.currentLevel += level;
+        }
+    };
+
+    menu.setResults = function(saved, dead) {
+        this.results = {
+            saved : saved,
+            dead  : dead
         }
     };
 
@@ -49,7 +68,16 @@ var menu = {
     };
 
     menu.update = function(du){
+        if (this.menuState === 0) {
+            this.update1(du);
+        } else if (this.menuState === 1) {
+            this.update2(du);
+        } else if (this.menuState === 2) {
+            this.update3(du);
+        }
+    };
 
+    menu.update1 = function(du) {
         g_menuSong.fadeIN();
 
         this.currentS = 0;
@@ -64,7 +92,7 @@ var menu = {
         if(menu.mouseOnButton(390, 75, 30, 20) && this.mpress){
             this.mpress = false;
             menu.changeLevel(1);
-        } 
+        }
 
         //if mouse is hovering a button changes sprites
         if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50,
@@ -100,7 +128,26 @@ var menu = {
         }
     };
 
+    menu.update2 = function(du) {
+        // keyrist þegar leikmaður vinnur
+
+    };
+
+    menu.update3 = function(du) {
+        // keyrist þegar leikmaður tapar
+    };
+
     menu.render = function(ctx){
+        if (this.menuState === 0) {
+            this.render1(ctx);
+        } else if (this.menuState === 1) {
+            this.render2(ctx);
+        } else if (this.menuState === 2) {
+            this.render3(ctx);
+        }
+    };
+
+    menu.render1 = function(ctx) {
         util.clearCanvas(ctx);
         if(this.renderContr){
             menu.renderControls(ctx);
@@ -113,8 +160,61 @@ var menu = {
         util.drawText(ctx, '26px Fipps',"#10021A",this.levelString(),
                       ctx.canvas.width/2 - 100, 100);
         ctx.drawImage(menu.getImage(this.currentS), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50);
-        ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);                           
+        ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);   
     };
+
+    menu.render2 = function(ctx) {
+        // keyrist þegar leikmaður vinnur
+
+        util.clearCanvas(ctx);
+        util.fillBox(ctx, 0, 0, ctx.canvas.width, 
+            ctx.canvas.height,"#080f21");
+            
+        util.fillBox(ctx, 0, 60-5,ctx.canvas.width, 
+            (ctx.canvas.height / 4) + 10,"#4c7264");
+
+        util.fillBox(ctx, 0, 60, ctx.canvas.width, 
+            ctx.canvas.height / 4,"#aa1e70");
+
+        
+        var win1 = "Congratulations!";
+        var win2 = "You have unlocked level " + this.currentLevel + "!";
+        
+        util.drawText(ctx, '30px Georgia',"#10021A", win1 ,
+        ctx.canvas.width/2 - 120, 100);
+
+        util.drawText(ctx, '30px Georgia',"#10021A", win2 ,
+        ctx.canvas.width/2 - 170, 140);
+
+        ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
+    };
+
+    menu.render3 = function(ctx) {
+        // keyrist þegar leikmaður tapar
+
+        util.clearCanvas(ctx);
+        util.fillBox(ctx, 0, 0, ctx.canvas.width, 
+            ctx.canvas.height,"#080f21");
+            
+        util.fillBox(ctx, 0, 60-5,ctx.canvas.width, 
+            (ctx.canvas.height / 4) + 10,"#4c7264");
+
+        util.fillBox(ctx, 0, 60, ctx.canvas.width, 
+            ctx.canvas.height / 4,"#aa1e70");
+
+        
+        var win1 = "Lemmings saved: " + this.results.saved + "/" + this.results.dead;
+        var win2 = "Press Close and try again!";
+        
+        util.drawText(ctx, '30px Georgia',"#10021A", win1 ,
+        ctx.canvas.width/2 - 140, 100);
+
+        util.drawText(ctx, '30px Georgia',"#10021A", win2 ,
+        ctx.canvas.width/2 - 170, 140);
+
+        ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
+    };
+
 
     menu.renderControls = function(ctx){
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 

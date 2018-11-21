@@ -42,6 +42,7 @@ killALL   : false,
 gunsLeft  : 0,
 isChosen  : false,
 rotation  : false,
+portalSp  : true,
 grid      : Object,
 // "PRIVATE" METHODS
 
@@ -146,7 +147,8 @@ init: function(level) {
     canvas2.solutionGiven = false;
     this.generateGrid();
     this.isChosen = false;
-    this.killALL = false;  
+    this.killALL = false;
+    this.portalSp = true;  
     if (level === 1) {
         this.grid.level1();
     } else if (level === 2) {
@@ -155,7 +157,7 @@ init: function(level) {
         this.grid.level3();
     } else if (level === 4) {
         this.grid.level4();
-    } else if (level === 5){
+    } else if (level === 5) {
         this.grid.level5();
     } else if (level === 6){
         this.grid.level6();
@@ -171,7 +173,6 @@ init: function(level) {
 generateGrid: function(){
     this.grid = new Grid();
     this.grid.createGrid();
-    console.log("jea");
 },
 
 
@@ -183,6 +184,13 @@ render: function(ctx) {
     for (var i = 0; i < this._doors.length; i++) {
         this._doors[i].render(ctx);
     }
+
+    if(!canvas2.getIsMuted() && this.portalSp){   
+        var S = new sound ("Sounds/portal.ogg");
+        S.playSoundE(); 
+        this.portalSp = false;
+    }
+
     for(var i = 0; i < this._portals.length; i++){
         this._portals[i].render(ctx);
     }
@@ -258,22 +266,6 @@ update: function(du) {
             ++i;
         }
     }
-
-/*     for (var c = 0; c < this._categories.length; ++c) {
-        var aCategory = this._categories[c];
-        var i = 0;
-        while (i < aCategory.length) {
-            var status = aCategory[i].update(du);
-            if (status === this.KILL_ME_NOW) {
-                // remove the dead guy, and shuffle the others down to
-                // prevent a confusing gap from appearing in the array
-                aCategory.splice(i,1);
-            }
-            else {
-                ++i;
-            }
-        }
-    } */
 }
 }
 
