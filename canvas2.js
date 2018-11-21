@@ -26,27 +26,27 @@ var canvas2 = {
 
 
     mouseStuff : function(x,y){
-        console.log(x,y);
-        if(y > 0 && y < this.yInterval){
-            if(x > 610 && x < (610 + this.xInterval)){
-                this.isMuted = !this.isMuted;
-                if(this.isMuted){
-                    g_gameSong.stop();
-                } else {
-                    g_gameSong.play();
+        if(gamestate !== 0){
+            if(y > 0 && y < this.yInterval){
+                if(x > 610 && x < (610 + this.xInterval)){
+                    this.isMuted = !this.isMuted;
+                    if(this.isMuted){
+                        g_gameSong.stop();
+                    } else {
+                        g_gameSong.play();
+                    }
+                } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2) {
+                    entityManager.killALL = true;
                 }
-            } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2) {
-                entityManager.killALL = true;
-            }
-        } else if(y > this.yInterval && y < this.yInterval*2){
-            if(x > 610 && x < (610 + this.xInterval)){
-                this.isPaused = !this.isPaused;
-                g_isUpdatePaused = !g_isUpdatePaused;
-            } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2){
-                if(!this.solutionGiven) {
-                    console.log("BOOM");
-                    entityManager.grid.giveSolution();
-                    this.solutionGiven = true;
+            } else if(y > this.yInterval && y < this.yInterval*2){
+                if(x > 610 && x < (610 + this.xInterval)){
+                    this.isPaused = !this.isPaused;
+                } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2){
+                    if(!this.solutionGiven) {
+                        console.log("BOOM");
+                        entityManager.grid.giveSolution();
+                        this.solutionGiven = true;
+                    }
                 }
             }
         }
@@ -82,6 +82,10 @@ var canvas2 = {
                              info.leftjumps, info.gunsleft];
         }
 
+    },
+
+    getIsMuted : function(){
+        return this.isMuted;
     },
 
     setGrid : function(ctx) {

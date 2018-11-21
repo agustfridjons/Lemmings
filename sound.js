@@ -10,6 +10,10 @@ function sound(src) {
     this.play = function(){
         this.sound.play();
     }
+    this.playSoundE = function(){
+        this.sound.volume = 1;
+        this.sound.play();
+    } 
     this.stop = function(){
         this.sound.pause();
     }

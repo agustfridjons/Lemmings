@@ -57,17 +57,16 @@ lemming.prototype.isExploding = false;
 lemming.prototype.isLeaving = false;
 lemming.prototype.isDropping = false;
 lemming.prototype.isOnRamp = false;
+lemming.prototype.isDrowning = false;
+lemming.prototype.soundE = ["Sounds/water.mp3",
+                            "Sounds/zap.mp3",
+                            "Sounds/flame.mp3"];
 
 lemming.prototype.currentIMG = 0;
 lemming.prototype.time = 0;
 
 
 lemming.prototype.update = function (du) {
-    //If player wants to kill all to restart.
-    if(entityManager.killALL && !this.isExploding){
-        this.explode();
-        console.log("BOOM");
-    }
     // Which way is lemming walking
     if(this.velX < 0 && !this.isExploding){
         this.sprite = g_sprites.reverse;
@@ -126,6 +125,10 @@ lemming.prototype.update = function (du) {
     // React to specialBlocks
     this.specialReaction(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du);
     
+    //If player wants to kill all to restart.
+    if(entityManager.killALL && !this.isExploding){
+        this.explode();
+    }
     if (this.isDropping) {
         this.velY += NOMINAL_GRAVITY;
     } else if (!this.isOnRamp){
@@ -217,23 +220,28 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
 
 var NOMINAL_GRAVITY = 0.1;
 
+lemming.prototype.playEffect = function(index){
+    var S = new sound(this.soundE[index]);
+    S.playSoundE();
+}
+
 lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDright, adBlocks, du) {
     var currentBlockPos = adBlocks[1][1];
     if (BlocksID[0] != 1 && BlocksIDleft[0] != 1 && BlocksIDright[0] != 1) {
         if(!this.isExploding) this.isDropping = true;
     }
     if (BlocksID[1] === 5 && this.cy > currentBlockPos.cy) {
-        this.isDropping = true;
+        if(!this.isExploding) this.isDropping = true;
         this.velY = -this.bigJumpSPEED;
     } else if (BlocksID[1] === 9 && this.cy > currentBlockPos.cy) {
-        this.isDropping = true;
+        if(!this.isExploding) this.isDropping = true;
         this.velY = -this.smallJumpSPEED;
     } else if (BlocksID[1] === 7) {
         if (currentBlockPos.cy < this.cy) {
             this.isOnRamp = true;
             this.velY = -this.speedX;
         } else if (currentBlockPos.cy < this.cy + this.radius / 2){
-            this.isDropping = true;
+            if(!this.isExploding) this.isDropping = true;
             this.isOnRamp = false;
             this.velY = -this.sideJumpSPEED;
             this.velX = this.speedX;
@@ -243,16 +251,28 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
             this.isOnRamp = true;
             this.velY = -this.speedX;
         } else if (currentBlockPos.cy < this.cy + this.radius / 2) {
-            this.isDropping = true;
+            if(!this.isExploding) this.isDropping = true;
             this.isOnRamp = false;
             this.velY = -this.sideJumpSPEED;
             this.velX = -this.speedX;
         }
     } else if (BlocksID[1] === 3) {
+        if(!this.isDrowning && !canvas2.getIsMuted()){
+            this.playEffect(0);
+        }
+        this.isDrowning = true;
         this.lifeSpan -= du;
         this.currentIMG = 1;
         this.velX /= 1.02;
     } else if (BlocksID[1] === 2) {
+        if(!this.isExploding && !canvas2.getIsMuted()){
+            this.playEffect(2);
+        }
+        this.isExploding = true;
+        if(this.currentIMG >3) this.currentIMG = 0;
+        this.sprite = g_sprites.explosion;
+        this.velX = 0;
+        this.velY = 0;
         this.explode();
     } else if(BlocksID[1] === 4 && this.cx < currentBlockPos.cx + 1 && this.cx > currentBlockPos.cx - 1){
         this.lifeSpan -= du*4;
@@ -260,6 +280,7 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         this.currentIMG = 8;
         this.velX = 0;
     } else if(BlocksID[1] === 8 && this.cx < currentBlockPos.cx + 2 && this.cx > currentBlockPos.cx - 2){
+        this.playEffect(1);
         entityManager.generateBullet({
             cx : this.cx,
             cy : this.cy,
