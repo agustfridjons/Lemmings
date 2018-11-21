@@ -86,7 +86,8 @@ lemming.prototype.update = function (du) {
         }
     } else if(this.isLeaving){
         this.currentIMG = 8;
-    } else if(this.isExploding){
+    } 
+    if(this.isExploding){
         if (this.time % 10 === 0) {
             if (this.currentIMG < 3) {
                 this.currentIMG++;
@@ -271,11 +272,6 @@ lemming.prototype.specialReaction = function(BlocksID, BlocksIDleft, BlocksIDrig
         if(!this.isExploding){
             this.playEffect(2);
         }
-        this.isExploding = true;
-        if(this.currentIMG >3) this.currentIMG = 0;
-        this.sprite = g_sprites.explosion;
-        this.velX = 0;
-        this.velY = 0;
         this.explode();
     } else if(BlocksID[1] === 4 && this.cx < currentBlockPos.cx + 1 && this.cx > currentBlockPos.cx - 1){
         this.lifeSpan -= du*4;
@@ -297,9 +293,9 @@ lemming.prototype.explode = function(){
     this.isDropping = false;
     this.isLeaving = false;
     this.isExploding = true;
-    this.currentIMG = 0;
+    if(this.currentIMG > 3) this.currentIMG = 0;
     this.sprite = g_sprites.explosion;
-    this.velX = 0;
+    this.velX = 0;  
     this.velY = 0;  
 };
 
