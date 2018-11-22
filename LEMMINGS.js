@@ -108,6 +108,7 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 
 var KEY_HALT  = keyCode('H');
+var KEY_MIXED   = keyCode('M');;
 
 var KEY_0 = keyCode('0');
 
@@ -247,12 +248,13 @@ function requestPreloads() {
         background1 : "https://notendur.hi.is/~fth29/Kalli/Background/Sky.jpeg",
         background2 : "https://notendur.hi.is/~fth29/Kalli/Background/Forest.png",
         background3 : "https://notendur.hi.is/~fth29/Kalli/Background/Landscape.jpeg",
-        background4 : "https://notendur.hi.is/agf6/lemmingSprites/lvl4.png",
+        background4 : "https://notendur.hi.is/agf6/lemmingSprites/lvl10.jpg",
         background5 : "https://notendur.hi.is/agf6/lemmingSprites/lvl5.png",
         background6 : "https://notendur.hi.is/agf6/lemmingSprites/lvl6.png",
-        background7 : "https://notendur.hi.is/agf6/lemmingSprites/lvl7.png",
-        background8 : "https://notendur.hi.is/agf6/lemmingSprites/lvl8.png",
-
+        background7 : "https://notendur.hi.is/agf6/lemmingSprites/lvl9.jpg",
+        background8 : "https://notendur.hi.is/agf6/lemmingSprites/lvl4.png",
+        background9 : "https://notendur.hi.is/agf6/lemmingSprites/lvl7.png",
+        background10 : "https://notendur.hi.is/agf6/lemmingSprites/lvl8.png",
 
         blockIMG : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/woodBlock.png"
     };

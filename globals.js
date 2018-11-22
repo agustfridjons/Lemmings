@@ -20,16 +20,19 @@ var g_ctx2 = g_canvas2.getContext("2d");
 var g_gameSong;
 var g_menuSong;
 
-var g_levelINFO = [[4, 4, 4, 4, 4, 2],
-                   [4, 4, 4, 4, 4, 0],
-                   [2, 4, 4, 4, 4, 2],
+//To get the information on wich powerups are available in each level 
+//before we start the level 
+
+var g_levelINFO = [[4, 4, 4, 4, 4, 2], //lvl 1
+                   [4, 4, 4, 4, 4, 0], //lvl 2
+                   [2, 4, 4, 4, 4, 2], //ext..
                    [2, 4, 4, 4, 4, 1],
                    [1, 5, 0, 3, 3, 1],
                    [6, 6, 6, 3, 3, 0],
                    [2, 3, 6, 3, 3, 3],
                    [0, 4, 6, 0, 0, 0],
                    [4, 5, 1, 1, 1, 0],
-                   [4, 4, 4, 4, 4, 1]];
+                   [3, 4, 4, 2, 2, 1]];
 
 //var g_canvas2 = document.getElementById("myInfoCanvas");
 //var g_ctx2 = g_canvas2.getContext("2d");
