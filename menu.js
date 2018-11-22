@@ -14,7 +14,7 @@ Has 4 "menustates":
 var menu = {
     currentLevel : 1,
     menuState : 0,
-    levelUnlocked: 10,
+    levelUnlocked: 1,
     finalLevel:  10,    
     buttonHalfW : 100,
     buttonHalfH : 25,
@@ -30,6 +30,9 @@ var menu = {
     margin: 30,
     results: {}
 };
+
+// Uncomment this if you want to unlock all levels!
+//menu.levelUnlocked = 10;
 
 //checks if mouse gets pressed
 menu.mousePress = function(button){

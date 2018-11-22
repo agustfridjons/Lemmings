@@ -229,7 +229,7 @@ render: function(ctx) {
 },
 
 update: function(du) {
-    this.grid.update();
+    if(!canvas2.isPaused) this.grid.update();
 
     var i = 0;
     while (i < this._doors.length) {

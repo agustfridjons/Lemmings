@@ -37,6 +37,7 @@ var canvas2 = {
                     }
                 } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2) {
                     entityManager.killALL = true;
+                    this.isPaused = false;
                 }
             } else if(y > this.yInterval && y < this.yInterval*2){
                 if(x > 610 && x < (610 + this.xInterval)){
@@ -64,6 +65,8 @@ var canvas2 = {
                     entityManager.changeChoice(6);
                 }
             }
+        } else if(gamestate === 0){
+            if(x > 610 && x < (610 + this.xInterval)) this.isMuted = !this.isMuted;
         }
 
     },
