@@ -49,7 +49,23 @@ var canvas2 = {
                     }
                 }
             }
+            if(x > 610 && x < 610 + this.xInterval*2){
+                if(y >this.yInterval*2 &&  y < this.yInterval*3){
+                    entityManager.changeChoice(1);
+                } else if(y > this.yInterval*3 && y < this.yInterval*4){
+                    entityManager.changeChoice(2);
+                } else if(y > this.yInterval*4 && y < this.yInterval*5){
+                    entityManager.changeChoice(3);
+                } else if(y > this.yInterval*5 && y < this.yInterval*6){
+                    entityManager.changeChoice(4);
+                } else if(y > this.yInterval*6 && y < this.yInterval*7){
+                    entityManager.changeChoice(5);
+                } else if(y > this.yInterval*7 && y < this.yInterval*8){
+                    entityManager.changeChoice(6);
+                }
+            }
         }
+
     },
 
     init : function() {

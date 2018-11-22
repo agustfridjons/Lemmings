@@ -11,7 +11,7 @@
 var menu = {
     currentLevel : 1,
     menuState : 0,
-    levelUnlocked: 1,
+    levelUnlocked: 10,
     finalLevel:  10,    
     buttonHalfW : 100,
     buttonHalfH : 25,
@@ -51,10 +51,10 @@ var menu = {
         }
     };
 
-    menu.setResults = function(saved, dead) {
+    menu.setResults = function(saved, total) {
         this.results = {
             saved : saved,
-            dead  : dead
+            total  : total
         }
     };
 
@@ -209,7 +209,7 @@ var menu = {
             ctx.canvas.height / 4,"#aa1e70");
 
         
-        var win1 = "Lemmings saved: " + this.results.saved + "/" + this.results.dead;
+        var win1 = "Lemmings saved: " + this.results.saved + "/" + this.results.total;
         var win2 = "Press Close and try again!";
         
         util.drawText(ctx, '30px Georgia',"#10021A", win1 ,
