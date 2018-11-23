@@ -1,4 +1,6 @@
-//Bullet
+// ==========
+// BULLET STUFF
+// ==========
 
 function Bullet(descr) {
 
@@ -16,29 +18,7 @@ Bullet.prototype.rotation = 0;
 Bullet.prototype.rotationSpeed = 0;
 Bullet.prototype.rotVEL = 25;
 
-Bullet.prototype.update = function(du){
-
-    var adBlocks = entityManager.grid.findAdjacentBlocks(this.cx, this.cy);
-    var currentBlockID = entityManager.grid.getBlocksID(this.cx, this.cy);
-    var topBlockID = entityManager.grid.getBlocksID(adBlocks[0][1].cx, adBlocks[0][1].cy);
-
-    if (this.cx + this.halfWidth > g_canvas.width || 
-        this.cx - this.halfWidth < 0) {   
-        return entityManager.KILL_ME_NOW;
-    }
-
-    if (currentBlockID[1] === 1) {
-        if (topBlockID[1] != 1) {
-            entityManager.grid.removeBlock(adBlocks[0][1].cx, adBlocks[0][1].cy, false);
-        }
-        entityManager.grid.removeBlock(this.cx, this.cy, true);
-        return entityManager.KILL_ME_NOW;
-    }
-    this.rotationSpeed += this.rotVEL;
-    this.rotation = this.rotationSpeed * (Math.PI / 180);
-    this.cx += this.vel * du;
-};
-
+// Function to draw rotating bullet
 Bullet.prototype.drawCentredAt = function (ctx) {
 
     var w = this.halfWidth*2,
@@ -55,6 +35,37 @@ Bullet.prototype.drawCentredAt = function (ctx) {
     ctx.restore();
 };
 
+// Update bullet
+Bullet.prototype.update = function(du){
+
+    // Get adjacent blocks position and id
+    var adBlocks = entityManager.grid.findAdjacentBlocks(this.cx, this.cy);
+    var currentBlockID = entityManager.grid.getBlocksID(this.cx, this.cy);
+    var topBlockID = entityManager.grid.getBlocksID(adBlocks[0][1].cx, adBlocks[0][1].cy);
+
+    // If bullet gets outside of canvas, remove bullet
+    if (this.cx + this.halfWidth > g_canvas.width || 
+        this.cx - this.halfWidth < 0) {   
+        return entityManager.KILL_ME_NOW;
+    }
+
+    // If Bullet hits a block, remove the block
+    if (currentBlockID[1] === 1) {
+        // If the block has something other than a block
+        // on top of it, remove it too
+        if (topBlockID[1] != 1) {
+            entityManager.grid.removeBlock(adBlocks[0][1].cx, adBlocks[0][1].cy, false);
+        }
+        entityManager.grid.removeBlock(this.cx, this.cy, true);
+        return entityManager.KILL_ME_NOW;
+    }
+    // Update position
+    this.rotationSpeed += this.rotVEL;
+    this.rotation = this.rotationSpeed * (Math.PI / 180);
+    this.cx += this.vel * du;
+};
+
+// Render bullet
 Bullet.prototype.render = function(ctx){
     this.drawCentredAt(ctx);
 };

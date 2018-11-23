@@ -15,8 +15,6 @@ function Door(descr) {
 
 Door.prototype = new Entity();
 
-
-
 Door.prototype.cx = 180;
 Door.prototype.cy = 200;
 Door.prototype.currentIMG = 0;

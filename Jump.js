@@ -13,8 +13,6 @@ function Jump(descr) {
 
 Jump.prototype = new Entity();
 
-
-
 Jump.prototype.cx = 180;
 Jump.prototype.cy = 200;
 Jump.prototype.currentIMG = 0;
@@ -23,8 +21,6 @@ Jump.prototype._scale = 1;
 
 
 Jump.prototype.update = function () {
-    
-
     // Change current image at certain interval    
     if (this.time % 10 === 0) {
         if (this.currentIMG < 3) {

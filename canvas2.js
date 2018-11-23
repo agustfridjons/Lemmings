@@ -44,7 +44,6 @@ var canvas2 = {
                     this.isPaused = !this.isPaused;
                 } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2){
                     if(!this.solutionGiven) {
-                        console.log("BOOM");
                         entityManager.grid.giveSolution();
                         this.solutionGiven = true;
                     }
