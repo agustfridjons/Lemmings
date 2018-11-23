@@ -1,3 +1,8 @@
+//=====================
+// Canvas 2 constructor
+// stats and etc.
+//=====================
+
 var canvas2 = {
 
     margin : 10,
@@ -24,7 +29,8 @@ var canvas2 = {
     xInterval : g_canvas2.width / 2,
     yInterval : g_canvas2.height / 8,
 
-
+    // Function to check where mouse is clicking
+    // and reacting accordinlgy
     mouseStuff : function(x,y){
         if(gamestate !== 0){
             if(y > 0 && y < this.yInterval){
@@ -107,6 +113,7 @@ var canvas2 = {
         return this.isMuted;
     },
 
+    // Drawing the grid for the canvas
     setGrid : function(ctx) {
         ctx.fillStyle = "BLACK";
         ctx.beginPath();
@@ -122,14 +129,14 @@ var canvas2 = {
             y += this.yInterval;
         }
     },
-
+    // Writing I give up in one of the grid boxes.
     setGiveUp : function(ctx) {
         ctx.font="16px Georgia";
         ctx.fillText("I", this.xInterval + 20, this.yInterval + 16);
         ctx.fillText("GIVE", this.xInterval + 5, this.yInterval + 30);
         ctx.fillText("UP", this.xInterval + 15, this.yInterval + 45);
     },
-
+    // Changing numbers for each type of block
     setNumbers : function(ctx) {
         ctx.font="18px Georgia";
 
@@ -141,7 +148,7 @@ var canvas2 = {
             cy += this.yInterval;
         }
     },
-
+    // IMGs for different types of blocks
     setImgs : function(ctx) {
         var cx = this.margin / 2;
         var cy = (this.yInterval * 2) + this.margin / 2;
