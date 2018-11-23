@@ -15,8 +15,6 @@ function Gun(descr) {
 
 Gun.prototype = new Entity();
 
-
-
 Gun.prototype.cx = 180;
 Gun.prototype.cy = 200;
 Gun.prototype.currentIMG = 0;
@@ -27,10 +25,11 @@ Gun.prototype._scale = 1;
 Gun.prototype.update = function () {
     var BlocksID = entityManager.grid.getBlocksID(this.cx, this.cy);
 
+    // If gun has been removed from grid, delete gun
     if (BlocksID[1] != 8) {
         return entityManager.KILL_ME_NOW;
     } 
-
+    // Change current image at certain interval 
     if(this.time%30 === 0){
         if(this.currentIMG >= 1){
             this.currentIMG = 0;

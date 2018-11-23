@@ -12,7 +12,7 @@
 */
 
 
-// Construct a "sprite" from the given `image`,
+// Construct a "sprite" from the given `images`,
 //
 function Sprite(images) {
     this.images = images;
@@ -21,11 +21,6 @@ function Sprite(images) {
     this.height = images[0].height;
     this.scale = 1;
 }
-
-Sprite.prototype.drawAt = function (ctx, x, y, img) {
-    ctx.drawImage(this.image[img], 
-                  x, y);
-};
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation, img) {
 
@@ -48,28 +43,3 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation, img) {
     ctx.restore();
 };
 
-Sprite.prototype.drawWrappedCentredAt = function (ctx, cx, cy, rotation) {
-    
-    // Get "screen width"
-    var sw = g_canvas.width;
-    
-    // Draw primary instance
-    this.drawWrappedVerticalCentredAt(ctx, cx, cy, rotation);
-    
-    // Left and Right wraps
-    //this.drawWrappedVerticalCentredAt(ctx, cx - sw, cy, rotation);
-    //this.drawWrappedVerticalCentredAt(ctx, cx + sw, cy, rotation);
-};
-
-Sprite.prototype.drawWrappedVerticalCentredAt = function (ctx, cx, cy, rotation) {
-
-    // Get "screen height"
-    var sh = g_canvas.height;
-    
-    // Draw primary instance
-    this.drawCentredAt(ctx, cx, cy, rotation);
-    
-    // Top and Bottom wraps
-    this.drawCentredAt(ctx, cx, cy - sh, rotation);
-    this.drawCentredAt(ctx, cx, cy + sh, rotation);
-};
