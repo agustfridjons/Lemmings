@@ -161,6 +161,7 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
+        //lemming sprites
         img0 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_0.png",
         img1 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_1.png",
         img2 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_2.png",
@@ -178,50 +179,58 @@ function requestPreloads() {
         img14 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_6.png",
         img15 : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse_7.png",
 
+        //Toolbar stuff
         mute   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/mute.png",
         unmute : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/unmute.png",
         pause  : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/pause.png",
         play   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/play.png",
         bomb   : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/bomb.svg",
 
+        //jumping animation
         lemmingJump : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_8.png",
         lemmingJumpReverse : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/Lemming/sprite_reverse8.png",
 
-        backside : "https://notendur.hi.is/~fth29/Kalli/New%20Piskel.png",
-
+        //fire sprites
         fire1   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire1.png",
         fire2   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire2.png",
         fire3   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire3.png",
         fire4   : "https://notendur.hi.is/~fth29/Kalli/FireSprite/Layer 1_sprite_fire4.png",
 
+        //water sprites
         water1  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water0.png",
         water2  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water1.png",
         water3  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water2.png",
         water4  : "https://notendur.hi.is/~fth29/Kalli/WaterSprites/sprite_Water3.png",
 
+        //door sprite
         door1   : "https://notendur.hi.is/~fth29/Kalli/DoorSprites/sprite_Doors0.png",
         door2   : "https://notendur.hi.is/~fth29/Kalli/DoorSprites/sprite_Doors1.png",
 
+        //high jump sprite
         jump1   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump0.png",
         jump2   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump1.png",
         jump3   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump2.png",
         jump4   : "https://notendur.hi.is/~fth29/Kalli/JumpSprite/sprite_Jump3.png",
 
+        //small jump sprite
         smalljump1 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump0.png",
         smalljump2 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump1.png",
         smalljump3 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump2.png",
         smalljump4 : "https://notendur.hi.is/~fth29/Kalli/SmallJump/sprite_SmallJump3.png",
 
+        //left jump sprite 
         side1   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump0.png",
         side2   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump1.png",
         side3   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump2.png",
         side4   : "https://notendur.hi.is/~fth29/Kalli/SideJumpSprite/sprite_SideJump3.png",
         
+        //right jump sprite
         right1  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight0.png",
         right2  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight1.png",
         right3  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight2.png",
         right4  : "https://notendur.hi.is/~fth29/Kalli/JumpRightSprite/sprite_JumpRight3.png",
 
+        //button sprites
         button0 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton0.png",
         button1 : "https://notendur.hi.is/~fth29/Kalli/Buttons/StartButton1.png",
         button2 : "https://notendur.hi.is/~fth29/Kalli/Buttons/ControlButton0.png",
@@ -229,14 +238,17 @@ function requestPreloads() {
         button4 : "https://notendur.hi.is/agf6/lemmingSprites/closeButton.png",
         button5 : "https://notendur.hi.is/agf6/lemmingSprites/closeButtonL.png",
 
+        //death by fire animation
         explosion0 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion0.png",
         explosion1 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion1.png",
         explosion2 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion2.png",
         explosion3 : "https://notendur.hi.is/~fth29/Kalli/Explosion/sprite_Explosion3.png",
 
+        //gun sprite
         gun1 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun0.png",
         gun2 : "https://notendur.hi.is/~fth29/Kalli/WaterGun/sprite_WaterGun1.png",
 
+        //portal sprite
         portal1 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal0.png",
         portal2 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal1.png",
         portal3 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal2.png",
@@ -245,6 +257,7 @@ function requestPreloads() {
         portal6 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal5.png",
         portal7 : "https://notendur.hi.is/~fth29/Kalli/Portal/sprite_Portal6.png",
 
+        //all backgrounds
         background1 : "https://notendur.hi.is/~fth29/Kalli/Background/Sky.jpeg",
         background2 : "https://notendur.hi.is/~fth29/Kalli/Background/Forest.png",
         background3 : "https://notendur.hi.is/~fth29/Kalli/Background/Landscape.jpeg",
@@ -256,6 +269,7 @@ function requestPreloads() {
         background9 : "https://notendur.hi.is/agf6/lemmingSprites/lvl7.png",
         background10 : "https://notendur.hi.is/agf6/lemmingSprites/lvl8.png",
 
+        //solid blocks
         blockIMG : "https://notendur.hi.is/~egr4/Computer%20Games/Lemming_IMGS/woodBlock.png"
     };
 
@@ -292,7 +306,6 @@ function preloadDone() {
     g_sprites.smalljump = new Sprite(smallJump);
     g_sprites.side1 = new Sprite(side);
     g_sprites.right1 = new Sprite(right);
-    g_sprites.button1 = new Sprite(buttons);
     g_sprites.explosion = new Sprite(explosion);
 
     main.init();
