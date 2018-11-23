@@ -2,16 +2,19 @@
 // MENU
 //---------
  
-/*function Menu(descr) {
-    for (var property in descr) {
-        this[property] = descr[property];
-    } 
-}
-*/
+/*
+Contains witch level is beging played
+Has 4 "menustates":
+    Main menu state
+    you won state
+    you lost state
+    you finished the game state
+*/ 
+
 var menu = {
-    currentLevel : 7,
+    currentLevel : 1,
     menuState : 0,
-    levelUnlocked: 10,
+    levelUnlocked: 1,
     finalLevel:  10,    
     buttonHalfW : 100,
     buttonHalfH : 25,
@@ -28,6 +31,54 @@ var menu = {
     results: {}
 };
 
+// Uncomment this if you want to unlock all levels!
+//menu.levelUnlocked = 10;
+
+//checks if mouse gets pressed
+menu.mousePress = function(button){
+    this.mpress = button;
+};
+
+menu.getText = function(index){
+    var texts = ["CONTROLS",
+                "Use number keys 1 - 6 to select elements",
+                "to put on the map.",
+                "1 Key: Solid block",
+                "2 Key: Low jump",
+                "3 Key: High jump",
+                "4 Key: Right side jump",
+                "5 Key: Left side jump",
+                "6 Key: Gun",
+                "Gun shoots a lazer",
+                "that breaks solid blocks.",
+                "Derect the lemmings to",
+                "the door using blocks"];
+    return texts[index];
+}
+
+//images stored for controls screen
+menu.getImage = function(index){
+    var images =[g_images.button0,g_images.button1,
+                g_images.button2,g_images.button3,
+                g_images.button5,g_images.button4,
+                g_images.blockIMG,g_images.smalljump1,
+                g_images.jump1,g_images.right1,
+                g_images.side1,g_images.gun1];
+    return images[index];
+};
+
+//checks if mouse is hovering a button
+menu.mouseOnButton = function(x, y, w, h){
+    if(x < g_mouseX 
+    && g_mouseX < x + w
+    && y < g_mouseY
+    && g_mouseY < y + h){
+        return true;
+    }
+    return false;
+};
+
+//Set unlocks and updates current level and selects menustate
     menu.nextLevel = function(){
         if (this.currentLevel === this.finalLevel){
             this.menuState = 3;
@@ -38,10 +89,12 @@ var menu = {
         }
     };
 
+//if player does not win he 
     menu.notnextLevel = function() {
         this.menuState = 2;
     };
 
+// canges levels when using arrow buttons
     menu.changeLevel = function(level){
         if((this.currentLevel + level) < 1 || 
            (this.currentLevel + level) > this.levelUnlocked){
@@ -51,13 +104,14 @@ var menu = {
         }
     };
 
-    menu.setResults = function(saved, dead) {
+    menu.setResults = function(saved, total) {
         this.results = {
             saved : saved,
-            dead  : dead
+            total : total
         }
     };
 
+    //Fetch current level
     menu.getCurrentLevel = function() {
         return this.currentLevel;
     };
@@ -126,7 +180,7 @@ var menu = {
     };
 
     menu.update2 = function(du) {
-        // keyrist þegar leikmaður vinnur
+        // keyrist þegar leikmaður vinnur eða tapar
         this.currentCl = 4;
 
         if(menu.mouseOnButton(g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160,
@@ -141,6 +195,7 @@ var menu = {
         }
     };
 
+    //chooses wich screen to show 
     menu.render = function(ctx){
         if (this.menuState === 0) {
             this.render1(ctx);
@@ -159,16 +214,21 @@ var menu = {
             menu.renderControls(ctx);
             return;
         }
+
+        //main menu background and text/arrows 
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
         util.fillTriangle(ctx, 380, 85, "#8e1212");
         util.fillreverseTriangle(ctx, 410, 85, "#8e1212");
         util.drawText(ctx, '26px Fipps',"#10021A",this.levelString(),
                       ctx.canvas.width/2 - 100, 100);
+
+        //Buttons
         ctx.drawImage(menu.getImage(this.currentS), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 - 50);
         ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);   
     };
 
+    //when a player wins a level screen
     menu.render2 = function(ctx) {
         // keyrist þegar leikmaður vinnur
 
@@ -195,6 +255,7 @@ var menu = {
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
 
+    //when a player looses a level screen
     menu.render3 = function(ctx) {
         // keyrist þegar leikmaður tapar
 
@@ -209,7 +270,7 @@ var menu = {
             ctx.canvas.height / 4,"#aa1e70");
 
         
-        var win1 = "Lemmings saved: " + this.results.saved + "/" + this.results.dead;
+        var win1 = "Lemmings saved: " + this.results.saved + "/" + this.results.total;
         var win2 = "Press Close and try again!";
         
         util.drawText(ctx, '30px Georgia',"#10021A", win1 ,
@@ -221,8 +282,8 @@ var menu = {
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
 
+    //when player wins the gamn
     menu.render4 = function(ctx) {
-        // keyrist þegar leikmaður tapar
 
         util.clearCanvas(ctx);
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
@@ -247,7 +308,7 @@ var menu = {
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
 
-
+    //control page render
     menu.renderControls = function(ctx){
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
@@ -274,46 +335,12 @@ var menu = {
                       this.cColumnX3, posY);
         util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(10),
                       this.cColumnX3, posY + this.margin);
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(11),
+                      this.cColumnX3, posY - this.margin * 3);
+        util.drawText(ctx, '13px Fipps',"#10021A",menu.getText(12),
+                      this.cColumnX3, posY - this.margin*2);
+        
 
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 70);
 
-    };
-
-    menu.mousePress = function(button){
-        this.mpress = button;
-    };
-
-    menu.getText = function(index){
-        var texts = ["CONTROLS",
-                    "Use number keys 1 - 7 to select elements",
-                    "to put on the map.",
-                    "1 Key: Solid block",
-                    "2 Key: Low jump",
-                    "3 Key: High jump",
-                    "4 Key: Right side jump",
-                    "5 Key: Left side jump",
-                    "6 Key: Gun",
-                    "Tip!: Gun shoots a lazer",
-                    "that breaks solid blocks."];
-        return texts[index];
-    }
-
-    menu.getImage = function(index){
-        var images =[g_images.button0,g_images.button1,
-                    g_images.button2,g_images.button3,
-                    g_images.button5,g_images.button4,
-                    g_images.blockIMG,g_images.smalljump1,
-                    g_images.jump1,g_images.right1,
-                    g_images.side1,g_images.gun1];
-        return images[index];
-    };
-
-    menu.mouseOnButton = function(x, y, w, h){
-        if(x < g_mouseX 
-        && g_mouseX < x + w
-        && y < g_mouseY
-        && g_mouseY < y + h){
-            return true;
-        }
-        return false;
     };

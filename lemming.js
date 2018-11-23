@@ -214,7 +214,7 @@ lemming.prototype.computeSubsteps = function(du, realDU) {
                 break;
             } else {
                 this.velY *= -1;
-
+    
                 verticalCollide = true;
                 this.moveY(realDU);
                 //console.log("its a hit");

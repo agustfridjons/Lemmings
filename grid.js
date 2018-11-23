@@ -286,12 +286,12 @@ Grid.prototype.level5 = function() {
     entityManager.gunsLeft = 1;
 };
 
-Grid.prototype.level6 = function() {
-    this.background = g_images.background6;
+Grid.prototype.level10 = function() {
+    this.background = g_images.background10;
     this.totalLemmings = 6;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                        [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,10,1],
+                        [1,0,1,0,0,0,0,8,0,0,0,0,0,0,0,10,1],
                         [1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1],
                         [1,1,0,0,0,0,0,0,8,0,0,0,0,1,2,2,1],
                         [1,0,1,1,1,0,1,1,1,1,0,0,0,1,1,1,1],
@@ -304,7 +304,7 @@ Grid.prototype.level6 = function() {
 
     this.solution =     [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-                        [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,10,1],
+                        [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
                         [1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1],
                         [1,1,0,0,0,0,0,0,8,0,0,0,0,1,2,2,1],
                         [1,0,1,1,1,0,1,1,1,1,0,0,0,1,1,1,1],
@@ -316,15 +316,15 @@ Grid.prototype.level6 = function() {
                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     this.createEntities();
     entityManager.jumpsLeft = 4;
-    entityManager.blocksLeft = 4;
-    entityManager.leftLeft = 4;
-    entityManager.rightLeft = 4;
+    entityManager.blocksLeft = 3;
+    entityManager.leftLeft = 2;
+    entityManager.rightLeft = 2;
     entityManager.sjumpLeft = 4;
-    entityManager.gunsLeft = 2;
+    entityManager.gunsLeft = 1;
 };
 
-Grid.prototype.level7 = function() {
-    this.background = g_images.background7;
+Grid.prototype.level9 = function() {
+    this.background = g_images.background9;
     this.totalLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
@@ -365,8 +365,8 @@ Grid.prototype.level8 = function() {
     this.totalLemmings = 5;
     this.currentLevel =[[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,0,0,0,0,4,1,10,1,4,0,0,0,0,0,1],
-                        [1,0,0,1,1,1,1,1,0,1,1,1,1,1,0,0,1],
-                        [1,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,1],
+                        [1,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,1],
+                        [1,0,1,1,0,0,0,1,0,1,0,0,0,1,1,0,1],
                         [1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1],
                         [1,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,1],
                         [1,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,1],
@@ -378,8 +378,8 @@ Grid.prototype.level8 = function() {
 
     this.solution  =   [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,0,0,0,0,4,1,10,1,4,0,0,0,0,0,1],
-                        [1,0,9,1,1,1,1,1,0,1,1,1,1,1,9,0,1],
-                        [1,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,1],
+                        [1,0,0,9,1,1,1,1,0,1,1,1,1,9,0,0,1],
+                        [1,0,1,1,0,0,0,1,0,1,0,0,0,1,1,0,1],
                         [1,5,0,0,0,0,0,1,0,1,0,0,0,0,0,5,1],
                         [1,1,9,0,0,0,0,1,0,1,0,0,0,0,9,1,1],
                         [1,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,1],
@@ -397,32 +397,32 @@ Grid.prototype.level8 = function() {
     entityManager.gunsLeft = 0;
 };
 
-Grid.prototype.level9 = function() {
-    this.background = g_images.background8;
+Grid.prototype.level7 = function() {
+    this.background = g_images.background7;
     this.totalLemmings = 5;
     this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,4,1],
                         [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                        [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,10,1],
+                        [1,2,0,0,1,0,0,0,0,0,0,0,0,0,0,10,1],
                         [1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1],
                         [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1],
-                        [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
-                        [1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
-                        [1,0,0,0,0,0,0,0,0,2,0,0,1,0,0,0,1],
+                        [1,2,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
+                        [1,1,0,1,1,0,0,0,0,2,0,0,1,0,0,0,1],
+                        [1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,1],
                         [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
     this.solution =    [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,4,1],
                         [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                        [1,0,0,5,1,0,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,2,0,5,1,0,0,0,0,0,0,0,0,0,0,0,1],
                         [1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1],
                         [1,0,5,0,1,0,8,0,1,0,0,0,0,0,0,0,1],
                         [1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1],
-                        [1,5,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
-                        [1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1],
-                        [1,0,0,5,0,0,0,0,9,2,5,0,1,0,8,0,1],
+                        [1,2,0,5,1,0,0,0,0,0,0,0,1,0,0,0,1],
+                        [1,1,0,1,1,0,0,0,0,2,0,0,1,0,0,0,1],
+                        [1,0,5,0,0,0,0,0,9,1,5,0,1,0,8,0,1],
                         [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     this.createEntities();
@@ -432,6 +432,43 @@ Grid.prototype.level9 = function() {
     entityManager.rightLeft = 3;
     entityManager.sjumpLeft = 3;
     entityManager.gunsLeft = 3;
+};
+
+Grid.prototype.level6 = function() {
+    this.background = g_images.background6;
+    this.totalLemmings = 5;
+    this.currentLevel = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,1,2,2,1,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,0,1,1,0,0,0,0,0,1,0,0,1,0,0,4,1],
+                        [1,1,1,1,3,3,3,3,3,3,3,3,3,3,1,1,1],
+                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+
+    this.solution =    [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1],
+                        [1,0,0,0,0,0,0,0,0,0,0,0,1,2,2,1,1],
+                        [1,0,0,0,0,5,0,0,0,0,0,0,1,1,1,1,1],
+                        [1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,9,0,5,0,1,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,0,5,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+                        [1,0,1,1,0,0,0,0,0,5,0,0,9,0,0,0,1],
+                        [1,5,1,1,0,0,0,0,0,1,0,0,1,0,0,4,1],
+                        [1,1,1,1,3,3,3,3,3,3,3,3,3,3,1,1,1],
+                        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+    this.createEntities();
+    entityManager.jumpsLeft = 6;
+    entityManager.blocksLeft = 6;
+    entityManager.leftLeft = 3;
+    entityManager.rightLeft = 3;
+    entityManager.sjumpLeft = 6;
+    entityManager.gunsLeft = 0;
 };
 
 // Simple function to create all the entities
@@ -556,6 +593,9 @@ Grid.prototype.makeRightJump = function(pos){
 //Function that checks if the "spot" the payer
 // wants to put a block is allowed
 Grid.prototype.isAllowed = function(x,y){
+    if(this.choice === 6 && this.currentLevel[y][x] === 0){
+        return true;
+    }
     if(this.currentLevel[y][x] === 0 && this.currentLevel[y+1][x] === 1){
         return true;
     } else{
@@ -664,7 +704,7 @@ Grid.prototype.update = function(du) {
             }
         } else {
             gamestate = 0;
-            menu.setResults(this.savedLemmings, this.deadLemmings);
+            menu.setResults(this.savedLemmings, this.totalLemmings);
             menu.notnextLevel();
         }
         

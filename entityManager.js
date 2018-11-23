@@ -139,6 +139,7 @@ changeChoice : function(type){
 clearCatagories: function() {
     this._doors = [];
     this._entities = [];
+    this._portals = [];
 },
 
 init: function(level) {
@@ -167,6 +168,8 @@ init: function(level) {
         this.grid.level8();
     } else if (level === 9){
         this.grid.level9();
+    } else if (level === 10){
+        this.grid.level10();
     }
 },
 
@@ -226,7 +229,7 @@ render: function(ctx) {
 },
 
 update: function(du) {
-    this.grid.update();
+    if(!canvas2.isPaused) this.grid.update();
 
     var i = 0;
     while (i < this._doors.length) {
