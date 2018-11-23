@@ -52,7 +52,7 @@ menu.getText = function(index){
                 "6 Key: Gun",
                 "Gun shoots a lazer",
                 "that breaks solid blocks.",
-                "Derect the lemmings to",
+                "Direct the lemmings to",
                 "the door using blocks"];
     return texts[index];
 }
