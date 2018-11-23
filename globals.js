@@ -34,8 +34,7 @@ var g_levelINFO = [[4, 4, 4, 4, 4, 2], //lvl 1
                    [4, 5, 1, 1, 1, 0],
                    [3, 4, 4, 2, 2, 1]];
 
-//var g_canvas2 = document.getElementById("myInfoCanvas");
-//var g_ctx2 = g_canvas2.getContext("2d");
+
 // The "nominal interval" is the one that all of our time-based units are
 // calibrated to e.g. a velocity unit is "pixels per nominal interval"
 //
