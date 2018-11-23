@@ -59,23 +59,27 @@ main._updateClocks = function (frameTime) {
 
 main._iterCore = function (dt) {
     
-    // Handle QUIT
-    if (requestedQuit()) {
-        this.gameOver();
-        return;
-    }
-    
+    //we have two gamestates:
+    //gamestate === 0 - menu screan
+    //else - the game
     if(gamestate === 0){
         menu.update(dt);
         menu.render(g_ctx);
+
+        //info canvas
         canvas2.render(g_ctx2);
         canvas2.update();
+
+        //main theme song off
         g_gameSong.fadeOUT();
     }else{
         update(dt);
         render(g_ctx);
+
+        //main theme song off
         g_menuSong.fadeOUT();
 
+        //info canvas
         canvas2.render(g_ctx2);
         canvas2.update();
 
