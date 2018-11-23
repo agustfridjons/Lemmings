@@ -12,6 +12,7 @@ Has 4 "menustates":
 */ 
 
 var menu = {
+    //private variables
     currentLevel : 1,
     menuState : 0,
     levelUnlocked: 1,
@@ -107,7 +108,7 @@ menu.mouseOnButton = function(x, y, w, h){
     menu.setResults = function(saved, total) {
         this.results = {
             saved : saved,
-            total : total
+            total  : total
         }
     };
 

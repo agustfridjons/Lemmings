@@ -23,18 +23,19 @@ function handleMouse(evt) {
     // If no button is being pressed, then bail
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
 
-    if (!button) return;
-
     //telling the menu when a button is pressed
     menu.mousePress(button);
+
+    if (!button) return;
 
     //placeing blocks 
     try {
         entityManager.grid.changeBlock(g_mouseX,g_mouseY);
 
     } catch (undefined) {
-    }
 
+    }
+    
     canvas2.mouseStuff(g_mouseX,g_mouseY);
 }
 
