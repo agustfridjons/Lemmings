@@ -53,6 +53,7 @@ menu.getText = function(index){
     return texts[index];
 }
 
+//images stored for controls screen
 menu.getImage = function(index){
     var images =[g_images.button0,g_images.button1,
                 g_images.button2,g_images.button3,
@@ -100,10 +101,10 @@ menu.mouseOnButton = function(x, y, w, h){
         }
     };
 
-    menu.setResults = function(saved, dead) {
+    menu.setResults = function(saved, total) {
         this.results = {
             saved : saved,
-            dead  : dead
+            total : total
         }
     };
 
@@ -191,6 +192,7 @@ menu.mouseOnButton = function(x, y, w, h){
         }
     };
 
+    //chooses wich screen to show 
     menu.render = function(ctx){
         if (this.menuState === 0) {
             this.render1(ctx);
@@ -223,6 +225,7 @@ menu.mouseOnButton = function(x, y, w, h){
         ctx.drawImage(menu.getImage(this.currentC), g_canvas.width/2 - this.buttonHalfW, g_canvas.height/2 + 50);   
     };
 
+    //when a player wins a level screen
     menu.render2 = function(ctx) {
         // keyrist þegar leikmaður vinnur
 
@@ -249,6 +252,7 @@ menu.mouseOnButton = function(x, y, w, h){
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
 
+    //when a player looses a level screen
     menu.render3 = function(ctx) {
         // keyrist þegar leikmaður tapar
 
@@ -263,7 +267,7 @@ menu.mouseOnButton = function(x, y, w, h){
             ctx.canvas.height / 4,"#aa1e70");
 
         
-        var win1 = "Lemmings saved: " + this.results.saved + "/" + this.results.dead;
+        var win1 = "Lemmings saved: " + this.results.saved + "/" + this.results.total;
         var win2 = "Press Close and try again!";
         
         util.drawText(ctx, '30px Georgia',"#10021A", win1 ,
@@ -275,8 +279,8 @@ menu.mouseOnButton = function(x, y, w, h){
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
 
+    //when player wins the gamn
     menu.render4 = function(ctx) {
-        // keyrist þegar leikmaður tapar
 
         util.clearCanvas(ctx);
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
@@ -301,7 +305,7 @@ menu.mouseOnButton = function(x, y, w, h){
         ctx.drawImage(menu.getImage(this.currentCl), g_canvas.width/2 - this.buttonHalfW, g_canvas.height - 160);
     };
 
-
+    //control page render
     menu.renderControls = function(ctx){
         util.fillBox(ctx, 0, 0, ctx.canvas.width, 
                      ctx.canvas.height,"#704F5F");
