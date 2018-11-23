@@ -83,6 +83,54 @@ var canvas2 = {
 
     },
 
+    mouseHover : function(x,y, ctx){
+        if(gamestate !== 0){
+            //Checks in what row of buttons the mouse is in.
+            if(y > 0 && y < this.yInterval){
+                //Checks which button its is clicking
+                if(x > 610 && x < (610 + this.xInterval)){
+                    // If mouse is hoverins, darken button
+                    util.fillBox(ctx, 0, 0, this.xInterval, this.yInterval, "darkgrey");
+                } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2) {
+                    util.fillBox(ctx, this.xInterval, 0, this.xInterval, this.yInterval, "darkgrey");
+                }
+            // Checks if the mouse is in the second row.
+            } else if(y > this.yInterval && y < this.yInterval*2){
+                if(x > 610 && x < (610 + this.xInterval)){
+                    util.fillBox(ctx, 0, this.yInterval, this.xInterval, this.yInterval, "darkgrey");
+                } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2){
+                    if(!this.solutionGiven) {
+                        util.fillBox(ctx, this.xInterval, this.yInterval, this.xInterval, this.yInterval, "darkgrey");
+                    }
+                }
+            }
+            //Checks if the mouse clicked one of the blocks in the canvas
+            // and changes choice accordingly.
+            if(x > 610 && x < 610 + this.xInterval*2){
+                if(y >this.yInterval*2 &&  y < this.yInterval*3){
+                    util.fillBox(ctx, 0, this.yInterval * 2, this.xInterval * 2, this.yInterval, "darkgrey");
+                } else if(y > this.yInterval*3 && y < this.yInterval*4){
+                    util.fillBox(ctx, 0, this.yInterval * 3, this.xInterval * 2, this.yInterval, "darkgrey");
+                } else if(y > this.yInterval*4 && y < this.yInterval*5){
+                    util.fillBox(ctx, 0, this.yInterval * 4, this.xInterval * 2, this.yInterval, "darkgrey");
+                } else if(y > this.yInterval*5 && y < this.yInterval*6){
+                    util.fillBox(ctx, 0, this.yInterval * 5, this.xInterval * 2, this.yInterval, "darkgrey");
+                } else if(y > this.yInterval*6 && y < this.yInterval*7){
+                    util.fillBox(ctx, 0, this.yInterval * 6, this.xInterval * 2, this.yInterval, "darkgrey");
+                } else if(y > this.yInterval*7 && y < this.yInterval*8){
+                    util.fillBox(ctx, 0, this.yInterval * 7, this.xInterval * 2, this.yInterval, "darkgrey");
+                }
+            }
+        // So the player can mute and unmute in the menu.
+        } else if(gamestate === 0 &&
+                 y > 0 && y < this.yInterval && 
+                 x > 610 && x < (610 + this.xInterval)) {
+            //if(x > 610 && x < (610 + this.xInterval)) this.isMuted = !this.isMuted;
+            util.fillBox(ctx, 0, 0, this.xInterval, this.yInterval, "darkgrey");
+        }
+
+    },
+
     init : function() {
         this.volumeButtons = {
             mute   : g_images.mute,
@@ -112,7 +160,6 @@ var canvas2 = {
                              info.bigjumps, info.rightjumps,
                              info.leftjumps, info.gunsleft];
         }
-
     },
     // returns weather the player has muted or not.
     getIsMuted : function(){
@@ -178,6 +225,8 @@ var canvas2 = {
     render : function(ctx) {
 
         util.fillBox(ctx, 0, 0, this.width, this.height, "#514545");
+
+        this.mouseHover(g_mouseX, g_mouseY, ctx);
 
         this.setGrid(ctx);
 
