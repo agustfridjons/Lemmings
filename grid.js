@@ -123,7 +123,6 @@ Grid.prototype.level1 = function(){
                      [1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1],
                      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
     
-    //this.currentLevel = this.solution;
 
     this.createEntities();
     entityManager.jumpsLeft = 4;
@@ -602,10 +601,11 @@ Grid.prototype.isAllowed = function(x,y){
         return false;
     }
 };
+// Changes choice of blocks to put down
 Grid.prototype.changeChoice = function(choice){
     this.choice = choice;
 };
-
+// Plays sound?
 Grid.prototype.playSound = function(index){
     if(!canvas2.getIsMuted()){   
         var S = new sound (this.soundE[index]);
@@ -651,7 +651,7 @@ Grid.prototype.changeBlock = function(x,y){
         }
     }
 };
-
+// Function that removes block when shot with the gun
 Grid.prototype.removeBlock = function(xPos, yPos, isExploding) {
     var currentPos = this.findCurrentBlock(xPos, yPos);
     this.currentLevel[currentPos.y][currentPos.x] = 0;
