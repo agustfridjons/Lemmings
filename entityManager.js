@@ -181,7 +181,6 @@ generateGrid: function(){
 
 
 render: function(ctx) {
-
     this.grid.render(ctx);
 
     for (var i = 0; i < this._doors.length; i++) {
