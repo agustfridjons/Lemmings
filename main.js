@@ -4,7 +4,7 @@
 /*
 
 The mainloop is one big object with a fairly small public interface
-(e.g. init, iter, gameOver), and a bunch of private internal helper methods.
+(e.g. init, iter), and a bunch of private internal helper methods.
 
 The "private" members are identified as such purely by the naming convention
 of having them begin with a leading underscore. A more robust form of privacy,
@@ -59,42 +59,33 @@ main._updateClocks = function (frameTime) {
 
 main._iterCore = function (dt) {
     
-    // Handle QUIT
-    if (requestedQuit()) {
-        this.gameOver();
-        return;
-    }
-    
+    //we have two gamestates:
+    //gamestate === 0 - menu screan
+    //else - the game
     if(gamestate === 0){
         menu.update(dt);
         menu.render(g_ctx);
+
+        //info canvas
         canvas2.render(g_ctx2);
         canvas2.update();
+
+        //main theme song off
         g_gameSong.fadeOUT();
     }else{
         update(dt);
         render(g_ctx);
+
+        //main theme song off
         g_menuSong.fadeOUT();
 
+        //info canvas
         canvas2.render(g_ctx2);
         canvas2.update();
 
     }
 };
 
-main._isGameOver = false;
-
-main.gameOver = function () {
-    this._isGameOver = true;
-    console.log("gameOver: quitting...");
-};
-
-// Simple voluntary quit mechanism
-//
-var KEY_QUIT = 'Q'.charCodeAt(0);
-function requestedQuit() {
-    return keys[KEY_QUIT];
-}
 
 // Annoying shim for Firefox and Safari
 window.requestAnimationFrame = 
