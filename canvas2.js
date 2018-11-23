@@ -33,7 +33,9 @@ var canvas2 = {
     // and reacting accordinlgy
     mouseStuff : function(x,y){
         if(gamestate !== 0){
+            //Checks in what row of buttons the mouse is in.
             if(y > 0 && y < this.yInterval){
+                //Checks which button its is clicking
                 if(x > 610 && x < (610 + this.xInterval)){
                     this.isMuted = !this.isMuted;
                     if(this.isMuted){
@@ -43,8 +45,10 @@ var canvas2 = {
                     }
                 } else if(x > 610 + this.xInterval && x < 610 + this.xInterval*2) {
                     entityManager.killALL = true;
+                    //Unpauses so the player doesnt have to do it.
                     this.isPaused = false;
                 }
+            // Checks if the mouse is in the second row.
             } else if(y > this.yInterval && y < this.yInterval*2){
                 if(x > 610 && x < (610 + this.xInterval)){
                     this.isPaused = !this.isPaused;
@@ -55,6 +59,8 @@ var canvas2 = {
                     }
                 }
             }
+            //Checks if the mouse clicked one of the blocks in the canvas
+            // and changes choice accordingly.
             if(x > 610 && x < 610 + this.xInterval*2){
                 if(y >this.yInterval*2 &&  y < this.yInterval*3){
                     entityManager.changeChoice(1);
@@ -70,6 +76,7 @@ var canvas2 = {
                     entityManager.changeChoice(6);
                 }
             }
+        // So the player can mute and unmute in the menu.
         } else if(gamestate === 0){
             if(x > 610 && x < (610 + this.xInterval)) this.isMuted = !this.isMuted;
         }
@@ -107,7 +114,7 @@ var canvas2 = {
         }
 
     },
-
+    // returns weather the player has muted or not.
     getIsMuted : function(){
         return this.isMuted;
     },
