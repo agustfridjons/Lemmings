@@ -6,3 +6,7 @@ of little people or "Lemmings" into a portal by adding elements onto the player 
 ![](lemmingsgif.gif)
 
 The game includes 10 different levels that each have a unique puzzle to solve.
+
+The game was written in Javascript with little HTML and CSS to set it up.
+  
+Feel free to clone and edit or play the game of my personal University server: https://notendur.hi.is/~agf6/tolforritun/lemmins/
